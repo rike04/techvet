@@ -1,0 +1,26 @@
+.root {
+	
+}	
+
+.button {
+    -fx-padding: 5 22 5 22;   
+    -fx-border-color: black;
+    -fx-border-width: 2;
+    -fx-background-radius: 8, 7, 6;
+    -fx-background-color: white;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 11pt;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.text-field:error {
+    -fx-text-box-border: red;
+    -fx-focus-color: red;
+}
+
+.choice-box:error {
+    -fx-border-color: red;
+}
+
+
+

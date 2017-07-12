@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="682.0" prefWidth="929.0" style="-fx-background-color: #6398F3;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <opaqueInsets>
+      <Insets />
+   </opaqueInsets>
+   <top>
+      <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="151.0" prefWidth="929.0" BorderPane.alignment="TOP_CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="313.0" minWidth="0.0" prefWidth="227.0" />
+          <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="440.0" minWidth="0.0" prefWidth="365.0" />
+            <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" maxWidth="552.0" minWidth="0.0" prefWidth="20.0" />
+            <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="140.0" />
+            <ColumnConstraints fillWidth="false" halignment="RIGHT" hgrow="SOMETIMES" maxWidth="440.0" minWidth="10.0" prefWidth="42.0" />
+            <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="49.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="49.0" minHeight="10.0" prefHeight="40.0" />
+            <RowConstraints maxHeight="54.0" minHeight="10.0" prefHeight="54.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="42.0" />
+        </rowConstraints>
+         <children>
+            <fx:define> 
+                <Image fx:id="playbutImg" url="@reosurces/icon_saida.png" />    
+            </fx:define>
+            <Button fx:id="botaoSaida" accessibleText="Terminar a sessão" alignment="CENTER" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#cliqueTerminarSessao" prefHeight="27.0" prefWidth="27.0" style="-fx-text-fill: transparent; -fx-background-color: transparent; -fx-border-fill: transparent;" GridPane.columnIndex="5" GridPane.columnSpan="2147483647" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="SOMETIMES">
+               <GridPane.margin>
+                  <Insets bottom="10.0" right="15.0" top="15.0" />
+               </GridPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <HBox prefHeight="100.0" prefWidth="200.0" spacing="15.0" style="-fx-background-color: #9fc5f8;" GridPane.columnSpan="2147483647" GridPane.rowSpan="2">
+               <children>
+                  <ImageView fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../resources/logo2.png" />
+                     </image>
+                     <HBox.margin>
+                        <Insets left="15.0" />
+                     </HBox.margin>
+                  </ImageView>
+                  <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <VBox prefHeight="70.0" prefWidth="148.0" spacing="20.0">
+                     <children>
+                        <Label fx:id="dataSistema" text="Data do Sistema" />
+                        <Label fx:id="labelNomeUtilizador" text="Nome utilizador" />
+                     </children>
+                  </VBox>
+                  <Button mnemonicParsing="false" onAction="#cliqueTerminarSessao" pickOnBounds="false" prefHeight="48.0" prefWidth="35.0" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;" text="Button">
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../resources/icon_saida.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                     <HBox.margin>
+                        <Insets top="5.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </HBox>
+            <ButtonBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER">
+              <buttons>
+                <Button mnemonicParsing="false" text="Vendas" />
+                  <Button mnemonicParsing="false" onAction="#cliqueInventario" text="Inventario" />
+                  <Button mnemonicParsing="false" onAction="#cliqueClientes" text="Clientes" />
+                  <Button mnemonicParsing="false" onAction="#cliquePacientes" text="Pacientes" />
+                  <Button mnemonicParsing="false" onAction="#cliqueConsultas" text="Consultas" />
+              </buttons>
+            </ButtonBar>
+         </children>
+      </GridPane>
+   </top>
+   <left>
+      <VBox fx:id="sideBar" prefHeight="531.0" prefWidth="147.0" BorderPane.alignment="CENTER" />
+   </left>
+   <center>
+      <StackPane fx:id="content" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </StackPane>
+   </center>
+</BorderPane>
