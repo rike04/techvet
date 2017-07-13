@@ -3,6 +3,7 @@
  */
 package techvet.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
@@ -117,7 +118,7 @@ public class FormularioClienteController implements Initializable {
         ListaClientesController c = new ListaClientesController();
         try {
             Util.mudaContentPara(doc, c, content);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
