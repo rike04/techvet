@@ -59,9 +59,6 @@ public class ListaPacientesController implements Initializable {
         this.devolveEscolha = devolveEscolha;
     }
     
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         botaoSelecionar.setVisible(devolveEscolha);

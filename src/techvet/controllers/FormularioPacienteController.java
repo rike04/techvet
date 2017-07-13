@@ -31,10 +31,9 @@ import techvet.DocFXML;
 import techvet.Util;
 
 /**
- * FXML Controller class
- *
  * @author rike4
  */ 
+
 public class FormularioPacienteController implements Initializable {
     
     @FXML 
