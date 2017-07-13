@@ -4,6 +4,7 @@
 
 package techvet.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -14,10 +15,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import model.Cliente;
 import model.Paciente;
 import techvet.DocFXML;
@@ -54,7 +59,27 @@ public class FormularioPacienteController implements Initializable {
     
     @FXML
     public void cliqueProcurarCliente(ActionEvent event) {
-        
+        ListaClientesController controller;
+        try {
+            controller = abrirListaClientes();
+        } catch (IOException ex) {
+            return ;
+        }
+        if (controller.foiSelecionadaOpcao()) {
+            fieldCliente.setText(controller.getClienteSelecionado().getNome());
+        }
+    }
+    
+    private ListaClientesController abrirListaClientes() throws IOException {
+        Stage stage = new Stage();
+        ListaClientesController controller = new ListaClientesController();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(DocFXML.LISTACLIENTES.getPath()));
+        loader.setController(controller);
+        Parent root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.showAndWait();
+        return controller;
     }
     
     @FXML

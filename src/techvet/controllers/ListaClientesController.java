@@ -9,10 +9,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
 import model.Cliente;
 
 /**
@@ -35,6 +39,7 @@ public class ListaClientesController implements Initializable {
     @FXML
     private TableColumn<Cliente, String> colNIF;
     
+    private boolean foiConfirmado = false;
     /**
      * Initializes the controller class.
      * @param url
@@ -67,5 +72,29 @@ public class ListaClientesController implements Initializable {
         return listaClientes;
     }
     
+    public boolean foiSelecionadaOpcao() {
+        return foiConfirmado;
+    }
+    
+    public Cliente getClienteSelecionado() {
+        return tabelaClientes.getSelectionModel().getSelectedItem();
+    }
+    
+    @FXML 
+    public void cliqueSelecionar(ActionEvent event) {
+        foiConfirmado = true;
+        fechaJanela(event);
+    }
+    
+    @FXML 
+    public void cliqueCancelar(ActionEvent event) {
+        foiConfirmado = false;
+        fechaJanela(event);
+    }
+
+    private void fechaJanela(Event event) {
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.close();
+    }
 }
  
