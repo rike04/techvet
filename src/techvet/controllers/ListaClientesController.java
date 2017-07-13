@@ -14,6 +14,7 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
@@ -38,16 +39,28 @@ public class ListaClientesController implements Initializable {
     private TableColumn<Cliente, String> colMail;
     @FXML
     private TableColumn<Cliente, String> colNIF;
+    @FXML
+    private Button botaoSelecionar;
+    @FXML
+    private Button botaoCancelar;
     
-    private boolean foiConfirmado = false;
-    /**
-     * Initializes the controller class.
-     * @param url
-     * @param rb
-     */
+    private boolean foiConfirmado;
+    private final boolean devolveEscolha;
+
+    public ListaClientesController(boolean devolveEscolha) {
+        this.foiConfirmado = false;
+        this.devolveEscolha = devolveEscolha;
+    }        
+            
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        botaoSelecionar.setVisible(devolveEscolha);
+        botaoSelecionar.setDisable(!devolveEscolha);
+        
+        botaoCancelar.setVisible(devolveEscolha);
+        botaoCancelar.setDisable(!devolveEscolha);
+        
         //Atribui o valor que cada coluna ira ter 
         colNome.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getNome()));

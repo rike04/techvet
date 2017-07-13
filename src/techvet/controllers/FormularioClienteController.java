@@ -46,7 +46,7 @@ public class FormularioClienteController implements Initializable {
     private final PseudoClass erro = PseudoClass.getPseudoClass("error");
     
     public FormularioClienteController(Pane content) {
-        this.controller = new ListaClientesController();
+        this.controller = new ListaClientesController(false);
         this.doc = DocFXML.LISTACLIENTES;
         this.content = content;
     }
@@ -115,7 +115,7 @@ public class FormularioClienteController implements Initializable {
     }
     
     private void mudarContent() {
-        ListaClientesController c = new ListaClientesController();
+        ListaClientesController c = new ListaClientesController(false);
         try {
             Util.mudaContentPara(doc, c, content);
         } catch (IOException e) {

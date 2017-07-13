@@ -48,7 +48,7 @@ public class BotoesClienteController implements Initializable {
     
     @FXML
     public void cliqueVerClientes(ActionEvent event) {
-        Initializable controller = new ListaClientesController();
+        Initializable controller = new ListaClientesController(false);
         try {
             Util.mudaContentPara(DocFXML.LISTACLIENTES, controller, content);
         } catch (IOException e) {

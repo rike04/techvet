@@ -72,7 +72,7 @@ public class FormularioPacienteController implements Initializable {
     
     private ListaClientesController abrirListaClientes() throws IOException {
         Stage stage = new Stage();
-        ListaClientesController controller = new ListaClientesController();
+        ListaClientesController controller = new ListaClientesController(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(DocFXML.LISTACLIENTES.getPath()));
         loader.setController(controller);
         Parent root = loader.load();
