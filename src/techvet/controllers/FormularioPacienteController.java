@@ -17,8 +17,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 import model.Cliente;
 import model.Paciente;
+import techvet.DocFXML;
+import techvet.Util;
 
 /**
  * FXML Controller class
@@ -37,6 +40,12 @@ public class FormularioPacienteController implements Initializable {
     private ChoiceBox boxSexo;
     @FXML 
     private TextField fieldCliente;
+    
+    private final Pane content;
+    
+    public FormularioPacienteController(Pane content) {
+        this.content = content;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -54,7 +63,9 @@ public class FormularioPacienteController implements Initializable {
             Cliente c;
             try {
                 c = buscaCliente();
-                inserirNaBD(c);
+                inserirPacienteBD(c);
+                ListaConsultasController controller = new ListaConsultasController();
+                Util.mudaContentPara(DocFXML.LISTAPACIENTES, controller, content);
             } catch (Exception ex) {
                 Logger.getLogger(FormularioPacienteController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -79,7 +90,7 @@ public class FormularioPacienteController implements Initializable {
         boxSexo.getSelectionModel().select(0);
     }
     
-    private void inserirNaBD(Cliente c) {
+    private void inserirPacienteBD(Cliente c) {
         Paciente p = new Paciente();
         p.setNome(fieldNome.getText());
         p.setEspecie(fieldEspecie.getText());
@@ -93,7 +104,6 @@ public class FormularioPacienteController implements Initializable {
     } 
     
     private Cliente buscaCliente() throws Exception {
-        System.out.println("Procurar por: " + fieldCliente.getText());
         List<Cliente> clientes = Cliente.readByNome( fieldCliente.getText() );
         return clientes.get(0);
     }

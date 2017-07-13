@@ -24,7 +24,6 @@ import model.Cliente;
 import model.Consulta;
 import model.Paciente;
 import model.TipoConsulta;
-import model.Utilizador;
 
 /**
  * FXML Controller class

@@ -71,6 +71,7 @@ public class Template implements Initializable {
         return utilizador;
     }
     
+    //Labels no canto superior direito que sao o nome e data 
     private void preencherLabels() {
         LocalDate dataLocal = LocalDate.now();
         dataSistema.setText(DateTimeFormatter.ofPattern("yyy/MM/dd").format(dataLocal));

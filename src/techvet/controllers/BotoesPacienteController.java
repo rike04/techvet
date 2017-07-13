@@ -50,7 +50,7 @@ public class BotoesPacienteController implements Initializable {
     
     @FXML 
     public void cliqueRegistarPaciente(ActionEvent event) {
-        FormularioPacienteController controller = new FormularioPacienteController();
+        FormularioPacienteController controller = new FormularioPacienteController(getContent());
         try {
             Util.mudaContentPara(DocFXML.FORMULARIOPACIENTE, controller, getContent());
         } catch (IOException ex) {

@@ -43,16 +43,12 @@ public class LoginController implements Initializable {
     private final String erroFieldUtilizadorVazio = "O nome de utilizador deve ter entre 3 a 9 caracteres.";
     private final String erroFieldPasseVazia = "A palavra-passe deve ter entre 3 a 9 caracteres.";
    
+    //Tipo de estilo que mete a caixa de texto vermelho
     private final PseudoClass errorClass = PseudoClass.getPseudoClass("error");
     
     @FXML
     private void click(ActionEvent event) {
-        // Reset das mensagens de erro 
-        labelErroNome.setVisible(false);
-        labelErroPasse.setVisible(false);
-        fieldNomeUtilizador.pseudoClassStateChanged(errorClass, false);
-        fieldPalavraPasse.pseudoClassStateChanged(errorClass, false);
-        
+        resetErros();
         if(isCamposValidos()) {
             String nomeUtilizador = fieldNomeUtilizador.getText();
             String palavraPasse = fieldPalavraPasse.getCharacters().toString();
@@ -60,11 +56,19 @@ public class LoginController implements Initializable {
         } 
     }
     
+    private void resetErros() {
+        // Reset das mensagens de erro 
+        labelErroNome.setVisible(false);
+        labelErroPasse.setVisible(false);
+        fieldNomeUtilizador.pseudoClassStateChanged(errorClass, false);
+        fieldPalavraPasse.pseudoClassStateChanged(errorClass, false);
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {}    
     
     /*
-        Verifica se os campos do utilizador e palavra-passe tem valores validos
+      Verifica se os campos do utilizador e palavra-passe tem valores validos
     */
     private boolean isCamposValidos() {
         boolean saoValidos = true;

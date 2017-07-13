@@ -43,6 +43,7 @@ public class ListaClientesController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //Atribui o valor que cada coluna ira ter 
         colNome.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getNome()));
         colMorada.setCellValueFactory(dadosCell ->

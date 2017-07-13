@@ -56,6 +56,8 @@ public class ListaPacientesController implements Initializable {
                 new SimpleStringProperty(dadosCell.getValue().getSexo()));
         colCor.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getCor()));
+       
+        //Esta a atribuir vivo ou morto porque o tipo de variavel SHORT nao existe em JAVAFX
         colEstado.setCellValueFactory(dadosCell -> {
             SimpleStringProperty property = new SimpleStringProperty();
             Paciente p = (Paciente) dadosCell.getValue();
@@ -70,6 +72,8 @@ public class ListaPacientesController implements Initializable {
         colCliente.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getIdCliente().getNome()));
         
+        //Muda a cor da linha para verde se o paciente estiver vivo e para vermleho se estiver morto
+        //ALTERAR: Ficar apenas a celula da coluna Estado verde ou vermelha 
         tabelaPacientes.setRowFactory((TableView<Paciente> param) -> {
             final TableRow<Paciente> row = new TableRow<Paciente>() {
                 @Override
