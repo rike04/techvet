@@ -23,13 +23,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.Cliente;
 import model.Consulta;
 import model.Paciente;
 import model.TipoConsulta;
 import techvet.DocFXML;
+import techvet.Util;
 
 /**
  * @author rike4
@@ -176,7 +176,7 @@ public class FormularioConsultaController implements Initializable {
         Scene scene = new Scene(root);
         
         Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Stage stage = preparaStage(owner);
+        Stage stage = Util.preparaNovaJanela(owner);
         stage.setScene(scene);
         stage.showAndWait();
         return controller;
@@ -205,18 +205,10 @@ public class FormularioConsultaController implements Initializable {
         Scene scene = new Scene(root);
         
         Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Stage stage = preparaStage(owner);
+        Stage stage = Util.preparaNovaJanela(owner);
         stage.setScene(scene);
         stage.showAndWait();
         return controller;
-    }
-    
-    private Stage preparaStage(Stage owner) {
-        Stage stage = new Stage();
-        stage.initOwner(owner);
-        stage.setAlwaysOnTop(true);
-        stage.initModality(Modality.WINDOW_MODAL);
-        return stage;
     }
     
     private boolean osCamposPreenchidos() {

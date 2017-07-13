@@ -11,6 +11,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -40,6 +41,10 @@ public class Util {
     }
     
     public static Stage preparaNovaJanela(Stage owner) {
-        return null;
+        Stage stage = new Stage();
+        stage.initOwner(owner);
+        stage.setAlwaysOnTop(true);
+        stage.initModality(Modality.WINDOW_MODAL);
+        return stage;
     }
 }

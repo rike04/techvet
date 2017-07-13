@@ -14,9 +14,11 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
@@ -61,7 +63,7 @@ public class FormularioPacienteController implements Initializable {
     public void cliqueProcurarCliente(ActionEvent event) {
         ListaClientesController controller;
         try {
-            controller = abrirListaClientes();
+            controller = abrirListaClientes(event);
         } catch (IOException ex) {
             return ;
         }
@@ -70,13 +72,15 @@ public class FormularioPacienteController implements Initializable {
         }
     }
     
-    private ListaClientesController abrirListaClientes() throws IOException {
-        Stage stage = new Stage();
+    private ListaClientesController abrirListaClientes(Event event) throws IOException {
         ListaClientesController controller = new ListaClientesController(true);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(DocFXML.LISTACLIENTES.getPath()));
         loader.setController(controller);
         Parent root = loader.load();
         Scene scene = new Scene(root);
+        
+        Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage stage = Util.preparaNovaJanela(owner);
         stage.setScene(scene);
         stage.showAndWait();
         return controller;
