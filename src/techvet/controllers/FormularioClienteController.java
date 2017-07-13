@@ -125,7 +125,8 @@ public class FormularioClienteController implements Initializable {
     
     @FXML
     public void cliqueCancelar(ActionEvent event) {
-        
+        resetErros();
+        mudarContent();
     }
     
     private boolean osDadosSaoValidos() {

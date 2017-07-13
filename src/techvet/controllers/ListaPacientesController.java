@@ -10,11 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.stage.Stage;
+import model.Cliente;
 import model.Paciente;
 
 /**
@@ -40,12 +46,30 @@ public class ListaPacientesController implements Initializable {
     private TableColumn<Paciente, String> colEstado;
     @FXML
     private TableColumn<Paciente, String> colCliente;
+    @FXML
+    private Button botaoSelecionar;
+    @FXML
+    private Button botaoCancelar;
+    
+    private boolean foiConfirmado;
+    private final boolean devolveEscolha; 
+    
+    public ListaPacientesController(boolean devolveEscolha) {
+        this.foiConfirmado = false;
+        this.devolveEscolha = devolveEscolha;
+    }
     
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        botaoSelecionar.setVisible(devolveEscolha);
+        botaoSelecionar.setDisable(!devolveEscolha);
+        
+        botaoCancelar.setVisible(devolveEscolha);
+        botaoCancelar.setDisable(!devolveEscolha);
+        
         colNome.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getNome()));
         colEspecie.setCellValueFactory(dadosCell -> 
@@ -101,6 +125,31 @@ public class ListaPacientesController implements Initializable {
             e.printStackTrace();
         }
         return listaPacientes;
+    }
+    
+    public boolean foiSelecionadaOpcao() {
+        return foiConfirmado;
+    }
+    
+    public Paciente getPacienteSelecionado() {
+        return tabelaPacientes.getSelectionModel().getSelectedItem();
+    }
+    
+    @FXML 
+    public void cliqueSelecionar(ActionEvent event) {
+        foiConfirmado = true;
+        fechaJanela(event);
+    }
+    
+    @FXML 
+    public void cliqueCancelar(ActionEvent event) {
+        foiConfirmado = false;
+        fechaJanela(event);
+    }
+
+    private void fechaJanela(Event event) {
+        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        stage.close();
     }
 
 }

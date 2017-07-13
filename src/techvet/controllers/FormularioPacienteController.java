@@ -89,8 +89,7 @@ public class FormularioPacienteController implements Initializable {
             try {
                 c = buscaCliente();
                 inserirPacienteBD(c);
-                ListaConsultasController controller = new ListaConsultasController();
-                Util.mudaContentPara(DocFXML.LISTAPACIENTES, controller, content);
+                mudarContent();
             } catch (Exception ex) {
                 Logger.getLogger(FormularioPacienteController.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -99,7 +98,16 @@ public class FormularioPacienteController implements Initializable {
     
     @FXML 
     public void cliqueCancelar(ActionEvent event) {
-        
+        try {
+            mudarContent();
+        } catch (IOException e) {
+            
+        }
+    }
+    
+    private void mudarContent() throws IOException{
+        ListaConsultasController controller = new ListaConsultasController();
+        Util.mudaContentPara(DocFXML.LISTAPACIENTES, controller, content);
     }
     
     private Boolean osDadosSaoValidos() {
@@ -128,8 +136,10 @@ public class FormularioPacienteController implements Initializable {
         p.createT();
     } 
     
+    //ALTERAR: forma como o cliente e encontrado. Clientes com o mesmo nome darao problemas
     private Cliente buscaCliente() throws Exception {
         List<Cliente> clientes = Cliente.readByNome( fieldCliente.getText() );
         return clientes.get(0);
     }
+    
 }

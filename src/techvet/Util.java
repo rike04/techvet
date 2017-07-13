@@ -39,4 +39,7 @@ public class Util {
         content.getChildren().add(loader.load());
     }
     
+    public static Stage preparaNovaJanela(Stage owner) {
+        return null;
+    }
 }

@@ -40,7 +40,7 @@ public class BotoesPacienteController implements Initializable {
     
     @FXML 
     public void cliqueVerPacientes(ActionEvent event) {  
-        Initializable controller = new ListaPacientesController();
+        Initializable controller = new ListaPacientesController(false);
         try {
             Util.mudaContentPara(DocFXML.LISTAPACIENTES, controller, getContent());
         } catch (IOException e) {
