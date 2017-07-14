@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -21,6 +22,7 @@ import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Paciente;
+import techvet.GUIUtils;
 
 /**
  * FXML Controller class
@@ -66,6 +68,8 @@ public class ListaPacientesController implements Initializable {
         botaoCancelar.setVisible(devolveEscolha);
         botaoCancelar.setDisable(!devolveEscolha);
         
+        tabelaPacientes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        
         colNome.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getNome()));
         colEspecie.setCellValueFactory(dadosCell -> 
@@ -110,7 +114,10 @@ public class ListaPacientesController implements Initializable {
             };
             return row;
         });        
-        tabelaPacientes.getItems().setAll(leListaPacientes());
+        
+        tabelaPacientes.setItems(FXCollections.observableList(leListaPacientes()));
+        
+        GUIUtils.autoFitTable(tabelaPacientes);
     }    
     
     private List<Paciente> leListaPacientes() {

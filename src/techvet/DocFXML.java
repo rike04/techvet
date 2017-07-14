@@ -20,7 +20,7 @@ public enum DocFXML {
     FORMULARIOCONSULTA("/techvet/views/FormularioConsulta.fxml"),
     LISTACLIENTES("/techvet/views/ListaClientes.fxml"),
     LISTAPACIENTES("/techvet/views/ListaPacientes.fxml"),
-    LISTACONSULTAS("/techvet/views/MainConsultas.fxml");
+    LISTACONSULTAS("/techvet/views/ListaConsultas.fxml");
     
     private final String caminhoParaDoc;
     
@@ -31,4 +31,5 @@ public enum DocFXML {
     public String getPath() {
         return caminhoParaDoc;
     }
+    
 }

@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -19,6 +21,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Consulta;
+import techvet.GUIUtils;
 
 /**
  * FXML Controller class
@@ -62,6 +65,8 @@ public class ListaConsultasController implements Initializable {
         botaoCancelar.setVisible(devolveEscolha);
         botaoCancelar.setDisable(!devolveEscolha);
         
+        tabelaConsultas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        
         colCliente.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getIdPaciente().getIdCliente().getNome()));
         colPaciente.setCellValueFactory(dadosCell -> 
@@ -83,7 +88,9 @@ public class ListaConsultasController implements Initializable {
         });
         colValor.setCellValueFactory(dadosCell -> new SimpleStringProperty(dadosCell.getValue().getValor().toString()));
         
-        tabelaConsultas.getItems().addAll(leListaConsultas());
+        tabelaConsultas.setItems(FXCollections.observableList(leListaConsultas()));
+        
+        GUIUtils.autoFitTable(tabelaConsultas);
     }
 
     private List<Consulta> leListaConsultas() {

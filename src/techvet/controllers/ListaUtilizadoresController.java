@@ -1,5 +1,5 @@
 /*
- * 
+ *
  */
 
 package techvet.controllers;
@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -19,28 +18,24 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
-import model.Cliente;
-import techvet.GUIUtils;
+import model.Utilizador;
 
 /**
  * FXML Controller class
  *
  * @author rike4
  */
-public class ListaClientesController implements Initializable {
+
+public class ListaUtilizadoresController implements Initializable {
 
     @FXML
-    private TableView<Cliente> tabelaClientes;
+    private TableView<Utilizador> tabelaUtilizadores;
     @FXML
-    private TableColumn<Cliente, String> colNome;
+    private TableColumn<Utilizador, String> colUsername;
     @FXML
-    private TableColumn<Cliente, String> colMorada;
+    private TableColumn<Utilizador, String> colNome;
     @FXML
-    private TableColumn<Cliente, String> colTele;
-    @FXML
-    private TableColumn<Cliente, String> colMail;
-    @FXML
-    private TableColumn<Cliente, String> colNIF;
+    private TableColumn<Utilizador, String>  colFuncao;
     @FXML
     private Button botaoSelecionar;
     @FXML
@@ -48,54 +43,46 @@ public class ListaClientesController implements Initializable {
     
     private boolean foiConfirmado;
     private final boolean devolveEscolha;
-
-    public ListaClientesController(boolean devolveEscolha) {
+    
+    public ListaUtilizadoresController (boolean devolveEscolha) { 
         this.foiConfirmado = false;
         this.devolveEscolha = devolveEscolha;
-    }        
-            
-    
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         botaoSelecionar.setVisible(devolveEscolha);
-        botaoSelecionar.setDisable(!devolveEscolha);        
+        botaoSelecionar.setDisable(!devolveEscolha);
+        
         botaoCancelar.setVisible(devolveEscolha);
         botaoCancelar.setDisable(!devolveEscolha);
         
-        tabelaClientes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        
-        //Atribui o valor que cada coluna ira ter 
+        colUsername.setCellValueFactory(dadosCell -> 
+                new SimpleStringProperty(dadosCell.getValue().getUsername()));
         colNome.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getNome()));
-        colMorada.setCellValueFactory(dadosCell ->
-                new SimpleStringProperty(dadosCell.getValue().getMorada()));
-        colTele.setCellValueFactory(dadosCell ->
-                new SimpleStringProperty(dadosCell.getValue().getTelemovel()));
-        colMail.setCellValueFactory(dadosCell ->
-                new SimpleStringProperty(dadosCell.getValue().getEmail()));
-        colNIF.setCellValueFactory(dadosCell -> 
-                new SimpleStringProperty(dadosCell.getValue().getNif()));
+        colFuncao.setCellValueFactory(dadosCell -> 
+                new SimpleStringProperty(dadosCell.getValue().getFuncao()));
         
-        tabelaClientes.setItems(FXCollections.observableList(leListaClientes()));
-        GUIUtils.autoFitTable(tabelaClientes);
-    }  
-    
-    private List<Cliente> leListaClientes() {
-        List<Cliente> listaClientes = new ArrayList<>();
+        tabelaUtilizadores.getItems().addAll(leListaUtilizadores());
+    }
+
+    private List<Utilizador> leListaUtilizadores() {
+        List<Utilizador> listaUtilizadores = new ArrayList<>();
         try {
-            listaClientes = Cliente.retrieveAll();
+            listaUtilizadores = Utilizador.retrieveAll();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return listaClientes;
+        return listaUtilizadores;
     }
     
     public boolean foiSelecionadaOpcao() {
         return foiConfirmado;
     }
     
-    public Cliente getClienteSelecionado() {
-        return tabelaClientes.getSelectionModel().getSelectedItem();
+    public Utilizador getUtilizadorSelecionado() {
+        return tabelaUtilizadores.getSelectionModel().getSelectedItem();
     }
     
     @FXML 
@@ -114,5 +101,5 @@ public class ListaClientesController implements Initializable {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.close();
     }
+    
 }
- 
