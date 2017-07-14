@@ -10,7 +10,7 @@ package techvet;
 
 public enum DocFXML {
     
-    LOGIN("/techvet/views/Login.fxml"),
+    LOGIN("/techvetA/views/Login.fxml"),
     TEMPLATE("/techvet/views/MainMenu.fxml"),
     BOTOESCONSULTA("/techvet/views/BotoesConsulta.fxml"),
     BOTOESCLIENTE("/techvet/views/BotoesCliente.fxml"),
@@ -20,7 +20,7 @@ public enum DocFXML {
     FORMULARIOCONSULTA("/techvet/views/FormularioConsulta.fxml"),
     LISTACLIENTES("/techvet/views/ListaClientes.fxml"),
     LISTAPACIENTES("/techvet/views/ListaPacientes.fxml"),
-    LISTACONSULTAS("/techvet/views/ListaConsultas.fxml");
+    LISTACONSULTAS("/techvet/views/MainConsultas.fxml");
     
     private final String caminhoParaDoc;
     

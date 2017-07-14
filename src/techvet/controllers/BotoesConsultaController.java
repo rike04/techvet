@@ -60,15 +60,7 @@ public class BotoesConsultaController implements Initializable {
     
     @FXML
     public void abre(ActionEvent event) {
-        ListaClientesController m = new ListaClientesController(false);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/techvet/views/ListaClientes.fxml"));
-       // loader.setController(m);
-        content.getChildren().clear();
-        try {
-            content.getChildren().add(loader.load());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }   
+
     }
     
 }
