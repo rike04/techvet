@@ -95,8 +95,7 @@ public class LoginController implements Initializable {
     private void iniciarSessao(String nomeUtilizador, String palavraPasse, ActionEvent event) {
         Utilizador utilizador = new Utilizador();
         try {
-            utilizador.readByNome(nomeUtilizador);
-            
+            utilizador.readByNome(nomeUtilizador);            
         } catch (Exception e) {
             labelErroNome.setText("Nome de utilizador não encontrado.");
             labelErroNome.setVisible(true);
@@ -109,7 +108,6 @@ public class LoginController implements Initializable {
             try {
                 Initializable mainTemplate = new Template(utilizador);
                 Util.mudaScenePara(DocFXML.TEMPLATE, mainTemplate, event);
-                
             } catch (IOException e) {
                 e.printStackTrace();
             } 

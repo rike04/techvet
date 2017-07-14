@@ -23,13 +23,11 @@ import model.Utilizador;
 import techvet.GUIUtils;
 
 /**
- * FXML Controller class
- *
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 
 public class ListaUtilizadoresController implements Initializable {
-
+    
     @FXML
     private TableView<Utilizador> tabelaUtilizadores;
     @FXML
