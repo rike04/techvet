@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -19,6 +20,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
 import model.Utilizador;
+import techvet.GUIUtils;
 
 /**
  * FXML Controller class
@@ -57,6 +59,8 @@ public class ListaUtilizadoresController implements Initializable {
         botaoCancelar.setVisible(devolveEscolha);
         botaoCancelar.setDisable(!devolveEscolha);
         
+        tabelaUtilizadores.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        
         colUsername.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getUsername()));
         colNome.setCellValueFactory(dadosCell -> 
@@ -64,7 +68,9 @@ public class ListaUtilizadoresController implements Initializable {
         colFuncao.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getFuncao()));
         
-        tabelaUtilizadores.getItems().addAll(leListaUtilizadores());
+        tabelaUtilizadores.setItems(FXCollections.observableList(leListaUtilizadores()));
+        
+        GUIUtils.autoFitTable(tabelaUtilizadores);
     }
 
     private List<Utilizador> leListaUtilizadores() {

@@ -77,6 +77,7 @@ public class ListaClientesController implements Initializable {
                 new SimpleStringProperty(dadosCell.getValue().getNif()));
         
         tabelaClientes.setItems(FXCollections.observableList(leListaClientes()));
+        
         GUIUtils.autoFitTable(tabelaClientes);
     }  
     

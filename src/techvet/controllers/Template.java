@@ -127,6 +127,11 @@ public class Template implements Initializable {
         
     }
     
+    @FXML
+    public void cliqueAdministrador(ActionEvent event) {
+        mudarEcra(DocFXML.BOTOESADMINISTRADOR);
+    } 
+    
     private void mudarEcra(final DocFXML docSideBar) {
         final Initializable controllerSideBar;
         final Initializable controllerContent;
@@ -149,6 +154,12 @@ public class Template implements Initializable {
                     docContent = DocFXML.LISTACLIENTES;
                     controllerSideBar = new BotoesClienteController(getContent());
                     controllerContent = new ListaClientesController(false);
+            break;
+            
+            case BOTOESADMINISTRADOR: 
+                    docContent = DocFXML.LISTAUTILIZADORES;
+                    controllerSideBar = new BotoesAdministradorController(getContent());
+                    controllerContent = new ListaUtilizadoresController(false);
             break;
             
             default:
