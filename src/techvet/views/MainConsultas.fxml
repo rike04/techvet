@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 
 <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="669.0" prefWidth="962.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
@@ -19,7 +20,17 @@
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <VBox prefHeight="200.0" prefWidth="100.0" style="-fx-border-color: black;" GridPane.rowSpan="2147483647" />
-      <ListView fx:id="listaConsultas" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" />
+      <TableView fx:id="tabelaConsultas" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowSpan="2">
+        <columns>
+          <TableColumn fx:id="colData" prefWidth="75.0" text="Data" />
+          <TableColumn fx:id="colPaciente" prefWidth="75.0" text="Paciente" />
+            <TableColumn fx:id="colCliente" prefWidth="75.0" text="Cliente" />
+            <TableColumn fx:id="colLocal" prefWidth="75.0" text="Local" />
+            <TableColumn fx:id="colValor" prefWidth="75.0" text="Valor" />
+            <TableColumn fx:id="colPago" prefWidth="75.0" text="Pago" />
+        </columns>
+      </TableView>
+      <Button fx:id="botaoSelecionar" mnemonicParsing="false" onAction="#cliqueSelecionar" text="Selecionar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+      <Button fx:id="botaoCancelar" mnemonicParsing="false" onAction="#cliqueCancelar" text="Cancelar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
    </children>
 </GridPane>

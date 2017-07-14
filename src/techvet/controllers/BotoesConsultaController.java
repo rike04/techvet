@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import techvet.DocFXML;
+import techvet.Util;
 
 /**
  * FXML Controller class
@@ -34,6 +35,15 @@ public class BotoesConsultaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
     }    
+    
+    @FXML 
+    public void cliqueListaConsultas(ActionEvent event) {
+        Initializable controller = new ListaConsultasController(false);
+        try {
+            Util.mudaContentPara(DocFXML.LISTACONSULTAS, controller, content);
+        } catch (IOException e) {
+        }
+    }
     
     @FXML
     public void abreCriarConsulta(ActionEvent event) { 

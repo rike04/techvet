@@ -5,7 +5,9 @@
 package techvet.controllers;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
@@ -54,18 +56,14 @@ public class FormularioConsultaController implements Initializable {
     
     private Cliente cliente;
     private Paciente paciente;
-    
-    /**
-     * Initializes the controller class.
-     * @param url
-     * @param rb
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList<Choice> escolhasTipoConsulta = FXCollections.observableArrayList();
         List<TipoConsulta> tiposConsulta = TipoConsulta.retrieveAll();
-        tiposConsulta.forEach((TipoConsulta tipo) -> {
-            escolhasTipoConsulta.add(new Choice(tipo.getId(), tipo.getNome()));
+        System.out.println(tiposConsulta.size());
+        tiposConsulta.forEach( (TipoConsulta tipo) -> {
+            escolhasTipoConsulta.add(new Choice(tipo));
         });
         boxTipoConsulta.getItems().addAll(escolhasTipoConsulta);
         boxTipoConsulta.getSelectionModel().select(0);
@@ -150,7 +148,7 @@ public class FormularioConsultaController implements Initializable {
     
     @FXML
     public void cliqueCancelar(ActionEvent event) {
-        Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        
         
     }
     
@@ -247,7 +245,15 @@ public class FormularioConsultaController implements Initializable {
     
     private void inserirConsultaBD() {
         Consulta c = new Consulta();     
-        
+        c.setEstado((short) 0);
+        c.setPago((short) 0);
+        c.setDatahora(new Date());
+        c.setIdPaciente(paciente);
+        c.setIdTipo(boxTipoConsulta.getSelectionModel().getSelectedItem().getTipoConsulta());
+        c.setLocal(boxLocal.getSelectionModel().getSelectedItem().toString());
+        c.setValor(BigDecimal.ZERO);
+        c.setDesctratamento(descricao.getText());
+        c.createT();
     }
     
     /*
@@ -256,21 +262,19 @@ public class FormularioConsultaController implements Initializable {
         que seja possivel arranjar o ID correspondente a opcao escolhida
     */
     private class Choice {
-        private final int id;
-        private final String displayString;
+        private final TipoConsulta tipo;
         
-        public Choice(int id, String displayString) {
-           this.id = id;
-           this.displayString = displayString;
+        public Choice(TipoConsulta tipo) {
+           this.tipo = tipo;
         }
        
-        public int getIdTipoConsulta() {
-            return id;
+        public TipoConsulta getTipoConsulta() {
+            return this.tipo;
         }
         
         @Override 
         public String toString() {
-            return displayString;
+            return tipo.getNome();
         }    
     }
     
