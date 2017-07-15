@@ -19,6 +19,7 @@ public enum DocFXML {
     FORMULARIOPACIENTE("/techvet/views/FormularioPaciente.fxml"),
     FORMULARIOCLIENTE("/techvet/views/FormularioCliente.fxml"),
     FORMULARIOCONSULTA("/techvet/views/FormularioConsulta.fxml"),
+    FORMULARIOUTILIZADOR("/techvet/views/FormularioUtilizador.fxml"),
     LISTACLIENTES("/techvet/views/ListaClientes.fxml"),
     LISTAPACIENTES("/techvet/views/ListaPacientes.fxml"),
     LISTACONSULTAS("/techvet/views/ListaConsultas.fxml"),

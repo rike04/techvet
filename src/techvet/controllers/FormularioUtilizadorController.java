@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -19,8 +20,6 @@ import techvet.DocFXML;
 import techvet.Util;
 
 /**
- * FXML Controller class
- *
  * @author rike4
  */
 public class FormularioUtilizadorController implements Initializable {
@@ -42,24 +41,33 @@ public class FormularioUtilizadorController implements Initializable {
         this.content = content;
     }
     
-    /**
-     * Initializes the controller class.
-     */
+    public FormularioUtilizadorController() {
+        this.content = null;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
-    }    
+    } 
+    
+    public String getNomeUtilizador() {
+        return fieldNomeUtilizador.getText();
+    }
     
     @FXML
     public void cliqueConfirmar(ActionEvent event) {
-        
+        if (osDadosSaoValidos()) {
+            inserirUtilizadorBD();
+            mudarContent();
+        }
     }
     
     @FXML
     public void cliqueCancelar(ActionEvent event) {
-        if (osDadosSaoValidos()) {
-            inserirUtilizadorBD();
-            mudarContent();
+        ListaUtilizadoresController controller = new ListaUtilizadoresController(false);
+        try {
+            Util.mudaContentPara(DocFXML.LISTAUTILIZADORES, controller, content);
+        } catch (IOException e) {
         }
     }
     
@@ -102,5 +110,6 @@ public class FormularioUtilizadorController implements Initializable {
             e.printStackTrace();
         }
     }
+    
     
 }

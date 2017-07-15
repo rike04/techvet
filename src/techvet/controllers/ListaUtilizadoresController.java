@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
@@ -58,6 +59,8 @@ public class ListaUtilizadoresController implements Initializable {
         botaoCancelar.setDisable(!devolveEscolha);
         
         tabelaUtilizadores.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tabelaUtilizadores.setPlaceholder(new Label("Não existem utilizadores registados"));
+
         
         colUsername.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getUsername()));

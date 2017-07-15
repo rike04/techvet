@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
@@ -63,6 +64,7 @@ public class ListaClientesController implements Initializable {
         botaoCancelar.setDisable(!devolveEscolha);
         
         tabelaClientes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tabelaClientes.setPlaceholder(new Label("Nao existem clientes registados."));
         
         //Atribui o valor que cada coluna ira ter 
         colNome.setCellValueFactory(dadosCell -> 

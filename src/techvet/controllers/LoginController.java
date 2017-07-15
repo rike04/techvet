@@ -56,6 +56,16 @@ public class LoginController implements Initializable {
         } 
     }
     
+    @FXML
+    public void cliqueRegistar(ActionEvent event) {
+        FormularioUtilizadorController controller = new FormularioUtilizadorController(null);
+        try {
+            Util.mudaScenePara(DocFXML.FORMULARIOUTILIZADOR, controller, event);
+        } catch (IOException e) {
+        }
+        
+    }
+    
     private void resetErros() {
         // Reset das mensagens de erro 
         labelErroNome.setVisible(false);

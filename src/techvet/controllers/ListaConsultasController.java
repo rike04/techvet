@@ -17,6 +17,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.stage.Stage;
@@ -66,6 +67,7 @@ public class ListaConsultasController implements Initializable {
         botaoCancelar.setDisable(!devolveEscolha);
         
         tabelaConsultas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tabelaConsultas.setPlaceholder(new Label("Não existem consultas registadas"));
         
         colCliente.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getIdPaciente().getIdCliente().getNome()));
