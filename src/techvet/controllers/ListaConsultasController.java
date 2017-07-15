@@ -8,9 +8,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -41,7 +41,7 @@ public class ListaConsultasController implements Initializable {
     @FXML
     private TableColumn<Consulta, String>  colLocal;
     @FXML
-    private TableColumn<Consulta, String> colValor;
+    private TableColumn<Consulta, Double> colValor;
     @FXML
     private TableColumn<Consulta, String> colPago;
     @FXML
@@ -74,8 +74,9 @@ public class ListaConsultasController implements Initializable {
         colData.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getDatahora().toString()));
         colLocal.setCellValueFactory(dadosCell -> 
-                new SimpleStringProperty(dadosCell.getValue().getLocal()));
-        
+                new SimpleStringProperty(dadosCell.getValue().getLocal()));        
+        colValor.setCellValueFactory(dadosCell -> 
+                new SimpleDoubleProperty(dadosCell.getValue().getValor()).asObject());
         colPago.setCellValueFactory(dadosCell -> {
             SimpleStringProperty string = new SimpleStringProperty();
             Consulta c = (Consulta) dadosCell.getValue();
@@ -86,7 +87,6 @@ public class ListaConsultasController implements Initializable {
             }
             return string;
         });
-        colValor.setCellValueFactory(dadosCell -> new SimpleStringProperty(dadosCell.getValue().getValor().toString()));
         
         tabelaConsultas.setItems(FXCollections.observableList(leListaConsultas()));
         

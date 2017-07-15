@@ -251,7 +251,6 @@ public class FormularioConsultaController implements Initializable {
         c.setIdPaciente(paciente);
         c.setIdTipo(boxTipoConsulta.getSelectionModel().getSelectedItem().getTipoConsulta());
         c.setLocal(boxLocal.getSelectionModel().getSelectedItem().toString());
-        c.setValor(BigDecimal.ZERO);
         c.setDesctratamento(descricao.getText());
         c.createT();
     }
