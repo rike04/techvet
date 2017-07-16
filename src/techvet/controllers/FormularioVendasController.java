@@ -36,7 +36,7 @@ import techvet.Util;
  * @author rike4
  */
 
-public class FormularioConsultaController implements Initializable {
+public class FormularioVendasController implements Initializable {
 
     @FXML
     private TextField fieldNomePaciente;

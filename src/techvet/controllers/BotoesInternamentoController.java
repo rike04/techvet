@@ -1,6 +1,7 @@
 /*
  * 
  */
+
 package techvet.controllers;
 
 import java.io.IOException;
@@ -14,45 +15,48 @@ import techvet.DocFXML;
 import techvet.Util;
 
 /**
- * FXML Controller class
  *
  * @author rike4
  */
-public class BotoesAdministradorController implements Initializable {
-
+public class BotoesInternamentoController implements Initializable{
     
     private final Pane content;
     
-    public BotoesAdministradorController(Pane content) {
+    public BotoesInternamentoController(Pane content) {
         this.content = content;
     }
-    
+
     /**
      * Initializes the controller class.
      */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-       
-    }  
+        
+    }    
     
-        @FXML 
-    public void cliqueCriarUtilizador(ActionEvent event) {
-        Initializable controller = new FormularioUtilizadorController(content);
+    @FXML 
+    public void cliqueVerInternamentos(ActionEvent event) {
+        Initializable controller = new ListaInternamentosController(false);
         try {
-            Util.mudaContentPara(DocFXML.FORMULARIOUTILIZADOR, controller, content);
+            Util.mudaContentPara(DocFXML.LISTAINTERNAMENTOS, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
     @FXML
-    public void cliqueVerUtilizadores(ActionEvent event) {
-        Initializable controller = new ListaUtilizadoresController(false);
+    public void abreCriarInternamento(ActionEvent event) { 
+        FormularioInternamentoController controller = new FormularioInternamentoController(content);
         try {
-            Util.mudaContentPara(DocFXML.LISTAUTILIZADORES, controller, content);
+            Util.mudaContentPara(DocFXML.FORMULARIOINTERNAMENTO, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }
+       
     }
     
+    @FXML
+    public void abre(ActionEvent event) {
+
+    }
 }

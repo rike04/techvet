@@ -4,9 +4,6 @@
 
 package techvet;
 
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -24,8 +21,7 @@ public class Aplicacao extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("/techvet/views/Login.fxml"));
-        
+        Parent root = FXMLLoader.load(getClass().getResource(DocFXML.LOGIN.getPath()));
         Scene scene = new Scene(root);
         
         verificaAdminBD();

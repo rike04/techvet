@@ -1,17 +1,18 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *
  */
 package techvet.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
 import java.util.ResourceBundle;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -33,7 +34,7 @@ public class FormularioUtilizadorController implements Initializable {
     @FXML
     private PasswordField fieldPasseConfirmar;
     @FXML
-    private TextField fieldFuncao;
+    private ChoiceBox boxFuncao;
     
     private final Pane content;
     
@@ -47,11 +48,20 @@ public class FormularioUtilizadorController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
+        popularChoiceBox();
     } 
     
     public String getNomeUtilizador() {
         return fieldNomeUtilizador.getText();
+    }
+    
+    private void popularChoiceBox() {
+        ObservableList<String> escolhasFuncao = FXCollections.observableArrayList();
+        escolhasFuncao.add("Administrador");
+        escolhasFuncao.add("Enfermeiro");
+        escolhasFuncao.add("Médico");
+        boxFuncao.getItems().addAll(escolhasFuncao);
+        boxFuncao.getSelectionModel().select(0);
     }
     
     @FXML
@@ -86,8 +96,9 @@ public class FormularioUtilizadorController implements Initializable {
             saoValidos = false;
         }
         
-        if (fieldFuncao.getText().trim().isEmpty()) {
+        if (!fieldPasse.getCharacters().toString().contentEquals(fieldPasseConfirmar.getCharacters())) {
             saoValidos = false;
+            System.out.println("Passes incorrectas");
         }
         
         return saoValidos;
@@ -98,7 +109,7 @@ public class FormularioUtilizadorController implements Initializable {
         user.setNome(fieldNome.getText());
         user.setUsername(fieldNomeUtilizador.getText());
         user.setPassword(fieldPasse.getCharacters().toString());
-        user.setFuncao(fieldFuncao.getText());
+        user.setFuncao(boxFuncao.getSelectionModel().getSelectedItem().toString());
         user.createT();
     }
     
@@ -110,6 +121,5 @@ public class FormularioUtilizadorController implements Initializable {
             e.printStackTrace();
         }
     }
-    
     
 }

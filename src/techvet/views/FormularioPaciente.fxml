@@ -64,8 +64,8 @@
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="51.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="173.0" minWidth="10.0" prefWidth="104.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="199.0" minWidth="10.0" prefWidth="49.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="365.0" minWidth="10.0" prefWidth="108.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.0" minWidth="10.0" prefWidth="180.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="365.0" minWidth="10.0" prefWidth="58.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="267.0" minWidth="10.0" prefWidth="248.0" />
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="244.0" minWidth="10.0" prefWidth="38.0" />
         </columnConstraints>
         <rowConstraints>
@@ -85,10 +85,10 @@
             </TextField>
             <Label prefHeight="21.0" prefWidth="132.0" text="Nome do Paciente:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
             <TextField fx:id="fieldNome" prefHeight="31.0" prefWidth="196.0" promptText="Nome do Paciente" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.valignment="CENTER" />
-            <Label text="Idade:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
-            <TextField fx:id="fieldIdade" prefHeight="31.0" prefWidth="73.0" promptText="Idade" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-            <Label text="Sexo:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
-            <ChoiceBox fx:id="boxSexo" prefHeight="31.0" prefWidth="139.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+            <Label text="Idade:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+            <TextField fx:id="fieldIdade" prefHeight="31.0" prefWidth="73.0" promptText="Idade" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label text="Sexo:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+            <ChoiceBox fx:id="boxSexo" prefHeight="31.0" prefWidth="139.0" GridPane.columnIndex="2" GridPane.halignment="RIGHT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <Label text="Espécie:" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <TextField fx:id="fieldEspecie" promptText="Espécie" GridPane.columnIndex="5" GridPane.rowIndex="1" />
             <Label text="Cliente:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
@@ -96,6 +96,8 @@
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
+            <Label text="Peso:" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+            <TextField fx:id="fieldPeso" promptText="Peso" GridPane.columnIndex="5" GridPane.rowIndex="2" />
          </children>
       </GridPane>
       <Label prefHeight="26.0" prefWidth="259.0" text="Dados Básicos Paciente" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">

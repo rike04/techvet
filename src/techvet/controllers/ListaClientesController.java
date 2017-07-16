@@ -16,16 +16,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Cliente;
 import techvet.GUIUtils;
 
 /**
- * FXML Controller class
- *
  * @author rike4
  */
 public class ListaClientesController implements Initializable {
@@ -46,6 +46,10 @@ public class ListaClientesController implements Initializable {
     private Button botaoSelecionar;
     @FXML
     private Button botaoCancelar;
+    @FXML
+    private TextField filtroProcurar;
+    @FXML
+    private CheckBox checkPacientes;
     
     private boolean foiConfirmado;
     private final boolean devolveEscolha;
@@ -54,10 +58,10 @@ public class ListaClientesController implements Initializable {
         this.foiConfirmado = false;
         this.devolveEscolha = devolveEscolha;
     }        
-            
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        
         botaoSelecionar.setVisible(devolveEscolha);
         botaoSelecionar.setDisable(!devolveEscolha);        
         botaoCancelar.setVisible(devolveEscolha);
@@ -88,6 +92,7 @@ public class ListaClientesController implements Initializable {
         try {
             listaClientes = Cliente.retrieveAll();
         } catch (Exception e) {
+            System.out.println("Erro impossivel.");
             e.printStackTrace();
         }
         return listaClientes;

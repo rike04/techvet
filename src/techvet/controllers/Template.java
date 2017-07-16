@@ -124,13 +124,25 @@ public class Template implements Initializable {
     
     @FXML
     public void cliqueInventario(ActionEvent event) {
-        
+        mudarEcra(DocFXML.BOTOESINVENTARIO);
     }
+    
+    @FXML
+    public void cliqueInternamentos(ActionEvent event) {
+        mudarEcra(DocFXML.BOTOESINTERNAMENTOS);
+    } 
+    
+    @FXML
+    public void cliqueVendas(ActionEvent event) {
+        mudarEcra(DocFXML.BOTOESVENDA);
+    } 
     
     @FXML
     public void cliqueAdministrador(ActionEvent event) {
         mudarEcra(DocFXML.BOTOESADMINISTRADOR);
     } 
+    
+    
     
     private void mudarEcra(final DocFXML docSideBar) {
         final Initializable controllerSideBar;
@@ -160,6 +172,24 @@ public class Template implements Initializable {
                     docContent = DocFXML.LISTAUTILIZADORES;
                     controllerSideBar = new BotoesAdministradorController(getContent());
                     controllerContent = new ListaUtilizadoresController(false);
+            break;
+            
+            case BOTOESINTERNAMENTOS: 
+                    docContent = DocFXML.LISTAINTERNAMENTOS;
+                    controllerSideBar = new BotoesInternamentoController(getContent());
+                    controllerContent = new ListaInternamentosController(false);
+            break;
+            
+            case BOTOESVENDA: 
+                    docContent = DocFXML.LISTAVENDAS;
+                    controllerSideBar = new BotoesVendaController(getContent());
+                    controllerContent = new ListaVendasController(false);
+            break;
+            
+            case BOTOESINVENTARIO: 
+                    docContent = DocFXML.LISTAARTIGOS;
+                    controllerSideBar = new BotoesInventarioController(getContent());
+                    controllerContent = new ListaArtigosController(false);
             break;
             
             default:

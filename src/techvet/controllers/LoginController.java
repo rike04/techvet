@@ -26,16 +26,12 @@ public class LoginController implements Initializable {
     
     @FXML 
     private TextField fieldNomeUtilizador;
-    
     @FXML 
     private PasswordField fieldPalavraPasse;
-    
     @FXML 
     private Label labelErroPasse;
-    
     @FXML 
     private Label labelErroNome;
-    
     @FXML 
     private Button botaoInitSessao;
     

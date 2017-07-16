@@ -33,7 +33,7 @@ import techvet.Util;
  * @author Henrique Faria e Sergio Araujo
  */ 
 
-public class FormularioPacienteController implements Initializable {
+public class FormularioArtigoController implements Initializable {
     
     @FXML 
     private TextField fieldNome;
@@ -51,7 +51,7 @@ public class FormularioPacienteController implements Initializable {
     private final Pane content;
     private Cliente cliente;
     
-    public FormularioPacienteController(Pane content) {
+    public FormularioArtigoController(Pane content) {
         this.content = content;
         cliente = null;
     }
@@ -99,7 +99,7 @@ public class FormularioPacienteController implements Initializable {
                 inserirPacienteBD(cliente);
                 mudarContent();
             } catch (Exception e) {
-                Logger.getLogger(FormularioPacienteController.class.getName()).log(Level.SEVERE, null, e);
+                Logger.getLogger(FormularioArtigoController.class.getName()).log(Level.SEVERE, null, e);
             }
         }
     }
@@ -109,7 +109,7 @@ public class FormularioPacienteController implements Initializable {
         try {
             mudarContent();
         } catch (IOException e) {
-            Logger.getLogger(FormularioPacienteController.class.getName()).log(Level.SEVERE, null, e);
+            Logger.getLogger(FormularioArtigoController.class.getName()).log(Level.SEVERE, null, e);
         }
     }
     

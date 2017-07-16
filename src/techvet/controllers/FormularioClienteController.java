@@ -5,8 +5,10 @@ package techvet.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Task;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -18,6 +20,7 @@ import javafx.scene.layout.Pane;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import model.Cliente;
+import model.Paciente;
 import techvet.DocFXML;
 import techvet.Util;
 
@@ -62,10 +65,30 @@ public class FormularioClienteController implements Initializable {
         fieldNomeCliente.addEventFilter(KeyEvent.KEY_TYPED, validacaoLimiteMax(100));
         fieldMorada.addEventFilter(KeyEvent.KEY_TYPED, validacaoLimiteMax(100));
         fieldMail.addEventFilter(KeyEvent.KEY_TYPED, validacaoLimiteMax(40));
-        fieldCodigoPostal.addEventFilter(KeyEvent.KEY_TYPED, validacaoLimiteMax(8));
-        
+        fieldCodigoPostal.addEventFilter(KeyEvent.KEY_TYPED, validacaoLimiteMax(8));        
         fieldNIF.addEventFilter(KeyEvent.KEY_TYPED, validacaoNumerica(9));
         fieldTele.addEventFilter(KeyEvent.KEY_TYPED, validacaoNumerica(9));
+        
+        //Verifica na BD se o NIF ja se encontra registado 
+        fieldNIF.focusedProperty().addListener(
+                                (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
+            if (newValue == false && !fieldNIF.getText().trim().isEmpty()) {
+                Task<Void> task = new Task<Void>() {
+                    @Override
+                    protected Void call() throws Exception {
+                        String nif = fieldNIF.getText();
+                        List<Cliente> clientes = Cliente.retrieveByNIF(nif);
+                        if(!clientes.isEmpty()) {
+                            fieldNIF.pseudoClassStateChanged(erro, true);
+                        }
+                        return null;
+                    }
+                };
+                Thread t = new Thread(task);
+                t.setDaemon(true);
+                t.start();
+            }
+        });
         
         //Insere o caracter "-" na posição 5 da string do código postal e mantém-no lá
         //Ver se da para alterar de modod a ficar como Event Filter 
@@ -90,8 +113,8 @@ public class FormularioClienteController implements Initializable {
     public void cliqueConfirmar(ActionEvent event) {
         resetErros();
         if (osDadosSaoValidos()) {
-            inserirClienteBD();
-            mudarContent();
+                inserirClienteBD();
+                mudarContent();
         }
         
     }
@@ -147,12 +170,22 @@ public class FormularioClienteController implements Initializable {
             saoValidos = false;
         }
         
-        if (fieldNIF.getText().isEmpty()) {
-            fieldNIF.pseudoClassStateChanged(erro, true);
+        if (fieldCodigoPostal.getText().isEmpty()) {
+            fieldCodigoPostal.pseudoClassStateChanged(erro, true);
             saoValidos = false;
         }
         
-        if (fieldTele.getText().isEmpty()) {
+        if (fieldNIF.getText().isEmpty()) {
+            fieldNIF.pseudoClassStateChanged(erro, true);
+            saoValidos = false;
+        } else {
+            if (fieldNIF.getText().length() < 9) {
+                fieldNIF.pseudoClassStateChanged(erro, true);
+                saoValidos = false;
+            }
+        }
+        
+        if (!fieldTele.getText().isEmpty() && fieldTele.getText().length() < 9) {
             fieldTele.pseudoClassStateChanged(erro, true);
             saoValidos = false;
         }
@@ -161,14 +194,13 @@ public class FormularioClienteController implements Initializable {
     }
     
     private boolean eEmailValido(String email) {
-        boolean eValido = true;
         try {
             InternetAddress enderecoEmail = new InternetAddress(email);
             enderecoEmail.validate();
         } catch (AddressException e) {
-            eValido = false;
+            return false;
         }
-        return eValido;
+        return true;
     }
     
     //Sempre que for inserido um caracter vai ser verificado se é um número
@@ -200,5 +232,5 @@ public class FormularioClienteController implements Initializable {
             }
         };
     }
-    
+     
 }
