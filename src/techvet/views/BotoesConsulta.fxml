@@ -19,6 +19,6 @@
       <Button mnemonicParsing="false" onAction="#abreCriarConsulta" prefHeight="31.0" prefWidth="141.0" text="Criar Consulta" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
       <Button mnemonicParsing="false" onAction="#abre" text="Processar Consulta" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <Button mnemonicParsing="false" onAction="#cliqueListaConsultas" text="Listas de consultas" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Button mnemonicParsing="false" text="Button" GridPane.rowIndex="3" />
+      <Button mnemonicParsing="false" onAction="#cliqueCriarTipoConsulta" text="Criar Tipo Consulta" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
    </children>
 </GridPane>

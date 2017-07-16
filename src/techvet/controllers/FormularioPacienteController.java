@@ -135,7 +135,7 @@ public class FormularioPacienteController implements Initializable {
         Paciente p = new Paciente();
         p.setNome(fieldNome.getText());
         p.setEspecie(fieldEspecie.getText());
-        p.setIdade(Integer.getInteger(fieldIdade.getText()));
+        p.setIdade(Integer.parseInt(fieldIdade.getText()));
         p.setPeso(Double.parseDouble(fieldPeso.getText()));
         p.setIdCliente(c);
         p.setRaca("Raca");

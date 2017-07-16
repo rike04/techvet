@@ -5,11 +5,14 @@ package techvet;
 
 import java.io.IOException;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -48,4 +51,42 @@ public class Util {
         return stage;
     }
     
+    public static EventHandler<KeyEvent> validacaoNumerica(int limite) {
+        return (KeyEvent event) -> {
+            TextField txtField = (TextField) event.getSource();                
+            if (txtField.getText().length() >= limite) {                    
+                event.consume();
+            }
+            if(event.getCharacter().matches("[0-9.]")){ 
+                if(txtField.getText().contains(".") && event.getCharacter().matches("[.]")){
+                    event.consume();
+                }else if(txtField.getText().length() == 0 && event.getCharacter().matches("[.]")){
+                    event.consume(); 
+                }
+            } else{
+                event.consume();
+            }
+        };
+    }
+    
+    public static EventHandler<KeyEvent> validacaoPrecos(int limite) {
+        return (KeyEvent event) -> {
+            TextField txtField = (TextField) event.getSource();                
+            if (txtField.getText().length() >= limite) {                    
+                event.consume();
+            }
+            if(!event.getCharacter().matches("[0-9.]")){ 
+                event.consume();
+            }             
+        };
+    }
+    
+    public static EventHandler<KeyEvent> validacaoLimiteMax(int limite) {
+        return (KeyEvent event) -> {
+            TextField txtField = (TextField) event.getSource();                
+            if (txtField.getText().length() >= limite) {                    
+                event.consume();
+            }
+        };
+    }
 }

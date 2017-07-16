@@ -63,4 +63,14 @@ public class BotoesConsultaController implements Initializable {
 
     }
     
+    @FXML
+    public void cliqueCriarTipoConsulta(ActionEvent event) {
+        Initializable controller = new FormularioTipoConsultaController(content);
+        try {
+            Util.mudaContentPara(DocFXML.FORMULARIOTIPOCONSULTA, controller, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

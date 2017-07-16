@@ -26,6 +26,7 @@ public enum DocFXML {
     FORMULARIOVENDA("/techvet/views/FormularioVenda.fxml"),
     FORMULARIOARTIGO("/techvet/views/FormularioArtigo.fxml"),
     FORMULARIOINTERNAMENTO("/techvet/views/FormularioInternamento.fxml"),
+    FORMULARIOTIPOCONSULTA("/techvet/views/FormularioTipoConsulta.fxml"),
     LISTACLIENTES("/techvet/views/ListaClientes.fxml"),
     LISTAPACIENTES("/techvet/views/ListaPacientes.fxml"),
     LISTACONSULTAS("/techvet/views/ListaConsultas.fxml"),
