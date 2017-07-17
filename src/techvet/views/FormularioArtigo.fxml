@@ -6,8 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -15,27 +13,27 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="621.0" prefWidth="750.0" style="-fx-background-color: white; -fx-border-color: black;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="709.0" prefWidth="831.0" style="-fx-background-color: white; -fx-border-color: black;" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="141.0" prefWidth="150.0" />
-      <ColumnConstraints hgrow="NEVER" maxWidth="177.0" minWidth="0.0" prefWidth="46.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.0" minWidth="10.0" prefWidth="102.0" />
-      <ColumnConstraints hgrow="NEVER" maxWidth="249.0" minWidth="10.0" prefWidth="100.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="127.0" />
-      <ColumnConstraints hgrow="ALWAYS" maxWidth="220.0" minWidth="10.0" prefWidth="151.0" />
-      <ColumnConstraints hgrow="NEVER" maxWidth="171.0" minWidth="10.0" prefWidth="50.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="46.0" prefWidth="156.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="205.0" minWidth="0.0" prefWidth="115.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.0" minWidth="10.0" prefWidth="175.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="286.0" minWidth="10.0" prefWidth="128.0" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="220.0" minWidth="10.0" prefWidth="198.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="142.0" minHeight="8.0" prefHeight="81.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="276.0" minHeight="0.0" prefHeight="105.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="307.0" minHeight="0.0" prefHeight="84.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="138.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="307.0" minHeight="9.0" prefHeight="38.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="142.0" minHeight="8.0" prefHeight="88.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="276.0" minHeight="0.0" prefHeight="66.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="84.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="307.0" minHeight="0.0" prefHeight="53.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="53.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="307.0" minHeight="9.0" prefHeight="47.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="145.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="32.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="754.0" text="Nova Consulta" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="754.0" text="Novo Produto" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets top="20.0" />
          </GridPane.margin>
@@ -43,51 +41,7 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="fieldNomePaciente" prefHeight="30.0" prefWidth="150.0" promptText="Nome do Paciente" GridPane.rowIndex="1" />
-      <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#cliqueProcurarPaciente" pickOnBounds="false" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-         <graphic>
-            <ImageView fitHeight="34.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../resources/icon_pesquisa.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <GridPane.margin>
-            <Insets right="5.0" />
-         </GridPane.margin>
-      </Button>
-      <TextField fx:id="fieldNomeCliente" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" promptText="Nome do Cliente" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-      <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#cliqueProcurarCliente" pickOnBounds="false" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-         <graphic>
-            <ImageView fitHeight="34.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../resources/icon_pesquisa.png" />
-               </image>
-            </ImageView>
-         </graphic>
-         <GridPane.margin>
-            <Insets left="5.0" />
-         </GridPane.margin>
-      </Button>
-      <Label prefHeight="21.0" prefWidth="128.0" text="Tipo de Consulta:" GridPane.rowIndex="2">
-         <GridPane.margin>
-            <Insets right="5.0" />
-         </GridPane.margin>
-         <padding>
-            <Insets right="5.0" />
-         </padding>
-      </Label>
-      <TextField fx:id="dataConsulta" promptText="Data" GridPane.columnIndex="5" GridPane.rowIndex="2" />
-      <Label prefHeight="21.0" prefWidth="59.0" text="Local:" GridPane.rowIndex="3" />
-      <ChoiceBox fx:id="boxLocal" prefWidth="150.0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
-      <TextField fx:id="localConsulta" disable="true" promptText="Local" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="3">
-         <GridPane.margin>
-            <Insets left="15.0" />
-         </GridPane.margin>
-      </TextField>
-      <ChoiceBox fx:id="boxTipoConsulta" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
-      <TextArea fx:id="descricao" prefHeight="82.0" prefWidth="600.0" promptText="Detalhes" GridPane.columnSpan="7" GridPane.rowIndex="4" />
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="6" GridPane.valignment="BOTTOM" GridPane.vgrow="SOMETIMES">
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" GridPane.vgrow="SOMETIMES">
          <children>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cliqueConfirmar" prefHeight="31.0" prefWidth="129.0" text="Confirmar" HBox.hgrow="NEVER" />
@@ -99,6 +53,51 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </padding>
       </HBox>
+      <Label text="Nome:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <TextField fx:id="fieldNome" promptText="Nome do produto" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <Label text="Descrição:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="2" GridPane.valignment="TOP" />
+      <TextArea fx:id="fieldDescricao" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.rowSpan="2" />
+      <GridPane style="-fx-border-color: black;" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.rowIndex="6">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="59.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="179.0" minWidth="10.0" prefWidth="105.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="101.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="321.0" minWidth="10.0" prefWidth="99.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <GridPane.margin>
+            <Insets />
+         </GridPane.margin>
+         <padding>
+            <Insets bottom="5.0" left="15.0" right="15.0" top="5.0" />
+         </padding>
+         <children>
+            <Label prefHeight="21.0" prefWidth="101.0" text="Preço:" GridPane.columnIndex="1" />
+            <Label prefHeight="21.0" prefWidth="98.0" text="Stock:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Label text="Stock Minímo:" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="fieldPreco" promptText="Preço" GridPane.columnIndex="2" />
+            <TextField fx:id="fieldStock" promptText="Stock" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <TextField fx:id="fieldStockMin" promptText="Stock Min" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+            <Label text=" ‎€" GridPane.columnIndex="3" />
+            <Label text="Unidades" GridPane.columnIndex="3" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+            <Label text="Unidades" GridPane.columnIndex="3" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Label>
+         </children>
+      </GridPane>
+      <Label text="Detalhes Negócio" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="5" />
+      <Label text="Tipo de Produto:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
+      <ChoiceBox fx:id="boxTipoProduto" prefWidth="150.0" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER" />
    </children>
    <opaqueInsets>
       <Insets />

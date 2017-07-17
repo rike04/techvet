@@ -11,15 +11,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
+import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
- *
- * @author rike4
+ * @author Henrique Faria e Sérgio Araújo
  */
 public class Util {
     
@@ -53,7 +52,7 @@ public class Util {
     
     public static EventHandler<KeyEvent> validacaoNumerica(int limite) {
         return (KeyEvent event) -> {
-            TextField txtField = (TextField) event.getSource();                
+            TextInputControl txtField = (TextInputControl) event.getSource();                
             if (txtField.getText().length() >= limite) {                    
                 event.consume();
             }
@@ -71,7 +70,7 @@ public class Util {
     
     public static EventHandler<KeyEvent> validacaoPrecos(int limite) {
         return (KeyEvent event) -> {
-            TextField txtField = (TextField) event.getSource();                
+            TextInputControl txtField = (TextInputControl) event.getSource();                
             if (txtField.getText().length() >= limite) {                    
                 event.consume();
             }
@@ -83,7 +82,7 @@ public class Util {
     
     public static EventHandler<KeyEvent> validacaoLimiteMax(int limite) {
         return (KeyEvent event) -> {
-            TextField txtField = (TextField) event.getSource();                
+            TextInputControl txtField = (TextInputControl) event.getSource();                
             if (txtField.getText().length() >= limite) {                    
                 event.consume();
             }

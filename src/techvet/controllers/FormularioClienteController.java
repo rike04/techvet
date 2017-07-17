@@ -20,7 +20,6 @@ import javafx.scene.layout.Pane;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import model.Cliente;
-import model.Paciente;
 import techvet.DocFXML;
 import techvet.Util;
 

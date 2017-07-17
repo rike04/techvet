@@ -25,8 +25,6 @@ import model.Consulta;
 import techvet.GUIUtils;
 
 /**
- * FXML Controller class
- *
  * @author rike4
  */
 public class ListaConsultasController implements Initializable {

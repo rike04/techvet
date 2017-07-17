@@ -47,7 +47,6 @@ public class Aplicacao extends Application {
                 try {
                     u.readByNome("Administrador");
                 } catch (Exception e) {
-                    System.out.println("Inserindo Administrador");
                    insereAdminBD();
                 }
                 return null;

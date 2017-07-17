@@ -97,10 +97,10 @@ public class Template implements Initializable {
         Optional<ButtonType> result = alerta.showAndWait();
         if(result.get() == botaoConfirmar) {
             try {
-                 Parent root = FXMLLoader.load(getClass().getResource("/techvet/views/Login.fxml"));
-                 Scene scene = new Scene(root);
-                 stage.setScene(scene);
-                 stage.show();      
+                Parent root = FXMLLoader.load(getClass().getResource("/techvet/views/Login.fxml"));
+                Scene scene = new Scene(root);
+                stage.setScene(scene);
+                stage.show();      
             } catch (IOException e) {
                  e.printStackTrace();
             }
@@ -142,14 +142,13 @@ public class Template implements Initializable {
         mudarEcra(DocFXML.BOTOESADMINISTRADOR);
     } 
     
-    
-    
     private void mudarEcra(final DocFXML docSideBar) {
         final Initializable controllerSideBar;
         final Initializable controllerContent;
         final DocFXML docContent;
         
         switch (docSideBar) {
+            
             case BOTOESCONSULTA: 
                     docContent = DocFXML.LISTACONSULTAS;
                     controllerSideBar = new BotoesConsultaController(getContent());

@@ -52,6 +52,7 @@ public class BotoesInventarioController implements Initializable {
         try {
             Util.mudaContentPara(DocFXML.FORMULARIOARTIGO, controller, content);
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     

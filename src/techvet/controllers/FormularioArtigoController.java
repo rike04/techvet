@@ -1,6 +1,3 @@
-/*
- * 
- */
 
 package techvet.controllers;
 
@@ -13,19 +10,15 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import model.Cliente;
-import model.Paciente;
+import model.Produto;
+import model.TipoProduto;
 import techvet.DocFXML;
 import techvet.Util;
 
@@ -38,67 +31,40 @@ public class FormularioArtigoController implements Initializable {
     @FXML 
     private TextField fieldNome;
     @FXML
-    private TextField fieldEspecie;
+    private TextArea fieldDescricao;
     @FXML
-    private TextField fieldIdade;
-    @FXML
-    private ChoiceBox boxSexo;
+    private TextField fieldPreco;
     @FXML 
-    private TextField fieldCliente;
+    private TextField fieldStock;
     @FXML
-    private TextField fieldPeso;
+    private TextField fieldStockMin;
+    @FXML
+    private ChoiceBox<Choice> boxTipoProduto;
     
     private final Pane content;
-    private Cliente cliente;
     
     public FormularioArtigoController(Pane content) {
         this.content = content;
-        cliente = null;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         popularChoiceBox();
-    }    
-    
-    @FXML
-    public void cliqueProcurarCliente(ActionEvent event) {
-        ListaClientesController controller;
-        try {
-            controller = abrirListaClientes(event);
-        } catch (IOException ex) {
-            return ;
-        }
-        if (controller.foiSelecionadaOpcao()) {
-            cliente = controller.getClienteSelecionado();
-            fieldCliente.setText(cliente.getNome());
-        }
-    }
-    
-    private ListaClientesController abrirListaClientes(Event event) throws IOException {
-        ListaClientesController controller = new ListaClientesController(true);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(DocFXML.LISTACLIENTES.getPath()));
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
         
-        Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Stage stage = Util.preparaNovaJanela(owner);
-        stage.setScene(scene);
-        stage.showAndWait();
-        return controller;
-    }
+        fieldNome.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoLimiteMax(100));
+//        fieldDescricao.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoLimiteMax(200));
+        fieldPreco.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoPrecos(12));
+        fieldStock.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoNumerica(5));
+        fieldStockMin.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoNumerica(5));
+    }    
     
     @FXML
     public void cliqueConfirmar(ActionEvent event) {
         if (osDadosSaoValidos()) {
             try {
-                if (cliente == null) {
-                    cliente = buscaCliente();
-                }
-                inserirPacienteBD(cliente);
+                inserirProdutoBD();
                 mudarContent();
-            } catch (Exception e) {
+            } catch (IOException e) {
                 Logger.getLogger(FormularioArtigoController.class.getName()).log(Level.SEVERE, null, e);
             }
         }
@@ -114,41 +80,85 @@ public class FormularioArtigoController implements Initializable {
     }
     
     private void mudarContent() throws IOException{
-        ListaConsultasController controller = new ListaConsultasController(false);
-        Util.mudaContentPara(DocFXML.LISTAPACIENTES, controller, content);
+        ListaArtigosController controller = new ListaArtigosController(false);
+        Util.mudaContentPara(DocFXML.LISTAARTIGOS, controller, content);
     }
     
     private Boolean osDadosSaoValidos() {
-        return true;
+        boolean saoValidos = true;
+        
+        if (fieldNome.getText().trim().isEmpty()) {
+            saoValidos = false;
+        }
+        
+        if (fieldPreco.getText().trim().isEmpty()) {
+            saoValidos = false;
+        } else {
+            try {
+                Double.parseDouble(fieldPreco.getText());
+            } catch (NumberFormatException e) {
+                saoValidos = false;
+            }
+        }
+        
+        if (fieldStock.getText().trim().isEmpty()) {
+            saoValidos = false;
+        } else {
+            try {
+                Integer.parseInt(fieldStock.getText());
+            } catch (NumberFormatException e) {
+                saoValidos = false;
+            }
+        }
+        
+        if (fieldStockMin.getText().trim().isEmpty()) {
+            saoValidos = false;
+        } else {
+            try {
+                Integer.parseInt(fieldStockMin.getText());
+            } catch (NumberFormatException e) {
+                saoValidos = false;
+            }
+        }
+        
+        return saoValidos;
     }
     
     private void popularChoiceBox() {
-        ObservableList<String> opcoes = FXCollections.observableArrayList();
-        opcoes.add("Masculino");
-        opcoes.add("Feminino");
-        
-        boxSexo.getItems().setAll(opcoes);
-        boxSexo.getSelectionModel().select(0);
+        ObservableList<Choice> escolhasTipoProduto = FXCollections.observableArrayList();
+        List<TipoProduto> tiposProduto = TipoProduto.retrieveAll();
+        tiposProduto.forEach( (TipoProduto tipo) -> {
+            escolhasTipoProduto.add(new Choice(tipo));
+        });
+        boxTipoProduto.getItems().addAll(escolhasTipoProduto);
+        boxTipoProduto.getSelectionModel().select(0);
     }
     
-    private void inserirPacienteBD(Cliente c) {
-        Paciente p = new Paciente();
+    private void inserirProdutoBD() {
+        Produto p = new Produto();
         p.setNome(fieldNome.getText());
-        p.setEspecie(fieldEspecie.getText());
-        p.setIdade(Integer.getInteger(fieldIdade.getText()));
-        p.setPeso(Double.parseDouble(fieldPeso.getText()));
-        p.setIdCliente(c);
-        p.setRaca("Raca");
-        p.setCor("Cor");
-        p.setSexo(boxSexo.getSelectionModel().getSelectedItem().toString());
-        p.setEstado((short) 1);
+        p.setPreco(Double.parseDouble(fieldPreco.getText()));
+        p.setStock(Integer.parseInt(fieldStock.getText()));
+        p.setStockmin(Integer.parseInt(fieldStockMin.getText()));
+        p.setDescricao(fieldDescricao.getText());
+        p.setCodTipo(boxTipoProduto.getSelectionModel().getSelectedItem().getTipoProduto());
         p.createT();
     } 
     
-    //ALTERAR: forma como o cliente e encontrado. Clientes com o mesmo nome darao problemas
-    private Cliente buscaCliente() throws Exception {
-        List<Cliente> clientes = Cliente.readByNome(fieldCliente.getText());
-        return clientes.get(0);
+    private class Choice {
+        private final TipoProduto tp;
+        
+        public Choice(TipoProduto tp) {
+            this.tp = tp;
+        }
+        
+        @Override
+        public String toString() {
+            return tp.getNome();
+        }
+        
+        public TipoProduto getTipoProduto() {
+            return tp;
+        }
     }
-    
 }
