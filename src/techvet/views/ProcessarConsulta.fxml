@@ -20,8 +20,8 @@
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="141.0" prefWidth="150.0" />
           <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.0" minWidth="10.0" prefWidth="102.0" />
-            <ColumnConstraints hgrow="NEVER" maxWidth="254.0" minWidth="10.0" prefWidth="228.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="116.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="254.0" minWidth="10.0" prefWidth="244.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="102.0" />
             <ColumnConstraints hgrow="NEVER" maxWidth="260.0" minWidth="10.0" prefWidth="178.0" />
         </columnConstraints>
         <rowConstraints>
@@ -67,7 +67,7 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
-                        <TableView fx:id="listaProdutosConsulta" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+                        <TableView fx:id="listaProdutosConsulta" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="313.0" prefWidth="429.0" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
                           <columns>
                             <TableColumn fx:id="colNomeProduto" prefWidth="75.0" text="Nome" />
                             <TableColumn fx:id="colQuantidade" prefWidth="75.0" text="Quantidade" />
