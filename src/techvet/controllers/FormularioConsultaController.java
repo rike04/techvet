@@ -122,8 +122,8 @@ public class FormularioConsultaController implements Initializable {
                                 
                                 if (clientes.size() == 1) {
                                     cliente = clientes.get(0);
-                                    if (cliente.getPacienteCollection().size() == 1) {
-                                        paciente = cliente.getPacienteCollection().get(0);
+                                    if (cliente.getListaPacientes().size() == 1) {
+                                        paciente = cliente.getListaPacientes().get(0);
                                         fieldNomePaciente.setText(paciente.getNome());
                                     }
                                 }
@@ -248,8 +248,8 @@ public class FormularioConsultaController implements Initializable {
         c.setEstado((short) 0);
         c.setPago((short) 0);
         c.setDatahora(new Date());
-        c.setIdPaciente(paciente);
-        c.setIdTipo(boxTipoConsulta.getSelectionModel().getSelectedItem().getTipoConsulta());
+        c.setPaciente(paciente);
+        c.setTipoConsulta(boxTipoConsulta.getSelectionModel().getSelectedItem().getTipoConsulta());
         c.setLocal(boxLocal.getSelectionModel().getSelectedItem().toString());
         c.setDesctratamento(descricao.getText());
 //        Internamento i = new Internamento();

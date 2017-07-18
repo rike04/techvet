@@ -32,7 +32,7 @@ public class ListaArtigosController implements Initializable {
         
     @FXML
     private TableView<Produto> tabela;
-;    @FXML
+    @FXML
     private TableColumn<Produto, String> colNome;
     @FXML
     private TableColumn<Produto, String> colTipoProduto;
@@ -66,7 +66,7 @@ public class ListaArtigosController implements Initializable {
         botaoCancelar.setDisable(!devolveEscolha);
         
         tabela.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tabela.setPlaceholder(new Label("Não existem artigos registados"));
+        tabela.setPlaceholder(new Label("Não existem consultas registadas"));
         
         colNome.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getNome()));
@@ -78,7 +78,7 @@ public class ListaArtigosController implements Initializable {
                 new SimpleIntegerProperty(dadosCell.getValue().getStockmin()).asObject());        
         colPreco.setCellValueFactory(dadosCell -> 
                 new SimpleDoubleProperty(dadosCell.getValue().getPreco()).asObject());
-        colNome.setCellValueFactory(dadosCell -> 
+        colDescricao.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getDescricao()));
 
         tabela.setItems(FXCollections.observableList(leListaProdutos()));

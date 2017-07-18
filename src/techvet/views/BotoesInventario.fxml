@@ -16,9 +16,9 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button mnemonicParsing="false" onAction="#cliqueCriarArtigo" prefHeight="31.0" prefWidth="141.0" text="Novo artigo" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-      <Button mnemonicParsing="false" onAction="#abre" text="Processar Consulta" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-      <Button mnemonicParsing="false" onAction="#cliqueListaArtigos" text="Ver artigos" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Button mnemonicParsing="false" text="Button" GridPane.rowIndex="3" />
+      <Button mnemonicParsing="false" onAction="#cliqueCriarArtigo" prefHeight="31.0" prefWidth="141.0" text="Novo produto" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#abre" text="Editar produto" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#cliqueListaArtigos" text="Listagem de produtos" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#cliqueCriarTipoProduto" text="Criar tipo de produto" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
    </children>
 </GridPane>

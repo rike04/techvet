@@ -90,9 +90,9 @@ public class ListaConsultasController implements Initializable {
         });
         
         colCliente.setCellValueFactory(dadosCell -> 
-                new SimpleStringProperty(dadosCell.getValue().getIdPaciente().getIdCliente().getNome()));
+                new SimpleStringProperty(dadosCell.getValue().getPaciente().getIdCliente().getNome()));
         colPaciente.setCellValueFactory(dadosCell -> 
-                new SimpleStringProperty(dadosCell.getValue().getIdPaciente().getNome()));
+                new SimpleStringProperty(dadosCell.getValue().getPaciente().getNome()));
         colData.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getDatahora().toString()));
         colLocal.setCellValueFactory(dadosCell -> 

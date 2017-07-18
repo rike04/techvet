@@ -61,4 +61,14 @@ public class BotoesInventarioController implements Initializable {
 
     }
     
+    @FXML
+    public void cliqueCriarTipoProduto(ActionEvent event) {
+        Initializable controller = new FormularioTipoProdutoController(content);
+        try {
+            Util.mudaContentPara(DocFXML.FORMULARIOTIPOPRODUTO, controller, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
 }

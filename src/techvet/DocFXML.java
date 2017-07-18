@@ -12,6 +12,8 @@ public enum DocFXML {
     
     LOGIN("/techvet/views/Login.fxml"),
     TEMPLATE("/techvet/views/MainMenu.fxml"),
+    
+    //Botoes da sidebar 
     BOTOESCONSULTA("/techvet/views/BotoesConsulta.fxml"),
     BOTOESCLIENTE("/techvet/views/BotoesCliente.fxml"),
     BOTOESPACIENTE("/techvet/views/BotoesPaciente.fxml"),
@@ -19,6 +21,8 @@ public enum DocFXML {
     BOTOESINTERNAMENTOS("/techvet/views/BotoesInternamentos.fxml"),
     BOTOESINVENTARIO("/techvet/views/BotoesInventario.fxml"),
     BOTOESVENDA("/techvet/views/BotoesVenda.fxml"),
+    
+    //Formularios para introduzir um novo objecto na BD 
     FORMULARIOPACIENTE("/techvet/views/FormularioPaciente.fxml"),
     FORMULARIOCLIENTE("/techvet/views/FormularioCliente.fxml"),
     FORMULARIOCONSULTA("/techvet/views/FormularioConsulta.fxml"),
@@ -27,6 +31,10 @@ public enum DocFXML {
     FORMULARIOARTIGO("/techvet/views/FormularioArtigo.fxml"),
     FORMULARIOINTERNAMENTO("/techvet/views/FormularioInternamento.fxml"),
     FORMULARIOTIPOCONSULTA("/techvet/views/FormularioTipoConsulta.fxml"),
+    FORMULARIOTIPOPRODUTO("/techvet/views/FormularioTipoProduto.fxml"),
+
+    
+    //Listagem dos objectos armazenados na BD
     LISTACLIENTES("/techvet/views/ListaClientes.fxml"),
     LISTAPACIENTES("/techvet/views/ListaPacientes.fxml"),
     LISTACONSULTAS("/techvet/views/ListaConsultas.fxml"),

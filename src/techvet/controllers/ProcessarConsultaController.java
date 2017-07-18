@@ -73,7 +73,7 @@ public class ProcessarConsultaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        fieldNomePaciente.setText(consulta.getIdPaciente().getNome());
+        fieldNomePaciente.setText(consulta.getPaciente().getNome());
     
         listaProdutosConsulta.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         listaProdutosConsulta.setPlaceholder(new Label("Nao foram adicionados produtos."));
