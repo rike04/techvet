@@ -10,13 +10,15 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,7 +28,8 @@ import model.Cliente;
 import techvet.GUIUtils;
 
 /**
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
+
  */
 public class ListaClientesController implements Initializable {
 
@@ -48,8 +51,6 @@ public class ListaClientesController implements Initializable {
     private Button botaoCancelar;
     @FXML
     private TextField filtroProcurar;
-    @FXML
-    private CheckBox checkPacientes;
     
     private boolean foiConfirmado;
     private final boolean devolveEscolha;
@@ -82,7 +83,28 @@ public class ListaClientesController implements Initializable {
         colNIF.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getNif()));
         
-        tabelaClientes.setItems(FXCollections.observableList(leListaClientes()));
+        /*
+         *   http://code.makery.ch/blog/javafx-8-tableview-sorting-filtering/
+        */
+        ObservableList<Cliente> listaClientes = FXCollections.observableList(leListaClientes());
+        FilteredList<Cliente> listaFiltrada = new FilteredList<>(listaClientes, p -> true);
+        filtroProcurar.textProperty().addListener((observable, oldValue, newValue) -> {
+            listaFiltrada.setPredicate(cliente -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }         
+                String filtro = newValue.toLowerCase();
+                if (cliente.getNome().toLowerCase().contains(filtro)) {
+                    return true;
+                }
+                return false;
+            });
+        });
+        
+        SortedList<Cliente> sortedList = new SortedList<>(listaFiltrada);
+        sortedList.comparatorProperty().bind(tabelaClientes.comparatorProperty());
+        
+        tabelaClientes.setItems(sortedList);
         
         GUIUtils.autoFitTable(tabelaClientes);
     }  
@@ -92,8 +114,7 @@ public class ListaClientesController implements Initializable {
         try {
             listaClientes = Cliente.retrieveAll();
         } catch (Exception e) {
-            System.out.println("Erro impossivel.");
-            e.printStackTrace();
+            System.out.println("Oops. Nao foi possivel encontrar clientes.");
         }
         return listaClientes;
     }

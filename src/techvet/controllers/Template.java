@@ -152,7 +152,7 @@ public class Template implements Initializable {
             case BOTOESCONSULTA: 
                     docContent = DocFXML.LISTACONSULTAS;
                     controllerSideBar = new BotoesConsultaController(getContent());
-                    controllerContent = new ListaConsultasController(false);
+                    controllerContent = new ListaConsultasController(false, content);
             break;
             
             case BOTOESPACIENTE: 

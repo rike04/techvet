@@ -38,7 +38,7 @@ public class BotoesConsultaController implements Initializable {
     
     @FXML 
     public void cliqueListaConsultas(ActionEvent event) {
-        Initializable controller = new ListaConsultasController(false);
+        Initializable controller = new ListaConsultasController(false, content);
         try {
             Util.mudaContentPara(DocFXML.LISTACONSULTAS, controller, content);
         } catch (IOException e) {
@@ -60,7 +60,7 @@ public class BotoesConsultaController implements Initializable {
     
     @FXML
     public void abre(ActionEvent event) {
-
+       
     }
     
     @FXML

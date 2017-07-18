@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -11,8 +11,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-
 
 <BorderPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <center>
@@ -47,13 +45,9 @@
             <Label text="Procurar por:" />
             <TextField fx:id="filtroProcurar" />
          </children>
+         <padding>
+            <Insets bottom="15.0" left="51.0" right="15.0" top="15.0" />
+         </padding>
       </HBox>
    </top>
-   <right>
-      <VBox prefHeight="432.0" prefWidth="150.0" BorderPane.alignment="CENTER">
-         <children>
-            <CheckBox fx:id="checkPacientes" mnemonicParsing="false" text="Com pacientes" />
-         </children>
-      </VBox>
-   </right>
 </BorderPane>

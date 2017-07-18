@@ -23,4 +23,9 @@
 }
 
 
+.table-row-cell:error {
+    -fx-text-fill: white;
+    -fx-border-color: red;
+}
+
 

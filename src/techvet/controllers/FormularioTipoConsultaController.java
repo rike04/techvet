@@ -80,7 +80,7 @@ public class FormularioTipoConsultaController implements Initializable {
     }
     
     private void mudaContent() {
-        Initializable controller = new ListaConsultasController(false);
+        Initializable controller = new ListaConsultasController(false, content);
         try {
             Util.mudaContentPara(DocFXML.LISTACONSULTAS, controller, content);
         } catch (IOException e) {

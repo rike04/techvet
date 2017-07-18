@@ -114,7 +114,7 @@ public class FormularioInternamentoController implements Initializable {
     }
     
     private void mudarContent() throws IOException{
-        ListaConsultasController controller = new ListaConsultasController(false);
+        ListaConsultasController controller = new ListaConsultasController(false, content);
         Util.mudaContentPara(DocFXML.LISTAPACIENTES, controller, content);
     }
     

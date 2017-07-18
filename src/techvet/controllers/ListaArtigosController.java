@@ -66,7 +66,7 @@ public class ListaArtigosController implements Initializable {
         botaoCancelar.setDisable(!devolveEscolha);
         
         tabela.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tabela.setPlaceholder(new Label("Não existem consultas registadas"));
+        tabela.setPlaceholder(new Label("Não existem artigos registados"));
         
         colNome.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getNome()));

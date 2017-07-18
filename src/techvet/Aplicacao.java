@@ -4,6 +4,7 @@
 
 package techvet;
 
+import java.util.List;
 import javafx.application.Application;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import model.Consulta;
 import model.Utilizador;
 
 /**

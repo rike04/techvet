@@ -4,6 +4,7 @@
 
 package techvet.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,15 +15,22 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Consulta;
+import techvet.DocFXML;
 import techvet.GUIUtils;
+import techvet.Util;
 
 /**
  * @author rike4
@@ -51,9 +59,12 @@ public class ListaConsultasController implements Initializable {
     private boolean foiConfirmado;
     private final boolean devolveEscolha;
     
-    public ListaConsultasController (boolean devolveEscolha) { 
+    private final Pane content;
+    
+    public ListaConsultasController (boolean devolveEscolha, Pane content) { 
         this.foiConfirmado = false;
         this.devolveEscolha = devolveEscolha;
+        this.content = content;
     }
 
     @Override
@@ -66,6 +77,17 @@ public class ListaConsultasController implements Initializable {
         
         tabelaConsultas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tabelaConsultas.setPlaceholder(new Label("Não existem consultas registadas"));
+        
+        tabelaConsultas.setRowFactory( tv -> {
+            TableRow<Consulta> linha = new TableRow<>();
+            linha.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!linha.isEmpty())) {
+                    Consulta c = linha.getItem();
+                    abrirProcessarConsulta(c);
+                }
+            });
+          return linha;
+        });
         
         colCliente.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getIdPaciente().getIdCliente().getNome()));
@@ -101,6 +123,15 @@ public class ListaConsultasController implements Initializable {
             e.printStackTrace();
         }
         return listaConsultas;
+    }
+    
+    private void abrirProcessarConsulta(Consulta c) {
+        ProcessarConsultaController controller = new ProcessarConsultaController(c);
+        try {
+            Util.mudaContentPara(DocFXML.PROCESSARCONSULTA, controller, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     public boolean foiSelecionadaOpcao() {

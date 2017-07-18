@@ -27,6 +27,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Cliente;
 import model.Consulta;
+import model.Internamento;
 import model.Paciente;
 import model.TipoConsulta;
 import techvet.DocFXML;
@@ -251,6 +252,14 @@ public class FormularioConsultaController implements Initializable {
         c.setIdTipo(boxTipoConsulta.getSelectionModel().getSelectedItem().getTipoConsulta());
         c.setLocal(boxLocal.getSelectionModel().getSelectedItem().toString());
         c.setDesctratamento(descricao.getText());
+//        Internamento i = new Internamento();
+//        i.setGuiamed("ahaha");
+//        i.setDatae(new Date());
+//        i.setDatas(new Date());
+//        i.setIdConsulta(c);
+//        i.setIdPaciente(c.getIdPaciente());
+//        i.setObs("ashahsa");
+//        c.setInternamentoCollection(i);
         c.createT();
     }
     
