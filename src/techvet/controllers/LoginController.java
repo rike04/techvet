@@ -1,9 +1,5 @@
 package techvet.controllers;
 
-/*
- *
- */
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -20,7 +16,7 @@ import techvet.DocFXML;
 import techvet.Util;
 
 /**
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 public class LoginController implements Initializable {
     

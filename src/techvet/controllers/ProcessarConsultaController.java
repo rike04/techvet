@@ -1,6 +1,7 @@
 /*
  * 
  */
+
 package techvet.controllers;
 
 import java.io.IOException;
@@ -30,6 +31,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.ArtigoConsulta;
 import model.Consulta;
@@ -65,13 +67,14 @@ public class ProcessarConsultaController implements Initializable {
     private final ObservableList<ArtigoConsulta> listaArtigosConsulta;
     
     private final Consulta consulta;
-    
     private final PseudoClass classErro;
+    private final Pane content;
     
-    public ProcessarConsultaController(Consulta c) {
+    public ProcessarConsultaController(Consulta c, Pane content) {
         this.consulta = c;
         this.listaArtigosConsulta = FXCollections.observableArrayList();
         classErro = PseudoClass.getPseudoClass("error");
+        this.content = content;
     }
 
     @Override
@@ -190,7 +193,7 @@ public class ProcessarConsultaController implements Initializable {
     @FXML
     public void cliqueConfirmar(ActionEvent event) {
         if(osDadosSaoValidos()) {
-            atualizaConsulta();
+            atualizaConsultaBD();
             consulta.updateT();  
         }
 
@@ -206,8 +209,11 @@ public class ProcessarConsultaController implements Initializable {
         return saoValidos;
     }
     
-    private void atualizaConsulta() {
+    private void atualizaConsultaBD() {
         consulta.setDesctratamento(fieldDescricao.getText());
+        consulta.setEstado((short) 1);
+        consulta.setPago((short) 0);
+        consulta.updateT();
     }
     
     @FXML
@@ -224,7 +230,8 @@ public class ProcessarConsultaController implements Initializable {
     
     @FXML
     public void cliquePrescreverReceita(ActionEvent event) {
-        Initializable controller = new FormularioReceitaController(consulta);
+        boolean notReadOnly = false;
+        Initializable controller = new FormularioReceitaController(consulta, notReadOnly);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(DocFXML.FORMULARIORECEITA.getPath()));
         loader.setController(controller);
         Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
@@ -235,7 +242,25 @@ public class ProcessarConsultaController implements Initializable {
             stage.setScene(scene);
             stage.showAndWait();
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
+    @FXML
+    public void cliqueInternar(ActionEvent event) {
+        if (osDadosSaoValidos()) {
+            atualizaConsultaBD();
+            iniciarInternamento();
+        }
+    }
+    
+    @FXML
+    private void iniciarInternamento() {
+        Initializable controller = new FormularioInternamentoController(content, consulta);
+        try {
+            Util.mudaContentPara(DocFXML.FORMULARIOINTERNAMENTO, controller, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

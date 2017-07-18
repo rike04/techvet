@@ -55,8 +55,10 @@
                <children>
                   <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
                   <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cliqueConfirmar" prefHeight="31.0" prefWidth="129.0" text="Confirmar" HBox.hgrow="NEVER" />
-                  <Region prefHeight="200.0" prefWidth="200.0" />
+                  <Region prefHeight="31.0" prefWidth="141.0" />
                   <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cliqueCancelar" prefHeight="31.0" prefWidth="123.0" text="Cancelar" HBox.hgrow="NEVER" />
+                  <Region prefHeight="31.0" prefWidth="123.0" />
+                  <Button mnemonicParsing="false" onAction="#cliqueInternar" prefHeight="31.0" prefWidth="129.0" text="Internar" />
                   <Region prefHeight="200.0" prefWidth="200.0" />
                </children>
                <padding>

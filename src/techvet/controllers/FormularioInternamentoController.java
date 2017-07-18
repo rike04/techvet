@@ -6,26 +6,21 @@ package techvet.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.List;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
-import model.Cliente;
-import model.Paciente;
+import model.Consulta;
+import model.Internamento;
 import techvet.DocFXML;
 import techvet.Util;
 
@@ -36,72 +31,79 @@ import techvet.Util;
 public class FormularioInternamentoController implements Initializable {
     
     @FXML 
-    private TextField fieldNome;
+    private TextField fieldNomePaciente;
     @FXML
-    private TextField fieldEspecie;
+    private TextField fieldDataE;
     @FXML
-    private TextField fieldIdade;
-    @FXML
-    private ChoiceBox boxSexo;
+    private TextField fieldDataS;
     @FXML 
-    private TextField fieldCliente;
+    private TextArea fieldObsv;
     @FXML
-    private TextField fieldPeso;
+    private TextArea fieldGuia;
     
     private final Pane content;
-    private Cliente cliente;
+    private final Consulta consulta;
     
-    public FormularioInternamentoController(Pane content) {
+    public FormularioInternamentoController(Pane content, Consulta consulta) {
         this.content = content;
-        cliente = null;
+        this.consulta = consulta;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        popularChoiceBox();
+        if (consulta.getInternamento() != null) {
+            preencherFields(consulta.getInternamento());
+        } else {
+                preencherLabels();
+        }
+        
     }    
     
-    @FXML
-    public void cliqueProcurarCliente(ActionEvent event) {
-        ListaClientesController controller;
-        try {
-            controller = abrirListaClientes(event);
-        } catch (IOException ex) {
-            return ;
-        }
-        if (controller.foiSelecionadaOpcao()) {
-            cliente = controller.getClienteSelecionado();
-            fieldCliente.setText(cliente.getNome());
-        }
+    private void preencherLabels() {
+        fieldNomePaciente.setText(consulta.getPaciente().getNome());
+        LocalDate dataLocal = LocalDate.now();
+        fieldDataE.setText(DateTimeFormatter.ofPattern("yyyy/MM/dd").format(dataLocal));
     }
     
-    private ListaClientesController abrirListaClientes(Event event) throws IOException {
-        ListaClientesController controller = new ListaClientesController(true);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(DocFXML.LISTACLIENTES.getPath()));
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        
-        Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Stage stage = Util.preparaNovaJanela(owner);
-        stage.setScene(scene);
-        stage.showAndWait();
-        return controller;
+    private void preencherFields(Internamento i) {
+        fieldNomePaciente.setText(consulta.getPaciente().getNome());
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        fieldDataE.setText(sdf.format(i.getDatae()));
+        if (i.getDatas() != null) {
+            fieldDataS.setText(sdf.format(i.getDatas()));
+        }
+        fieldObsv.setText(i.getObs());
+        fieldGuia.setText(i.getGuiamed());
     }
-    
+       
     @FXML
     public void cliqueConfirmar(ActionEvent event) {
         if (osDadosSaoValidos()) {
+            inserirInternamentoBD();
             try {
-                if (cliente == null) {
-                    cliente = buscaCliente();
-                }
-                inserirPacienteBD(cliente);
                 mudarContent();
-            } catch (Exception e) {
-                Logger.getLogger(FormularioInternamentoController.class.getName()).log(Level.SEVERE, null, e);
+            } catch (IOException ex) {
+                Logger.getLogger(FormularioInternamentoController.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+    }
+    
+    private Boolean osDadosSaoValidos() {
+        boolean saoValidos = true;     
+        try {
+            Date.valueOf(fieldDataE.getText());
+        } catch (Exception e) {
+            saoValidos = false;
+        }
+        
+        if (!fieldDataS.getText().trim().isEmpty()) {
+            try {
+                Date.valueOf(fieldDataS.getText());
+            } catch (Exception e) {
+                saoValidos = false;
+            }
+        }
+        return saoValidos;
     }
     
     @FXML 
@@ -114,41 +116,25 @@ public class FormularioInternamentoController implements Initializable {
     }
     
     private void mudarContent() throws IOException{
-        ListaConsultasController controller = new ListaConsultasController(false, content);
-        Util.mudaContentPara(DocFXML.LISTAPACIENTES, controller, content);
+        ListaInternamentosController controller = new ListaInternamentosController(false);
+        Util.mudaContentPara(DocFXML.LISTAINTERNAMENTOS, controller, content);
     }
-    
-    private Boolean osDadosSaoValidos() {
-        return true;
-    }
-    
-    private void popularChoiceBox() {
-        ObservableList<String> opcoes = FXCollections.observableArrayList();
-        opcoes.add("Masculino");
-        opcoes.add("Feminino");
-        
-        boxSexo.getItems().setAll(opcoes);
-        boxSexo.getSelectionModel().select(0);
-    }
-    
-    private void inserirPacienteBD(Cliente c) {
-        Paciente p = new Paciente();
-        p.setNome(fieldNome.getText());
-        p.setEspecie(fieldEspecie.getText());
-        p.setIdade(Integer.getInteger(fieldIdade.getText()));
-        p.setPeso(Double.parseDouble(fieldPeso.getText()));
-        p.setIdCliente(c);
-        p.setRaca("Raca");
-        p.setCor("Cor");
-        p.setSexo(boxSexo.getSelectionModel().getSelectedItem().toString());
-        p.setEstado((short) 1);
-        p.createT();
-    } 
-    
-    //ALTERAR: forma como o cliente e encontrado. Clientes com o mesmo nome darao problemas
-    private Cliente buscaCliente() throws Exception {
-        List<Cliente> clientes = Cliente.readByNome(fieldCliente.getText());
-        return clientes.get(0);
-    }
-    
+
+    private void inserirInternamentoBD() {
+        Internamento i = new Internamento();
+        i.setIdConsulta(consulta);
+        i.setIdPaciente(consulta.getPaciente());
+        try {
+            i.setDatae(Date.valueOf(fieldDataE.getText()));
+            if (!fieldDataS.getText().isEmpty()) {
+                i.setDatas(Date.valueOf(fieldDataS.getText()));
+            }
+        } catch (IllegalArgumentException e) {
+            return ;
+        }
+        i.setGuiamed(fieldGuia.getText());
+        i.setObs(fieldObsv.getText());
+        consulta.setInternamento(i);
+        consulta.updateT();
+    }    
 }

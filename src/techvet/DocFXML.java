@@ -12,6 +12,8 @@ public enum DocFXML {
     
     LOGIN("/techvet/views/Login.fxml"),
     TEMPLATE("/techvet/views/MainMenu.fxml"),
+    CONSULTACELL("/techvet/views/ListaConsultaCell.fxml"),
+    HORARIO("/techvet/views/HorarioConsultas.fxml"),
     
     //Botoes da sidebar 
     BOTOESCONSULTA("/techvet/views/BotoesConsulta.fxml"),

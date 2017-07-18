@@ -72,8 +72,14 @@ public class ListaInternamentosController implements Initializable {
                 new SimpleStringProperty(dadosCell.getValue().getIdPaciente().getNome()));
         colDataE.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getDatae().toString()));
-        colDataS.setCellValueFactory(dadosCell -> 
-                new SimpleStringProperty(dadosCell.getValue().getDatas().toString()));        
+        colDataS.setCellValueFactory(dadosCell -> {
+            SimpleStringProperty string = new SimpleStringProperty();       
+            Internamento i = (Internamento) dadosCell.getValue();
+            if (i.getDatas() != null) {
+                string.set(i.getDatas().toString());
+            }
+            return string;
+        });        
         colGuia.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getGuiamed()));
         

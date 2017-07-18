@@ -29,6 +29,9 @@
             <TableColumn fx:id="colValor" prefWidth="75.0" text="Valor" />
             <TableColumn fx:id="colPago" prefWidth="75.0" text="Pago" />
         </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
       </TableView>
       <Button fx:id="botaoSelecionar" mnemonicParsing="false" onAction="#cliqueSelecionar" text="Selecionar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
       <Button fx:id="botaoCancelar" mnemonicParsing="false" onAction="#cliqueCancelar" text="Cancelar" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />

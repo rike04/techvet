@@ -15,8 +15,6 @@ import techvet.DocFXML;
 import techvet.Util;
 
 /**
- * FXML Controller class
- *
  * @author rike4
  */
 
@@ -25,7 +23,7 @@ public class BotoesConsultaController implements Initializable {
     private final Pane content;
     
     public BotoesConsultaController(Pane content) {
-        this.content= content;
+        this.content = content;
     }
 
     /**
@@ -60,7 +58,12 @@ public class BotoesConsultaController implements Initializable {
     
     @FXML
     public void abre(ActionEvent event) {
-       
+       Initializable controller = new HorarioConsultasController();
+        try {
+            Util.mudaContentPara(DocFXML.HORARIO, controller, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     @FXML

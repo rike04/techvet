@@ -1,7 +1,5 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package techvet.controllers;
 
@@ -12,6 +10,8 @@ import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
@@ -30,11 +30,21 @@ public class FormularioReceitaController implements Initializable {
     private TextArea fieldMedicamentos;
     @FXML
     private TextArea fieldTratamentos;
+    @FXML
+    private Label labelTitulo;
+    @FXML
+    private Button botaoCentral;
+    @FXML
+    private Button botaoConfirmar;
+    @FXML
+    private Button botaoElimina;
     
     private final Consulta consulta;
+    private final boolean eReadOnly;
     
-    public FormularioReceitaController(Consulta consulta) {
+    public FormularioReceitaController(Consulta consulta, boolean readOnly) {
         this.consulta = consulta;
+        this.eReadOnly = readOnly;
     }
     
     @Override
@@ -42,6 +52,8 @@ public class FormularioReceitaController implements Initializable {
         if (consulta.getReceita() != null) {
             preencheCampos(consulta.getReceita());
         }
+        
+        verificaReadOnly();
         
         fieldMedicamentos.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoLimiteMax(100));
         fieldTratamentos.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoLimiteMax(200));
@@ -78,6 +90,22 @@ public class FormularioReceitaController implements Initializable {
         
         if (!receita.getMedicamentos().trim().isEmpty()) {
             fieldMedicamentos.setText(receita.getMedicamentos());
+        }
+    }
+    
+    private void verificaReadOnly() {
+        if (eReadOnly) {
+            labelTitulo.setText("Receita");
+            botaoCentral.setText("Sair");
+            
+            botaoConfirmar.setDisable(eReadOnly);
+            botaoConfirmar.setVisible(!eReadOnly);
+            
+            botaoElimina.setDisable(eReadOnly);
+            botaoElimina.setVisible(!eReadOnly);
+            
+            fieldMedicamentos.setEditable(!eReadOnly);
+            fieldTratamentos.setEditable(!eReadOnly);
         }
     }
     

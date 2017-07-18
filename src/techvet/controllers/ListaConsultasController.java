@@ -6,6 +6,7 @@ package techvet.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -15,11 +16,8 @@ import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
@@ -75,7 +73,6 @@ public class ListaConsultasController implements Initializable {
         botaoCancelar.setVisible(devolveEscolha);
         botaoCancelar.setDisable(!devolveEscolha);
         
-        tabelaConsultas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tabelaConsultas.setPlaceholder(new Label("Não existem consultas registadas"));
         
         tabelaConsultas.setRowFactory( tv -> {
@@ -83,7 +80,9 @@ public class ListaConsultasController implements Initializable {
             linha.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!linha.isEmpty())) {
                     Consulta c = linha.getItem();
-                    abrirProcessarConsulta(c);
+                    if (c.getEstado() == 0) {
+                        abrirProcessarConsulta(c);
+                    }
                 }
             });
           return linha;
@@ -93,8 +92,9 @@ public class ListaConsultasController implements Initializable {
                 new SimpleStringProperty(dadosCell.getValue().getPaciente().getIdCliente().getNome()));
         colPaciente.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getPaciente().getNome()));
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         colData.setCellValueFactory(dadosCell -> 
-                new SimpleStringProperty(dadosCell.getValue().getDatahora().toString()));
+                new SimpleStringProperty(sdf.format(dadosCell.getValue().getDatahora())));
         colLocal.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getLocal()));        
         colValor.setCellValueFactory(dadosCell -> 
@@ -126,7 +126,7 @@ public class ListaConsultasController implements Initializable {
     }
     
     private void abrirProcessarConsulta(Consulta c) {
-        ProcessarConsultaController controller = new ProcessarConsultaController(c);
+        ProcessarConsultaController controller = new ProcessarConsultaController(c, content);
         try {
             Util.mudaContentPara(DocFXML.PROCESSARCONSULTA, controller, content);
         } catch (IOException e) {

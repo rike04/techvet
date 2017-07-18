@@ -46,12 +46,12 @@ public class BotoesInternamentoController implements Initializable{
     
     @FXML
     public void abreCriarInternamento(ActionEvent event) { 
-        FormularioInternamentoController controller = new FormularioInternamentoController(content);
-        try {
-            Util.mudaContentPara(DocFXML.FORMULARIOINTERNAMENTO, controller, content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+//        FormularioInternamentoController controller = new FormularioInternamentoController(content);
+//        try {
+//            Util.mudaContentPara(DocFXML.FORMULARIOINTERNAMENTO, controller, content);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
        
     }
     

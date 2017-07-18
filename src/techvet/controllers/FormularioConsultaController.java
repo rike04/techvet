@@ -22,6 +22,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -43,7 +44,7 @@ public class FormularioConsultaController implements Initializable {
     @FXML
     private TextField fieldNomeCliente;
     @FXML
-    private TextField dataConsulta;
+    private DatePicker fieldData;
     @FXML 
     private TextArea descricao;
     @FXML 
@@ -217,7 +218,7 @@ public class FormularioConsultaController implements Initializable {
            eValido = false;
         }
         
-        if(dataConsulta.getText().trim().isEmpty()) {
+        if(fieldData.getValue() == null) {
             eValido = false;
         }
         
@@ -240,16 +241,27 @@ public class FormularioConsultaController implements Initializable {
         return saoValidos;
     }
     
+    @FXML
+    private void cliqueNovaData(ActionEvent event) {
+        
+    }
+    
     private void inserirConsultaBD() {
         Consulta c = new Consulta();     
         c.setEstado((short) 0);
         c.setPago((short) 0);
-        c.setDatahora(new Date());
+        try {
+                Date data = java.sql.Date.valueOf(fieldData.getValue());
+                 c.setDatahora(data);
+        } catch (Exception e) {
+            System.out.println("fodeu");
+        }
         c.setPaciente(paciente);
         c.setTipoConsulta(boxTipoConsulta.getSelectionModel().getSelectedItem().getTipoConsulta());
         c.setLocal(boxLocal.getSelectionModel().getSelectedItem().toString());
         c.setDesctratamento(descricao.getText());
         c.createT();
+        System.out.println("inseriu consulta na bd");
     }
     
     /*
