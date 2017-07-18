@@ -1,13 +1,12 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package techvet.controllers;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -16,22 +15,22 @@ import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import model.ArtigoConsulta;
 import model.Consulta;
 import model.Produto;
@@ -40,8 +39,6 @@ import techvet.GUIUtils;
 import techvet.Util;
 
 /**
- * FXML Controller class
- *
  * @author Henrique Faria e Sérgio Araújo
  */
 public class ProcessarConsultaController implements Initializable {
@@ -49,7 +46,7 @@ public class ProcessarConsultaController implements Initializable {
     @FXML
     private TextField fieldNomePaciente;
     @FXML 
-    private TableView<ArtigoConsulta> listaProdutosConsulta;
+    private TableView<ArtigoConsulta> tabelaProdutosConsulta;
     @FXML
     private TableColumn<ArtigoConsulta, String> colNomeProduto;
     @FXML
@@ -58,8 +55,14 @@ public class ProcessarConsultaController implements Initializable {
     private TableColumn<ArtigoConsulta, Integer> colStock;
     @FXML
     private TableColumn<ArtigoConsulta, Double> colPreco;
+    @FXML
+    private Button botaoRemoveProd;
+    @FXML
+    private Label labelTipoConsulta;
+    @FXML
+    private TextArea fieldDescricao;
     
-    private final ObservableList<ArtigoConsulta> listaArtigoConsulta;
+    private final ObservableList<ArtigoConsulta> listaArtigosConsulta;
     
     private final Consulta consulta;
     
@@ -67,20 +70,16 @@ public class ProcessarConsultaController implements Initializable {
     
     public ProcessarConsultaController(Consulta c) {
         this.consulta = c;
-        this.listaArtigoConsulta = FXCollections.observableArrayList();
+        this.listaArtigosConsulta = FXCollections.observableArrayList();
         classErro = PseudoClass.getPseudoClass("error");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        fieldNomePaciente.setText(consulta.getPaciente().getNome());
+        preencherLabels();
     
-        listaProdutosConsulta.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        listaProdutosConsulta.setPlaceholder(new Label("Nao foram adicionados produtos."));
-        
-        listaProdutosConsulta.setEditable(true);
-        
-        listaProdutosConsulta.setRowFactory((TableView<ArtigoConsulta> param) -> new TableRow<ArtigoConsulta>() {
+        tabelaProdutosConsulta.setPlaceholder(new Label("Nao foram adicionados produtos."));
+        tabelaProdutosConsulta.setRowFactory((TableView<ArtigoConsulta> param) -> new TableRow<ArtigoConsulta>() {
             @Override
             protected void updateItem(ArtigoConsulta ac, boolean isEmpty) {
                 super.updateItem(ac, isEmpty);
@@ -91,25 +90,16 @@ public class ProcessarConsultaController implements Initializable {
                 }
             }
         });
+       
+        //Desativa o botao de remover produtos caso nao esteja selecionada nenhuma linha
+        BooleanBinding desativaBotao = tabelaProdutosConsulta.getSelectionModel().selectedItemProperty().isNull();
+        botaoRemoveProd.disableProperty().bind(desativaBotao);
         
+        //Permite editar a coluna de quantidade para inserir o valor pretendido
         colQuantidade.setCellFactory(TextFieldTableCell.forTableColumn());
         colQuantidade.setOnEditCommit((CellEditEvent<ArtigoConsulta, String> t) -> {
-            int quantidade;
-            try {
-                quantidade = Integer.parseInt(t.getNewValue());
-            } catch (NumberFormatException e) {
-                return ;
-            }
-            if (quantidade == 0) {
-                return ;
-            }
-            
-            if(quantidade > 0 && quantidade < t.getRowValue().getIdProduto().getStock()) {
-                t.getRowValue().setQuantidade(quantidade);
-            }
-            t.getTableView().refresh();
+            atribuiQuantidadeAColuna(t);
         });
-        colQuantidade.setEditable(true);
         
         colNomeProduto.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getIdProduto().getNome()));
@@ -120,39 +110,49 @@ public class ProcessarConsultaController implements Initializable {
         colStock.setCellValueFactory(dadosCell -> 
                 new SimpleIntegerProperty(dadosCell.getValue().getIdProduto().getStock()).asObject());
         
-        listaProdutosConsulta.setItems(listaArtigoConsulta);
+        tabelaProdutosConsulta.setItems(listaArtigosConsulta);
         
-        GUIUtils.autoFitTable(listaProdutosConsulta);
+        GUIUtils.autoFitTable(tabelaProdutosConsulta);
     }   
+    
+    private void preencherLabels() {
+        labelTipoConsulta.setText(consulta.getTipoConsulta().getNome());
+        fieldNomePaciente.setText(consulta.getPaciente().getNome());
+        
+        if (!consulta.getDesctratamento().trim().isEmpty()) {
+            fieldDescricao.setText(consulta.getDesctratamento());
+        }
+    }
+    
+    private void atribuiQuantidadeAColuna(CellEditEvent<ArtigoConsulta, String> t) {
+        int quantidade;
+        try {
+            quantidade = Integer.parseInt(t.getNewValue());
+        } catch (NumberFormatException e) {
+            return ;
+        }
+        if (quantidade == 0) {
+            return ;
+        }
+            
+        if(quantidade > 0 && quantidade < t.getRowValue().getIdProduto().getStock()) {
+            t.getRowValue().setQuantidade(quantidade);
+        }
+        t.getTableView().refresh();
+    }
     
     @FXML
     public void cliqueAdicionarProduto(ActionEvent event) {
         ListaArtigosController controller;
         try {
             controller = abrirListaProdutos(event);
-            
         } catch (IOException e) {
             return ;
         }
         
         if (controller.foiSelecionadaOpcao()) {
-            Produto p = controller.getProdutoSelecionado();
-            if (verificaProdutoUnico(p)) {
-                ArtigoConsulta ac = new ArtigoConsulta();
-                ac.setIdProduto(p);
-                listaArtigoConsulta.add(ac);
-                listaProdutosConsulta.refresh();
-            }
+            adicionaProduto(controller.getProdutoSelecionado());
         }
-    }
-    
-    private boolean verificaProdutoUnico(Produto p) {
-        for(ArtigoConsulta ac: listaArtigoConsulta) {
-            if (ac.getIdProduto().equals(p)) {
-                return false;
-            }
-        }
-        return true;
     }
     
     private ListaArtigosController abrirListaProdutos(Event event) throws IOException {
@@ -169,15 +169,73 @@ public class ProcessarConsultaController implements Initializable {
         return controller;
     }
     
+    private boolean verificaProdutoUnico(Produto p) {
+        for(ArtigoConsulta ac: listaArtigosConsulta) {
+            if (ac.getIdProduto().equals(p)) {
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    private void adicionaProduto(Produto p) {
+        if (verificaProdutoUnico(p)) {
+            ArtigoConsulta ac = new ArtigoConsulta();
+            ac.setIdProduto(p);
+            listaArtigosConsulta.add(ac);
+            tabelaProdutosConsulta.refresh();
+        }
+    }
+    
     @FXML
     public void cliqueConfirmar(ActionEvent event) {
-        
+        if(osDadosSaoValidos()) {
+            atualizaConsulta();
+            consulta.updateT();  
+        }
+
     } 
+    
+    private boolean osDadosSaoValidos() {
+        boolean saoValidos = true;
+        
+        if (fieldDescricao.getText().trim().isEmpty()) {
+            saoValidos = false;
+        }
+        
+        return saoValidos;
+    }
+    
+    private void atualizaConsulta() {
+        consulta.setDesctratamento(fieldDescricao.getText());
+    }
     
     @FXML
     public void cliqueCancelar(ActionEvent event) {
-//        Initializable controller = new ListaConsultasController(false, );
+       
     }
 
+    @FXML
+    public void cliqueRemoveProd(ActionEvent event) {
+        ArtigoConsulta ac = tabelaProdutosConsulta.getSelectionModel().getSelectedItem();
+        listaArtigosConsulta.remove(ac);
+        tabelaProdutosConsulta.refresh();
+    }
     
+    @FXML
+    public void cliquePrescreverReceita(ActionEvent event) {
+        Initializable controller = new FormularioReceitaController(consulta);
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(DocFXML.FORMULARIORECEITA.getPath()));
+        loader.setController(controller);
+        Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
+        Stage stage = Util.preparaNovaJanela(owner);
+        try {
+            Parent root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.showAndWait();
+        } catch (IOException e) {
+        }
+    }
+
 }

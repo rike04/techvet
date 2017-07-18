@@ -32,7 +32,7 @@ public enum DocFXML {
     FORMULARIOINTERNAMENTO("/techvet/views/FormularioInternamento.fxml"),
     FORMULARIOTIPOCONSULTA("/techvet/views/FormularioTipoConsulta.fxml"),
     FORMULARIOTIPOPRODUTO("/techvet/views/FormularioTipoProduto.fxml"),
-
+    FORMULARIORECEITA("/techvet/views/FormularioReceita.fxml"),
     
     //Listagem dos objectos armazenados na BD
     LISTACLIENTES("/techvet/views/ListaClientes.fxml"),
@@ -42,6 +42,7 @@ public enum DocFXML {
     LISTAINTERNAMENTOS("/techvet/views/ListaInternamentos.fxml"),
     LISTAVENDAS("/techvet/views/ListaVendas.fxml"),
     LISTAARTIGOS("/techvet/views/ListaArtigos.fxml"),
+    
     PROCESSARCONSULTA("/techvet/views/ProcessarConsulta.fxml");
     
     private final String caminhoParaDoc;

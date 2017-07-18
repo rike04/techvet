@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -28,8 +29,8 @@
   <rowConstraints>
     <RowConstraints maxHeight="142.0" minHeight="8.0" prefHeight="81.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="276.0" minHeight="0.0" prefHeight="105.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="307.0" minHeight="0.0" prefHeight="84.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="74.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="307.0" minHeight="0.0" prefHeight="88.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="138.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="307.0" minHeight="9.0" prefHeight="38.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
@@ -77,7 +78,6 @@
             <Insets right="5.0" />
          </padding>
       </Label>
-      <TextField fx:id="dataConsulta" promptText="Data" GridPane.columnIndex="5" GridPane.rowIndex="2" />
       <Label prefHeight="21.0" prefWidth="59.0" text="Local:" GridPane.rowIndex="3" />
       <ChoiceBox fx:id="boxLocal" prefWidth="150.0" GridPane.columnSpan="2" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
       <TextField fx:id="localConsulta" disable="true" promptText="Local" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="3">
@@ -99,6 +99,7 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </padding>
       </HBox>
+      <DatePicker fx:id="fieldData" onAction="#cliqueNovaData" promptText="Data" GridPane.columnIndex="5" GridPane.rowIndex="2" />
    </children>
    <opaqueInsets>
       <Insets />

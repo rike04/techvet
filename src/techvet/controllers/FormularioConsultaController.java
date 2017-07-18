@@ -27,7 +27,6 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.Cliente;
 import model.Consulta;
-import model.Internamento;
 import model.Paciente;
 import model.TipoConsulta;
 import techvet.DocFXML;
@@ -61,7 +60,6 @@ public class FormularioConsultaController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         ObservableList<Choice> escolhasTipoConsulta = FXCollections.observableArrayList();
         List<TipoConsulta> tiposConsulta = TipoConsulta.retrieveAll();
-        System.out.println(tiposConsulta.size());
         tiposConsulta.forEach( (TipoConsulta tipo) -> {
             escolhasTipoConsulta.add(new Choice(tipo));
         });
@@ -148,7 +146,6 @@ public class FormularioConsultaController implements Initializable {
     
     @FXML
     public void cliqueCancelar(ActionEvent event) {
-        
         
     }
     
@@ -252,14 +249,6 @@ public class FormularioConsultaController implements Initializable {
         c.setTipoConsulta(boxTipoConsulta.getSelectionModel().getSelectedItem().getTipoConsulta());
         c.setLocal(boxLocal.getSelectionModel().getSelectedItem().toString());
         c.setDesctratamento(descricao.getText());
-//        Internamento i = new Internamento();
-//        i.setGuiamed("ahaha");
-//        i.setDatae(new Date());
-//        i.setDatas(new Date());
-//        i.setIdConsulta(c);
-//        i.setIdPaciente(c.getIdPaciente());
-//        i.setObs("ashahsa");
-//        c.setInternamentoCollection(i);
         c.createT();
     }
     

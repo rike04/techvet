@@ -63,8 +63,7 @@ public class FormularioTipoProdutoController implements Initializable {
         if (fieldNome.getText().trim().isEmpty()) {
             saoValidos = false;
         }
-        
-        
+               
         return saoValidos;
     }
     
