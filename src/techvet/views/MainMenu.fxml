@@ -98,7 +98,10 @@
       </GridPane>
    </top>
    <left>
-      <VBox fx:id="sideBar" prefHeight="531.0" prefWidth="147.0" BorderPane.alignment="CENTER" />
+      <VBox fx:id="sideBar" prefHeight="531.0" prefWidth="147.0" BorderPane.alignment="CENTER">
+         <padding>
+            <Insets top="30.0" />
+         </padding></VBox>
    </left>
    <center>
       <StackPane fx:id="content" prefHeight="150.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -106,7 +109,7 @@
             <Insets />
          </BorderPane.margin>
          <padding>
-            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+            <Insets bottom="30.0" left="30.0" right="30.0" top="30.0" />
          </padding>
       </StackPane>
    </center>
