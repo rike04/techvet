@@ -13,6 +13,8 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
@@ -43,15 +45,6 @@ public class HorarioConsultasController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        preencheData();
-       
-        fieldData.valueProperty().addListener((ov, valorAntigo, novoValor) -> {
-            if(novoValor != null) {
-               consultaObservableList.setAll(fetchConsultasPorDia(novoValor));
-               listaHorario.refresh();
-            }
-        });
-        
         listaHorario.setCellFactory(horarioListView -> new ConsultasCell());
         
         listaHorario.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Consulta>() { 
@@ -64,10 +57,16 @@ public class HorarioConsultasController implements Initializable {
                     } catch (IOException e) {}
                 }
             }
-            
         });
         
-        listaHorario.setItems(consultaObservableList);
+        fieldData.valueProperty().addListener((ov, valorAntigo, novoValor) -> {
+            if(novoValor != null) {
+               listaHorario.setItems(preparaSortedList(novoValor));
+               listaHorario.refresh();
+            }
+        });
+        
+        preencheData();
     }    
     
     private void preencheData() {
@@ -75,11 +74,24 @@ public class HorarioConsultasController implements Initializable {
         LocalDate localDate = LocalDate.now();
         fieldData.setValue(localDate);
         
-        consultaObservableList.setAll(fetchConsultasPorDia(localDate));
+//        consultaObservableList.setAll(fetchConsultasPorDia(localDate));
     }
     
     private List<Consulta> fetchConsultasPorDia(LocalDate data) {
        List<Consulta> listaConsultas = Consulta.readByData(data);
        return listaConsultas;
+    }
+    
+    private SortedList<Consulta> preparaSortedList (LocalDate data) {
+        ObservableList<Consulta> listaConsulta = 
+                FXCollections.observableList(fetchConsultasPorDia(data));
+        FilteredList<Consulta> listaFiltrada =
+                new FilteredList<>(listaConsulta, p -> true);
+        listaFiltrada.setPredicate(consulta -> {
+            if (consulta.getEstado() == (short) 0) return true;
+            return false;
+        });
+        SortedList<Consulta> sortedList = new SortedList<>(listaFiltrada);
+        return sortedList;
     }
 }
