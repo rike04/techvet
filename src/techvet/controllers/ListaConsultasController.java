@@ -31,7 +31,7 @@ import techvet.GUIUtils;
 import techvet.Utils;
 
 /**
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 public class ListaConsultasController implements Initializable {
         

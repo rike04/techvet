@@ -30,6 +30,7 @@ import bll.Util;
 import java.time.ZoneId;
 import java.util.Objects;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import techvet.DocFXML;
 import techvet.Utils;
@@ -37,7 +38,6 @@ import techvet.Utils;
 /**
  * @author Henrique Faria e Sergio Araujo
  */
-
 public class FormularioConsultaController implements Initializable {
 
     @FXML
@@ -52,6 +52,10 @@ public class FormularioConsultaController implements Initializable {
     private ChoiceBox boxLocal;
     @FXML
     private TextField localConsulta;
+    @FXML
+    private TextField fieldHoras;
+    @FXML
+    private TextField fieldMin;
     @FXML
     private Button botaoPesquisar;
     
@@ -72,6 +76,9 @@ public class FormularioConsultaController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         popularChoiceBox();
+        
+        fieldHoras.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoNumerica(2));
+        fieldMin.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoNumerica(2));
         
         //O textfield do local da consulta só é activado caso seja selecionada 
         //a opção "Exterior" 

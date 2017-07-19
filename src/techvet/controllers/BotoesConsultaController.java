@@ -15,9 +15,8 @@ import techvet.DocFXML;
 import techvet.Utils;
 
 /**
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
-
 public class BotoesConsultaController implements Initializable {
     
     private final Pane content;

@@ -20,9 +20,7 @@ import techvet.DocFXML;
 import techvet.Utils;
 
 /**
- * FXML Controller class
- *
- * @author PC
+ * @author Henrique Faria e Sergio Araujo
  */
 public class FormularioTipoProdutoController implements Initializable {
 

@@ -29,9 +29,7 @@ import techvet.GUIUtils;
 import techvet.Utils;
 
 /**
- * FXML Controller class
- *
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 public class ListaPacientesController implements Initializable {
 

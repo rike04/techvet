@@ -25,8 +25,7 @@ import model.Venda;
 import techvet.GUIUtils;
 
 /**
- *
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 public class ListaVendasController implements Initializable{
     

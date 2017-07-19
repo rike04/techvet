@@ -24,9 +24,7 @@ import model.Internamento;
 import techvet.GUIUtils;
 
 /**
- * FXML Controller class
- *
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 public class ListaInternamentosController implements Initializable {
         
