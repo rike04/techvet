@@ -37,7 +37,6 @@ public class BotoesAdministradorController implements Initializable {
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOUTILIZADOR, controller, content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
@@ -47,7 +46,6 @@ public class BotoesAdministradorController implements Initializable {
         try {
             Utils.mudaContentPara(DocFXML.LISTAUTILIZADORES, controller, content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
