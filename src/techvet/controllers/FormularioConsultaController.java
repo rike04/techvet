@@ -52,7 +52,7 @@ public class FormularioConsultaController implements Initializable {
     @FXML
     private TextField localConsulta;
     
-    private Pane content;
+    private final Pane content;
     
     private Paciente paciente;
     private Consulta consulta;
@@ -255,7 +255,6 @@ public class FormularioConsultaController implements Initializable {
             if ((this.tipo == null) ? (other.tipo != null) : !this.tipo.equals(other.tipo)) {
                 return false;
             }
-
             return true;
         }
 

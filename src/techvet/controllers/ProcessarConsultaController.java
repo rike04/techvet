@@ -113,10 +113,16 @@ public class ProcessarConsultaController implements Initializable {
         colStock.setCellValueFactory(dadosCell -> 
                 new SimpleIntegerProperty(dadosCell.getValue().getIdProduto().getStock()).asObject());
         
+        preencherLista();
+        
         tabelaProdutosConsulta.setItems(listaArtigosConsulta);
         
         GUIUtils.autoFitTable(tabelaProdutosConsulta);
     }   
+    
+    private void preencherLista() {
+        listaArtigosConsulta.setAll(consulta.getListaArtigosConsulta());
+    }
     
     private void preencherLabels() {
         labelTipoConsulta.setText(consulta.getTipoConsulta().getNome());
@@ -213,12 +219,22 @@ public class ProcessarConsultaController implements Initializable {
         consulta.setDesctratamento(fieldDescricao.getText());
         consulta.setEstado((short) 1);
         consulta.setPago((short) 0);
+        if (listaArtigosConsulta.size() > 0) {
+            consulta.setListaArtigosConsulta(listaArtigosConsulta);
+            for (ArtigoConsulta ac: listaArtigosConsulta) {
+                 ac.setConsulta(consulta);
+            }
+        } 
         consulta.updateT();
     }
     
     @FXML
     public void cliqueCancelar(ActionEvent event) {
-       
+       Initializable controller = new HorarioConsultasController(content);
+        try {
+            Utils.mudaContentPara(DocFXML.HORARIO, controller, content);
+        } catch (IOException e) {
+        }
     }
 
     @FXML
