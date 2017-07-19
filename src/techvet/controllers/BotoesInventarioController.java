@@ -16,9 +16,7 @@ import techvet.DocFXML;
 import techvet.Utils;
 
 /**
- * FXML Controller class
- *
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 public class BotoesInventarioController implements Initializable {
 
@@ -29,9 +27,6 @@ public class BotoesInventarioController implements Initializable {
         this.content = content;
     }
     
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -43,7 +38,6 @@ public class BotoesInventarioController implements Initializable {
         try {
             Utils.mudaContentPara(DocFXML.LISTAARTIGOS, controller, content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
@@ -53,34 +47,15 @@ public class BotoesInventarioController implements Initializable {
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOARTIGO, controller, content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
-    
-    
-    @FXML
-    public void cliqueEditarProduto(ActionEvent event) {
-        Initializable controller = new FormularioArtigoController(content, false);
-        try {
-            Utils.mudaContentPara(DocFXML.FORMULARIOARTIGO, controller, content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    
-    
-    /*@FXML
-    public void abre(ActionEvent event) {
-
-    }*/
-    
+  
     @FXML
     public void cliqueCriarTipoProduto(ActionEvent event) {
         Initializable controller = new FormularioTipoProdutoController(content);
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOTIPOPRODUTO, controller, content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     

@@ -1,6 +1,3 @@
-/*
- * 
- */
 
 package techvet.controllers;
 
@@ -32,11 +29,12 @@ import model.TipoConsulta;
 import bll.Util;
 import java.time.ZoneId;
 import java.util.Objects;
+import javafx.scene.layout.Pane;
 import techvet.DocFXML;
 import techvet.Utils;
 
 /**
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 
 public class FormularioConsultaController implements Initializable {
@@ -54,14 +52,18 @@ public class FormularioConsultaController implements Initializable {
     @FXML
     private TextField localConsulta;
     
+    private Pane content;
+    
     private Paciente paciente;
     private Consulta consulta;
     
-    public FormularioConsultaController() {
+    public FormularioConsultaController(Pane content) {
+        this.content = content;
     }
     
-    public FormularioConsultaController (Consulta consulta) {
+    public FormularioConsultaController (Consulta consulta, Pane content) {
         this.consulta = consulta;
+        this.content = content;
     }
 
     @Override
@@ -140,12 +142,20 @@ public class FormularioConsultaController implements Initializable {
     public void cliqueConfirmar(ActionEvent event) {
         if (osCamposPreenchidos()) {
             inserirConsultaBD();
+            mudarContent();
         } 
+    }
+    
+    private void mudarContent() {
+        Initializable controller = new ListaConsultasController(false, content);
+        try {
+            Utils.mudaContentPara(DocFXML.LISTACONSULTAS, controller, content);
+        } catch (IOException e) {}
     }
     
     @FXML
     public void cliqueCancelar(ActionEvent event) {
-        
+        mudarContent();
     }
     
     @FXML
@@ -154,7 +164,6 @@ public class FormularioConsultaController implements Initializable {
         try {
             controller = abrirListaPacientes(event);
         } catch (IOException ex) {
-            ex.printStackTrace();
             return ;
         }
         if (controller.foiSelecionadaOpcao()) {
@@ -201,11 +210,6 @@ public class FormularioConsultaController implements Initializable {
         return eValido;
     }
     
-    @FXML
-    private void cliqueNovaData(ActionEvent event) {
-        
-    }
-    
     private void inserirConsultaBD() { 
         boolean isNovaConsulta;
         isNovaConsulta = consulta == null;
@@ -222,11 +226,6 @@ public class FormularioConsultaController implements Initializable {
         else consulta.updateT();
     }
     
-    /*
-        Exemplo retirado de: https://gist.github.com/jewelsea/1422104
-        Serve para popular a ChoiceBox com os valores do TipoConsulta de forma a 
-        que seja possivel arranjar o ID correspondente a opcao escolhida
-    */
     private class Choice {
         private final TipoConsulta tipo;
         

@@ -130,7 +130,7 @@ public class ListaConsultasController implements Initializable {
     }
     
     private void abrirProcessarConsulta(Consulta c) {
-        FormularioConsultaController controller = new FormularioConsultaController(c);
+        FormularioConsultaController controller = new FormularioConsultaController(c, content);
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOCONSULTA, controller, content);
         } catch (IOException e) {

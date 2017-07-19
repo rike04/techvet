@@ -25,7 +25,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Cliente;
@@ -80,7 +79,6 @@ public class ListaClientesController implements Initializable {
         botaoCancelar.setVisible(devolveEscolha);
         botaoCancelar.setDisable(!devolveEscolha);
         
-        tabelaClientes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tabelaClientes.setPlaceholder(new Label("Nao existem clientes registados."));
         
         tabelaClientes.setRowFactory( tv -> {

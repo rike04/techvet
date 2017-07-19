@@ -17,8 +17,7 @@
   </rowConstraints>
    <children>
       <Button mnemonicParsing="false" onAction="#cliqueCriarArtigo" prefHeight="31.0" prefWidth="141.0" text="Novo produto" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
-      <Button mnemonicParsing="false" onAction="#cliqueEditarProduto" text="Editar produto" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
       <Button mnemonicParsing="false" onAction="#cliqueListaArtigos" text="Ver produtos" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Button mnemonicParsing="false" onAction="#cliqueCriarTipoProduto" text="Tipos de Produto" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#cliqueCriarTipoProduto" text="Tipos de Produto" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
    </children>
 </GridPane>

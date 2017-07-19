@@ -16,8 +16,8 @@
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Button mnemonicParsing="false" onAction="#abreCriarConsulta" prefHeight="31.0" prefWidth="141.0" text="Criar Consulta" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-      <Button mnemonicParsing="false" onAction="#abre" text="Horário" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#cliqueCriarConsulta" prefHeight="31.0" prefWidth="141.0" text="Criar Consulta" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#cliqueHorario" text="Horário" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
       <Button mnemonicParsing="false" onAction="#cliqueListaConsultas" text="Ver consultas" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <Button mnemonicParsing="false" onAction="#cliqueCriarTipoConsulta" text="Tipos de Consulta" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
    </children>

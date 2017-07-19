@@ -15,8 +15,7 @@ import techvet.DocFXML;
 import techvet.Utils;
 
 /**
- *
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 public class BotoesInternamentoController implements Initializable{
     
@@ -26,9 +25,6 @@ public class BotoesInternamentoController implements Initializable{
         this.content = content;
     }
 
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -40,7 +36,6 @@ public class BotoesInternamentoController implements Initializable{
         try {
             Utils.mudaContentPara(DocFXML.LISTAINTERNAMENTOS, controller, content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
@@ -54,9 +49,5 @@ public class BotoesInternamentoController implements Initializable{
 //        }
        
     }
-    
-    @FXML
-    public void abre(ActionEvent event) {
 
-    }
 }

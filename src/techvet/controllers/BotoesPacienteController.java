@@ -16,11 +16,8 @@ import techvet.DocFXML;
 import techvet.Utils;
 
 /**
- * FXML Controller class
- *
  * @author Henrique Faria e Sergio Araujo
  */
-
 public class BotoesPacienteController implements Initializable {
 
     private final Pane content;

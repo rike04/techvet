@@ -1,6 +1,3 @@
-/*
- * 
- */
 
 package techvet.controllers;
 
@@ -165,7 +162,6 @@ public class FormularioPacienteController implements Initializable {
         else paciente.updateT();
     } 
     
-    //ALTERAR: forma como o cliente e encontrado. Clientes com o mesmo nome darao problemas
     private Cliente buscaCliente() throws Exception {
         List<Cliente> clientes = Cliente.readByNome(fieldCliente.getText());
         return clientes.get(0);

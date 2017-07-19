@@ -1,16 +1,15 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ *
  */
 package techvet.controllers;
 
-import java.awt.Choice;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,7 +31,7 @@ import techvet.Utils;
 /**
  * FXML Controller class
  *
- * @author Sérgio Araújo
+ * @author Henrique Faria e Sérgio Araújo
  */
 public class EditarProdutoController implements Initializable {
     
@@ -57,31 +56,28 @@ public class EditarProdutoController implements Initializable {
        this.p = p; 
        this.content = content;
     }
-    
-    
    
-    /**
-     * Initializes the controller class.
-     */
+   
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
         popularChoiceBox();
         
-        TipoProduto tp = p.getCodTipo();
-        
-        fieldNome.setText(p.getNome());
-        fieldDescricao.setText(p.getDescricao());
-        boxTipoProduto.getSelectionModel().select(tp.getId()-2); 
-        fieldPreco.setText(Double.toString(p.getPreco()));
-        fieldStock.setText(Integer.toString(p.getStock()));
-        fieldStockMin.setText(Integer.toString(p.getStock()));
+        preencherCampos();
         
         fieldNome.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoLimiteMax(100));
-//        fieldDescricao.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoLimiteMax(200));
         fieldPreco.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoPrecos(12));
         fieldStock.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoNumerica(5));
         fieldStockMin.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoNumerica(5));
+    }
+    
+    private void preencherCampos() { 
+        fieldNome.setText(p.getNome());
+        fieldDescricao.setText(p.getDescricao());
+        boxTipoProduto.getSelectionModel().select(new Choice(p.getCodTipo())); 
+        fieldPreco.setText(Double.toString(p.getPreco()));
+        fieldStock.setText(Integer.toString(p.getStock()));
+        fieldStockMin.setText(Integer.toString(p.getStock()));
     }
     
     @FXML
@@ -154,14 +150,6 @@ public class EditarProdutoController implements Initializable {
         ObservableList<Choice> escolhasTipoProduto = FXCollections.observableArrayList();
         List<TipoProduto> tiposProduto = TipoProduto.retrieveAll();
         
-        // Ordena a lista de forma ascendente 
-        Collections.sort(tiposProduto, new Comparator<TipoProduto>() {
-
-            public int compare(TipoProduto o1, TipoProduto o2) {
-                return o1.getId().compareTo(o2.getId());
-            }   
-        });
-        
         tiposProduto.forEach( (TipoProduto tipo) -> {
             escolhasTipoProduto.add(new Choice(tipo));
         });
@@ -179,8 +167,6 @@ public class EditarProdutoController implements Initializable {
         p.updateT();
     } 
 
-   
-    
     private class Choice {
         private final TipoProduto tp;
         
@@ -195,6 +181,29 @@ public class EditarProdutoController implements Initializable {
         
         public TipoProduto getTipoProduto() {
             return tp;
+        }
+        
+        @Override
+        public boolean equals(Object obj) {
+             if (obj == null) {
+                return false;
+            }
+            if (!Choice.class.isAssignableFrom(obj.getClass())) {
+                return false;
+            }
+            final Choice other = (Choice) obj;
+            if ((this.tp == null) ? (other.tp != null) : !this.tp.equals(other.tp)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 53 * hash + Objects.hashCode(this.tp);
+            return hash;
         }
     }
     

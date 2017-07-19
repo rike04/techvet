@@ -14,9 +14,7 @@ import techvet.DocFXML;
 import techvet.Utils;
 
 /**
- * FXML Controller class
- *
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 public class BotoesAdministradorController implements Initializable {
 
@@ -27,9 +25,7 @@ public class BotoesAdministradorController implements Initializable {
         this.content = content;
     }
     
-    /**
-     * Initializes the controller class.
-     */
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        

@@ -44,8 +44,8 @@ public class BotoesConsultaController implements Initializable {
     }
     
     @FXML
-    public void abreCriarConsulta(ActionEvent event) { 
-        FormularioConsultaController m = new FormularioConsultaController();
+    public void cliqueCriarConsulta(ActionEvent event) { 
+        FormularioConsultaController m = new FormularioConsultaController(content);
         FXMLLoader loader = new FXMLLoader(getClass().getResource(DocFXML.FORMULARIOCONSULTA.getPath()));
         loader.setController(m);
         content.getChildren().clear();
@@ -57,7 +57,7 @@ public class BotoesConsultaController implements Initializable {
     }
     
     @FXML
-    public void abre(ActionEvent event) {
+    public void cliqueHorario(ActionEvent event) {
        Initializable controller = new HorarioConsultasController(content);
         try {
             Utils.mudaContentPara(DocFXML.HORARIO, controller, content);

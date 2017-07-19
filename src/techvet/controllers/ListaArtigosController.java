@@ -49,8 +49,7 @@ public class ListaArtigosController implements Initializable {
     private TableColumn<Produto, Double> colPreco;
     @FXML
     private TableColumn<Produto, String> colDescricao;
-    @FXML
-    private TableColumn<Produto, String> colEditar;
+
     @FXML
     private Button botaoSelecionar;
     @FXML
@@ -58,7 +57,7 @@ public class ListaArtigosController implements Initializable {
     
     private boolean foiConfirmado;
     private final boolean devolveEscolha;
-    private Pane content;
+    private final Pane content;
     
     public ListaArtigosController(boolean devolveEscolha) {
         this.foiConfirmado = false;
@@ -80,8 +79,7 @@ public class ListaArtigosController implements Initializable {
         botaoCancelar.setVisible(devolveEscolha);
         botaoCancelar.setDisable(!devolveEscolha);
         
-        tabela.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tabela.setPlaceholder(new Label("Não existem consultas registadas"));
+        tabela.setPlaceholder(new Label("Não foram encontrados produtos."));
         
         tabela.setRowFactory( tr -> {
             TableRow<Produto> linha = new TableRow<>();
@@ -91,7 +89,7 @@ public class ListaArtigosController implements Initializable {
                     abrirEditarProduto(p);
                 }
             });
-          return linha;
+            return linha;
         });
         
         colNome.setCellValueFactory(dadosCell -> 
@@ -106,8 +104,6 @@ public class ListaArtigosController implements Initializable {
                 new SimpleDoubleProperty(dadosCell.getValue().getPreco()).asObject());
         colDescricao.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getDescricao()));
-        colEditar.setCellValueFactory(dadosCell -> 
-                new SimpleStringProperty("Editar"));
         
         tabela.setItems(FXCollections.observableList(leListaProdutos()));
         
@@ -119,7 +115,6 @@ public class ListaArtigosController implements Initializable {
         try {
             lista = Produto.retrieveAll();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return lista;
     }
@@ -129,7 +124,6 @@ public class ListaArtigosController implements Initializable {
         try {
             Utils.mudaContentPara(DocFXML.EDITARPRODUTO, controller, content);
         }catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
@@ -157,5 +151,5 @@ public class ListaArtigosController implements Initializable {
         Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
         stage.close();
     }
-   
+    
 }

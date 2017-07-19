@@ -15,9 +15,7 @@ import techvet.DocFXML;
 import techvet.Utils;
 
 /**
- * FXML Controller class
- *
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 public class BotoesClienteController implements Initializable {
 
@@ -41,7 +39,6 @@ public class BotoesClienteController implements Initializable {
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOCLIENTE, controller, content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
@@ -51,7 +48,6 @@ public class BotoesClienteController implements Initializable {
         try {
             Utils.mudaContentPara(DocFXML.LISTACLIENTES, controller, content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     

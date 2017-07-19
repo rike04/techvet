@@ -86,7 +86,7 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </padding>
       </HBox>
-      <DatePicker fx:id="fieldData" onAction="#cliqueNovaData" promptText="Data" GridPane.columnIndex="5" GridPane.rowIndex="2" />
+      <DatePicker fx:id="fieldData" promptText="Data" GridPane.columnIndex="5" GridPane.rowIndex="2" />
    </children>
    <opaqueInsets>
       <Insets />

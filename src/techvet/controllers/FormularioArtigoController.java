@@ -12,9 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
@@ -65,7 +63,6 @@ public class FormularioArtigoController implements Initializable {
         popularChoiceBox();
         
         fieldNome.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoLimiteMax(100));
-//        fieldDescricao.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoLimiteMax(200));
         fieldPreco.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoPrecos(12));
         fieldStock.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoNumerica(5));
         fieldStockMin.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoNumerica(5));

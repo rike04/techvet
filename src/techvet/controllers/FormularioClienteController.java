@@ -11,7 +11,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
@@ -73,12 +72,12 @@ public class FormularioClienteController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        fieldNomeCliente.addEventFilter(KeyEvent.KEY_TYPED, validacaoLimiteMax(100));
-        fieldMorada.addEventFilter(KeyEvent.KEY_TYPED, validacaoLimiteMax(100));
-        fieldMail.addEventFilter(KeyEvent.KEY_TYPED, validacaoLimiteMax(40));
-        fieldCodigoPostal.addEventFilter(KeyEvent.KEY_TYPED, validacaoLimiteMax(8));        
-        fieldNIF.addEventFilter(KeyEvent.KEY_TYPED, validacaoNumerica(9));
-        fieldTele.addEventFilter(KeyEvent.KEY_TYPED, validacaoNumerica(9));
+        fieldNomeCliente.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoLimiteMax(100));
+        fieldMorada.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoLimiteMax(100));
+        fieldMail.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoLimiteMax(40));
+        fieldCodigoPostal.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoLimiteMax(8));        
+        fieldNIF.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoNumerica(9));
+        fieldTele.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoNumerica(9));
         
         //Verifica na BD se o NIF ja se encontra registado 
         fieldNIF.focusedProperty().addListener(
@@ -238,36 +237,6 @@ public class FormularioClienteController implements Initializable {
             return false;
         }
         return true;
-    }
-    
-    //Sempre que for inserido um caracter vai ser verificado se é um número
-    //e se não ultrapassa o limite definido 
-    private EventHandler<KeyEvent> validacaoNumerica(int limite) {
-        return (KeyEvent event) -> {
-            TextField txtField = (TextField) event.getSource();                
-            if (txtField.getText().length() >= limite) {                    
-                event.consume();
-            }
-            if(event.getCharacter().matches("[0-9.]")){ 
-                if(txtField.getText().contains(".") && event.getCharacter().matches("[.]")){
-                    event.consume();
-                }else if(txtField.getText().length() == 0 && event.getCharacter().matches("[.]")){
-                    event.consume(); 
-                }
-            } else{
-                event.consume();
-            }
-        };
-    }
-    
-    //Impede que o limite definido para o número de caracteres seja ultrapassado
-    private EventHandler<KeyEvent> validacaoLimiteMax(int limite) {
-        return (KeyEvent event) -> {
-            TextField txtField = (TextField) event.getSource();                
-            if (txtField.getText().length() >= limite) {                    
-                event.consume();
-            }
-        };
     }
      
 }
