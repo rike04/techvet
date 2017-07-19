@@ -200,7 +200,7 @@ public class ProcessarConsultaController implements Initializable {
     public void cliqueConfirmar(ActionEvent event) {
         if(osDadosSaoValidos()) {
             atualizaConsultaBD();
-            consulta.updateT();  
+            mudarContent();
         }
 
     } 
@@ -230,7 +230,11 @@ public class ProcessarConsultaController implements Initializable {
     
     @FXML
     public void cliqueCancelar(ActionEvent event) {
-       Initializable controller = new HorarioConsultasController(content);
+
+    }
+    
+    private void mudarContent() {
+        Initializable controller = new HorarioConsultasController(content);
         try {
             Utils.mudaContentPara(DocFXML.HORARIO, controller, content);
         } catch (IOException e) {
