@@ -4,6 +4,7 @@
 
 package techvet.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +22,16 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Cliente;
+import techvet.DocFXML;
 import techvet.GUIUtils;
+import techvet.Utils;
 
 /**
  * @author Henrique Faria e Sergio Araujo
@@ -54,15 +60,21 @@ public class ListaClientesController implements Initializable {
     
     private boolean foiConfirmado;
     private final boolean devolveEscolha;
+    private Pane content;
 
+    public ListaClientesController(boolean devolveEscolha, Pane content) {
+        this.foiConfirmado = false;
+        this.devolveEscolha = devolveEscolha;
+        this.content = content;
+    }   
+    
     public ListaClientesController(boolean devolveEscolha) {
         this.foiConfirmado = false;
         this.devolveEscolha = devolveEscolha;
-    }        
+    }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        
         botaoSelecionar.setVisible(devolveEscolha);
         botaoSelecionar.setDisable(!devolveEscolha);        
         botaoCancelar.setVisible(devolveEscolha);
@@ -70,6 +82,22 @@ public class ListaClientesController implements Initializable {
         
         tabelaClientes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tabelaClientes.setPlaceholder(new Label("Nao existem clientes registados."));
+        
+        tabelaClientes.setRowFactory( tv -> {
+            TableRow<Cliente> linha = new TableRow<>();
+            linha.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!linha.isEmpty()) && content != null) {
+                    Cliente c = linha.getItem();
+                    Initializable controller = new FormularioClienteController(content, c); 
+                    try {
+                        Utils.mudaContentPara(DocFXML.FORMULARIOCLIENTE, controller, content);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+          return linha;
+        });
         
         //Atribui o valor que cada coluna ira ter 
         colNome.setCellValueFactory(dadosCell -> 
@@ -84,8 +112,8 @@ public class ListaClientesController implements Initializable {
                 new SimpleStringProperty(dadosCell.getValue().getNif()));
         
         /*
-         *   http://code.makery.ch/blog/javafx-8-tableview-sorting-filtering/
-        */
+         * http://code.makery.ch/blog/javafx-8-tableview-sorting-filtering/
+         */
         ObservableList<Cliente> listaClientes = FXCollections.observableList(leListaClientes());
         FilteredList<Cliente> listaFiltrada = new FilteredList<>(listaClientes, p -> true);
         filtroProcurar.textProperty().addListener((observable, oldValue, newValue) -> {

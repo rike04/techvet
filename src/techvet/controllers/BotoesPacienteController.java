@@ -13,7 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * FXML Controller class
@@ -40,9 +40,9 @@ public class BotoesPacienteController implements Initializable {
     
     @FXML 
     public void cliqueVerPacientes(ActionEvent event) {  
-        Initializable controller = new ListaPacientesController(false);
+        Initializable controller = new ListaPacientesController(false, content);
         try {
-            Util.mudaContentPara(DocFXML.LISTAPACIENTES, controller, getContent());
+            Utils.mudaContentPara(DocFXML.LISTAPACIENTES, controller, getContent());
         } catch (IOException e) {
             Logger.getLogger(BotoesPacienteController.class.getName()).log(Level.SEVERE, null, e);
         }
@@ -52,7 +52,7 @@ public class BotoesPacienteController implements Initializable {
     public void cliqueRegistarPaciente(ActionEvent event) {
         FormularioPacienteController controller = new FormularioPacienteController(getContent());
         try {
-            Util.mudaContentPara(DocFXML.FORMULARIOPACIENTE, controller, getContent());
+            Utils.mudaContentPara(DocFXML.FORMULARIOPACIENTE, controller, getContent());
         } catch (IOException ex) {
             Logger.getLogger(BotoesPacienteController.class.getName()).log(Level.SEVERE, null, ex);
         }

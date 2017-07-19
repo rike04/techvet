@@ -13,7 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * FXML Controller class
@@ -39,33 +39,46 @@ public class BotoesInventarioController implements Initializable {
     
     @FXML 
     public void cliqueListaArtigos(ActionEvent event) {
-        Initializable controller = new ListaArtigosController(false);
+        Initializable controller = new ListaArtigosController(false, content);
         try {
-            Util.mudaContentPara(DocFXML.LISTAARTIGOS, controller, content);
-        } catch (IOException e) {
-        }
-    }
-    
-    @FXML
-    public void cliqueCriarArtigo(ActionEvent event) { 
-        Initializable controller = new FormularioArtigoController(content);
-        try {
-            Util.mudaContentPara(DocFXML.FORMULARIOARTIGO, controller, content);
+            Utils.mudaContentPara(DocFXML.LISTAARTIGOS, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
     
     @FXML
+    public void cliqueCriarArtigo(ActionEvent event) { 
+        Initializable controller = new FormularioArtigoController(content, true);
+        try {
+            Utils.mudaContentPara(DocFXML.FORMULARIOARTIGO, controller, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    @FXML
+    public void cliqueEditarProduto(ActionEvent event) {
+        Initializable controller = new FormularioArtigoController(content, false);
+        try {
+            Utils.mudaContentPara(DocFXML.FORMULARIOARTIGO, controller, content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    
+    /*@FXML
     public void abre(ActionEvent event) {
 
-    }
+    }*/
     
     @FXML
     public void cliqueCriarTipoProduto(ActionEvent event) {
         Initializable controller = new FormularioTipoProdutoController(content);
         try {
-            Util.mudaContentPara(DocFXML.FORMULARIOTIPOPRODUTO, controller, content);
+            Utils.mudaContentPara(DocFXML.FORMULARIOTIPOPRODUTO, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }

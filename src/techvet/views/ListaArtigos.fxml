@@ -28,6 +28,7 @@
             <TableColumn fx:id="colStockM" prefWidth="140.0" text="Stock Mínimo" />
             <TableColumn fx:id="colPreco" prefWidth="129.0" text="Preço" />
             <TableColumn fx:id="colDescricao" prefWidth="146.0" text="Descrição" />
+            <TableColumn fx:id="colEditar" prefWidth="106.0" text="editar" />
         </columns>
       </TableView>
       <Button fx:id="botaoSelecionar" mnemonicParsing="false" onAction="#cliqueSelecionar" text="Selecionar" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />

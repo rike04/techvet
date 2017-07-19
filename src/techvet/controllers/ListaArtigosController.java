@@ -4,6 +4,7 @@
 
 package techvet.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,10 +21,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Produto;
+import techvet.DocFXML;
 import techvet.GUIUtils;
+import techvet.Utils;
 
 /**
  * @author rike4
@@ -45,16 +50,26 @@ public class ListaArtigosController implements Initializable {
     @FXML
     private TableColumn<Produto, String> colDescricao;
     @FXML
+    private TableColumn<Produto, String> colEditar;
+    @FXML
     private Button botaoSelecionar;
     @FXML
     private Button botaoCancelar;
     
     private boolean foiConfirmado;
     private final boolean devolveEscolha;
+    private Pane content;
     
-    public ListaArtigosController (boolean devolveEscolha) { 
+    public ListaArtigosController(boolean devolveEscolha) {
         this.foiConfirmado = false;
         this.devolveEscolha = devolveEscolha;
+        this.content = null;
+    }
+    
+    public ListaArtigosController (boolean devolveEscolha, Pane content) { 
+        this.foiConfirmado = false;
+        this.devolveEscolha = devolveEscolha;
+        this.content = content;
     }
 
     @Override
@@ -68,6 +83,18 @@ public class ListaArtigosController implements Initializable {
         tabela.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tabela.setPlaceholder(new Label("Não existem consultas registadas"));
         
+        tabela.setRowFactory( tr -> {
+            TableRow<Produto> linha = new TableRow<>();
+            linha.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!linha.isEmpty()) && content != null) {
+                    Produto p = linha.getItem();
+                    abrirEditarProduto(p);
+                }
+            });
+          return linha;
+        });
+        
+        
         colNome.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getNome()));
         colTipoProduto.setCellValueFactory(dadosCell -> 
@@ -80,7 +107,10 @@ public class ListaArtigosController implements Initializable {
                 new SimpleDoubleProperty(dadosCell.getValue().getPreco()).asObject());
         colDescricao.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getDescricao()));
-
+        colEditar.setCellValueFactory(dadosCell -> 
+                new SimpleStringProperty("Editar"));
+        
+        
         tabela.setItems(FXCollections.observableList(leListaProdutos()));
         
         GUIUtils.autoFitTable(tabela);
@@ -94,6 +124,15 @@ public class ListaArtigosController implements Initializable {
             e.printStackTrace();
         }
         return lista;
+    }
+    
+    private void abrirEditarProduto(Produto p) {
+        EditarProdutoController controller = new EditarProdutoController(p, content);
+        try {
+            Utils.mudaContentPara(DocFXML.EDITARPRODUTO, controller, content);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
     }
     
     public boolean foiSelecionadaOpcao() {

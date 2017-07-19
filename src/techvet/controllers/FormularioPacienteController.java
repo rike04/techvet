@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 import model.Cliente;
 import model.Paciente;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * @author Henrique Faria e Sergio Araujo
@@ -50,16 +50,34 @@ public class FormularioPacienteController implements Initializable {
     
     private final Pane content;
     private Cliente cliente;
+    private Paciente paciente;
     
     public FormularioPacienteController(Pane content) {
         this.content = content;
         cliente = null;
     }
 
+    public FormularioPacienteController(Pane content, Paciente paciente) {
+        this.content = content;
+        this.cliente = null;
+        this.paciente = paciente;
+    }
+    
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         popularChoiceBox();
+       
+        if(paciente != null) preencheCampos();
     }    
+    
+    private void preencheCampos() {
+        fieldPeso.setText(paciente.getPeso().toString());
+        fieldIdade.setText(String.valueOf(paciente.getIdade()));
+        fieldNome.setText(paciente.getNome());
+        fieldCliente.setText(paciente.getIdCliente().getNome());
+        fieldEspecie.setText(paciente.getEspecie());
+        boxSexo.getSelectionModel().select(paciente.getSexo());
+    }
     
     @FXML
     public void cliqueProcurarCliente(ActionEvent event) {
@@ -83,7 +101,7 @@ public class FormularioPacienteController implements Initializable {
         Scene scene = new Scene(root);
         
         Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Stage stage = Util.preparaNovaJanela(owner);
+        Stage stage = Utils.preparaNovaJanela(owner);
         stage.setScene(scene);
         stage.showAndWait();
         return controller;
@@ -93,9 +111,7 @@ public class FormularioPacienteController implements Initializable {
     public void cliqueConfirmar(ActionEvent event) {
         if (osDadosSaoValidos()) {
             try {
-                if (cliente == null) {
-                    cliente = buscaCliente();
-                }
+                if (cliente == null) cliente = buscaCliente();
                 inserirPacienteBD(cliente);
                 mudarContent();
             } catch (Exception e) {
@@ -114,8 +130,8 @@ public class FormularioPacienteController implements Initializable {
     }
     
     private void mudarContent() throws IOException{
-        ListaConsultasController controller = new ListaConsultasController(false, content);
-        Util.mudaContentPara(DocFXML.LISTAPACIENTES, controller, content);
+        ListaPacientesController controller = new ListaPacientesController(false, content);
+        Utils.mudaContentPara(DocFXML.LISTAPACIENTES, controller, content);
     }
     
     private Boolean osDadosSaoValidos() {
@@ -132,17 +148,21 @@ public class FormularioPacienteController implements Initializable {
     }
     
     private void inserirPacienteBD(Cliente c) {
-        Paciente p = new Paciente();
-        p.setNome(fieldNome.getText());
-        p.setEspecie(fieldEspecie.getText());
-        p.setIdade(Integer.parseInt(fieldIdade.getText()));
-        p.setPeso(Double.parseDouble(fieldPeso.getText()));
-        p.setIdCliente(c);
-        p.setRaca("Raca");
-        p.setCor("Cor");
-        p.setSexo(boxSexo.getSelectionModel().getSelectedItem().toString());
-        p.setEstado((short) 1);
-        p.createT();
+        boolean isNovoPaciente = paciente == null;
+        if (isNovoPaciente) paciente = new Paciente();
+        
+        paciente.setNome(fieldNome.getText());
+        paciente.setEspecie(fieldEspecie.getText());
+        paciente.setIdade(Integer.parseInt(fieldIdade.getText()));
+        paciente.setPeso(Double.parseDouble(fieldPeso.getText()));
+        paciente.setIdCliente(c);
+        paciente.setRaca("Raca");
+        paciente.setCor("Cor");
+        paciente.setSexo(boxSexo.getSelectionModel().getSelectedItem().toString());
+        paciente.setEstado((short) 1);
+        
+        if (isNovoPaciente) paciente.createT();
+        else paciente.updateT();
     } 
     
     //ALTERAR: forma como o cliente e encontrado. Clientes com o mesmo nome darao problemas

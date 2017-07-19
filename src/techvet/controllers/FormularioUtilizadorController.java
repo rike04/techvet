@@ -18,7 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import model.Utilizador;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * @author rike4
@@ -76,7 +76,7 @@ public class FormularioUtilizadorController implements Initializable {
     public void cliqueCancelar(ActionEvent event) {
         ListaUtilizadoresController controller = new ListaUtilizadoresController(false);
         try {
-            Util.mudaContentPara(DocFXML.LISTAUTILIZADORES, controller, content);
+            Utils.mudaContentPara(DocFXML.LISTAUTILIZADORES, controller, content);
         } catch (IOException e) {
         }
     }
@@ -116,7 +116,7 @@ public class FormularioUtilizadorController implements Initializable {
     private void mudarContent(){
         Initializable controller = new ListaUtilizadoresController(false);
         try {
-            Util.mudaContentPara(DocFXML.LOGIN, controller, content);
+            Utils.mudaContentPara(DocFXML.LOGIN, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }

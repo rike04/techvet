@@ -17,7 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import model.Consulta;
 import model.Receita;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * FXML Controller class
@@ -55,8 +55,8 @@ public class FormularioReceitaController implements Initializable {
         
         verificaReadOnly();
         
-        fieldMedicamentos.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoLimiteMax(100));
-        fieldTratamentos.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoLimiteMax(200));
+        fieldMedicamentos.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoLimiteMax(100));
+        fieldTratamentos.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoLimiteMax(200));
     }    
     
     @FXML

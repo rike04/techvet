@@ -12,7 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import model.TipoConsulta;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * FXML Controller class
@@ -34,8 +34,8 @@ public class FormularioTipoConsultaController implements Initializable {
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        fieldNome.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoLimiteMax(40));
-        fieldValor.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoPrecos(35));
+        fieldNome.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoLimiteMax(40));
+        fieldValor.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoPrecos(35));
     }    
     
     @FXML
@@ -82,7 +82,7 @@ public class FormularioTipoConsultaController implements Initializable {
     private void mudaContent() {
         Initializable controller = new ListaConsultasController(false, content);
         try {
-            Util.mudaContentPara(DocFXML.LISTACONSULTAS, controller, content);
+            Utils.mudaContentPara(DocFXML.LISTACONSULTAS, controller, content);
         } catch (IOException e) {
         }
     }

@@ -33,7 +33,7 @@
       <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="754.0" text="Novo Produto" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="754.0" text="Editar produto" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets top="20.0" />
          </GridPane.margin>
@@ -44,7 +44,7 @@
       <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.rowIndex="8" GridPane.valignment="BOTTOM" GridPane.vgrow="SOMETIMES">
          <children>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="SOMETIMES" />
-            <Button fx:id="btnConfirmar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cliqueConfirmar" prefHeight="31.0" prefWidth="129.0" text="Confirmar" HBox.hgrow="NEVER" />
+            <Button fx:id="btnConfirmar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cliqueConfirmar" prefHeight="31.0" prefWidth="129.0" text="Editar" HBox.hgrow="NEVER" />
             <Region prefHeight="200.0" prefWidth="200.0" />
             <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#cliqueCancelar" prefHeight="31.0" prefWidth="123.0" text="Cancelar" HBox.hgrow="NEVER" />
             <Region prefHeight="200.0" prefWidth="200.0" />

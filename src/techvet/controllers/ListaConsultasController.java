@@ -28,7 +28,7 @@ import javafx.stage.Stage;
 import model.Consulta;
 import techvet.DocFXML;
 import techvet.GUIUtils;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * @author rike4
@@ -37,6 +37,8 @@ public class ListaConsultasController implements Initializable {
         
     @FXML
     private TableView<Consulta> tabelaConsultas;
+    @FXML
+    private TableColumn<Consulta, String> colTipoConsulta;
     @FXML
     private TableColumn<Consulta, String> colCliente;
     @FXML
@@ -73,7 +75,7 @@ public class ListaConsultasController implements Initializable {
         botaoCancelar.setVisible(devolveEscolha);
         botaoCancelar.setDisable(!devolveEscolha);
         
-        tabelaConsultas.setPlaceholder(new Label("Não existem consultas registadas"));
+        tabelaConsultas.setPlaceholder(new Label("Não existem consultas registadas."));
         
         tabelaConsultas.setRowFactory( tv -> {
             TableRow<Consulta> linha = new TableRow<>();
@@ -88,6 +90,8 @@ public class ListaConsultasController implements Initializable {
           return linha;
         });
         
+        colTipoConsulta.setCellValueFactory(dadosCell -> 
+                new SimpleStringProperty(dadosCell.getValue().getTipoConsulta().getNome()));
         colCliente.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getPaciente().getIdCliente().getNome()));
         colPaciente.setCellValueFactory(dadosCell -> 
@@ -126,9 +130,9 @@ public class ListaConsultasController implements Initializable {
     }
     
     private void abrirProcessarConsulta(Consulta c) {
-        ProcessarConsultaController controller = new ProcessarConsultaController(c, content);
+        FormularioConsultaController controller = new FormularioConsultaController(c);
         try {
-            Util.mudaContentPara(DocFXML.PROCESSARCONSULTA, controller, content);
+            Utils.mudaContentPara(DocFXML.FORMULARIOCONSULTA, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }

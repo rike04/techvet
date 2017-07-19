@@ -12,7 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * FXML Controller class
@@ -39,7 +39,7 @@ public class BotoesClienteController implements Initializable {
     public void cliqueCriarCliente(ActionEvent event) {
         Initializable controller = new FormularioClienteController(content);
         try {
-            Util.mudaContentPara(DocFXML.FORMULARIOCLIENTE, controller, content);
+            Utils.mudaContentPara(DocFXML.FORMULARIOCLIENTE, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,9 +47,9 @@ public class BotoesClienteController implements Initializable {
     
     @FXML
     public void cliqueVerClientes(ActionEvent event) {
-        Initializable controller = new ListaClientesController(false);
+        Initializable controller = new ListaClientesController(false, content);
         try {
-            Util.mudaContentPara(DocFXML.LISTACLIENTES, controller, content);
+            Utils.mudaContentPara(DocFXML.LISTACLIENTES, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }

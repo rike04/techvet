@@ -26,12 +26,14 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.Cliente;
 import model.Consulta;
 import model.Paciente;
 import model.TipoConsulta;
+import bll.Util;
+import java.time.ZoneId;
+import java.util.Objects;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * @author rike4
@@ -41,8 +43,6 @@ public class FormularioConsultaController implements Initializable {
 
     @FXML
     private TextField fieldNomePaciente;
-    @FXML
-    private TextField fieldNomeCliente;
     @FXML
     private DatePicker fieldData;
     @FXML 
@@ -54,23 +54,19 @@ public class FormularioConsultaController implements Initializable {
     @FXML
     private TextField localConsulta;
     
-    private Cliente cliente;
     private Paciente paciente;
+    private Consulta consulta;
+    
+    public FormularioConsultaController() {
+    }
+    
+    public FormularioConsultaController (Consulta consulta) {
+        this.consulta = consulta;
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        ObservableList<Choice> escolhasTipoConsulta = FXCollections.observableArrayList();
-        List<TipoConsulta> tiposConsulta = TipoConsulta.retrieveAll();
-        tiposConsulta.forEach( (TipoConsulta tipo) -> {
-            escolhasTipoConsulta.add(new Choice(tipo));
-        });
-        boxTipoConsulta.getItems().addAll(escolhasTipoConsulta);
-        boxTipoConsulta.getSelectionModel().select(0);
-        
-        ObservableList<String> escolhasLocal = FXCollections.observableArrayList();
-        escolhasLocal.add("Local");
-        escolhasLocal.add("Exterior");
-        boxLocal.getItems().addAll(escolhasLocal);
+        popularChoiceBox();
         
         //O textfield do local da consulta só é activado caso seja selecionada 
         //a opção "Exterior" 
@@ -83,9 +79,7 @@ public class FormularioConsultaController implements Initializable {
                 localConsulta.setDisable(false);
             }
         });
-        
-        boxLocal.getSelectionModel().select(0);
-        
+               
         //Listeners para os textfields
         //https://stackoverflow.com/questions/30249493/using-threads-to-make-database-requests
         fieldNomePaciente.focusedProperty().addListener(
@@ -95,12 +89,7 @@ public class FormularioConsultaController implements Initializable {
                     @Override
                     protected Void call() throws Exception {
                         String nome = fieldNomePaciente.getText();
-                        List<Paciente> pacientes = Paciente.retrievePacientesbyNome(nome);
-                        if (pacientes.size() == 1) {
-                            paciente = pacientes.get(0);
-                            cliente = paciente.getIdCliente();
-                            fieldNomeCliente.setText(cliente.getNome());
-                        } 
+                        atualizaPacienteBD(nome);
                         return null;
                     }
                 };
@@ -109,40 +98,49 @@ public class FormularioConsultaController implements Initializable {
                 t.start();
             }
         });
-        
-        fieldNomeCliente.focusedProperty().addListener(
-                (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-                    if (newValue == false && !fieldNomeCliente.getText().trim().isEmpty()) {
-                        Task<Void> task = new Task<Void>() {
-                            @Override
-                            protected Void call() throws Exception {
-                                String nome = fieldNomeCliente.getText();
-                                List<Cliente> clientes = Cliente.readByNome(nome);
-                                
-                                if (clientes.size() == 1) {
-                                    cliente = clientes.get(0);
-                                    if (cliente.getListaPacientes().size() == 1) {
-                                        paciente = cliente.getListaPacientes().get(0);
-                                        fieldNomePaciente.setText(paciente.getNome());
-                                    }
-                                }
-                                return null;
-                            }
-                        };
-                        Thread t = new Thread(task);
-                        t.setDaemon(true);
-                        t.start();
-                }
-        });
+        if (consulta != null) preencherCampos(); 
     }    
+    
+    private void popularChoiceBox() {
+        ObservableList<Choice> escolhasTipoConsulta = FXCollections.observableArrayList();
+        List<TipoConsulta> tiposConsulta = TipoConsulta.retrieveAll();
+        tiposConsulta.forEach( (TipoConsulta tipo) -> {
+            escolhasTipoConsulta.add(new Choice(tipo));
+        });
+        boxTipoConsulta.getItems().addAll(escolhasTipoConsulta);
+        boxTipoConsulta.getSelectionModel().select(0);
+        
+        ObservableList<String> escolhasLocal = FXCollections.observableArrayList();
+        escolhasLocal.add("Local");
+        escolhasLocal.add("Exterior");
+        boxLocal.getItems().addAll(escolhasLocal);
+        boxLocal.getSelectionModel().select(0);
+    }
+    
+    private void preencherCampos() {
+        fieldNomePaciente.setText(consulta.getPaciente().getNome());
+        fieldData.setValue(Util.dateToLocal(consulta.getDatahora()));
+        descricao.setText(consulta.getDesctratamento());
+        if (!consulta.getLocal().equals(boxLocal.getSelectionModel().getSelectedItem())) {
+            boxLocal.getSelectionModel().select(1);
+            localConsulta.setText(consulta.getLocal());
+        }
+        boxTipoConsulta.getSelectionModel().select(new Choice(consulta.getTipoConsulta()));
+        atualizaPacienteBD(consulta.getPaciente().getNome());
+    }
+    
+    private void atualizaPacienteBD(String nome) {
+        List<Paciente> pacientes = Paciente.retrievePacientesbyNome(nome);
+        if (pacientes.size() == 1) {
+            paciente = pacientes.get(0);
+        } 
+    }
     
     @FXML
     public void cliqueConfirmar(ActionEvent event) {
         if (osCamposPreenchidos()) {
             inserirConsultaBD();
-        } else {
-            
-        }
+        } 
     }
     
     @FXML
@@ -156,6 +154,7 @@ public class FormularioConsultaController implements Initializable {
         try {
             controller = abrirListaPacientes(event);
         } catch (IOException ex) {
+            ex.printStackTrace();
             return ;
         }
         if (controller.foiSelecionadaOpcao()) {
@@ -172,36 +171,7 @@ public class FormularioConsultaController implements Initializable {
         Scene scene = new Scene(root);
         
         Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Stage stage = Util.preparaNovaJanela(owner);
-        stage.setScene(scene);
-        stage.showAndWait();
-        return controller;
-    }
-    
-    @FXML
-    private void cliqueProcurarCliente(ActionEvent event) {
-        ListaClientesController controller;
-        try {
-            controller = abrirListaClientes(event);
-        } catch (IOException ex) {
-            return ;
-        }
-        if (controller.foiSelecionadaOpcao()) {
-            cliente = controller.getClienteSelecionado();
-            fieldNomeCliente.setText(cliente.getNome());
-            
-        }
-    }
-    
-    private ListaClientesController abrirListaClientes(Event event) throws IOException {
-        ListaClientesController controller = new ListaClientesController(true);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(DocFXML.LISTACLIENTES.getPath()));
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        
-        Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Stage stage = Util.preparaNovaJanela(owner);
+        Stage stage = Utils.preparaNovaJanela(owner);
         stage.setScene(scene);
         stage.showAndWait();
         return controller;
@@ -214,10 +184,6 @@ public class FormularioConsultaController implements Initializable {
            eValido = false;
         }
         
-        if (fieldNomeCliente.getText().trim().isEmpty()) {
-           eValido = false;
-        }
-        
         if(fieldData.getValue() == null) {
             eValido = false;
         }
@@ -226,19 +192,13 @@ public class FormularioConsultaController implements Initializable {
             eValido = false;
         }
         
-        if (!boxLocal.getValue().equals("Local")) {
-            eValido = false;   
+        if (!boxLocal.getValue().equals("Local") && localConsulta.getText().trim().isEmpty()) {
+            eValido = false;
         }
         
+        atualizaPacienteBD(fieldNomePaciente.getText());
+        
         return eValido;
-    }
-    
-    private boolean osDadosSaoValidos(){
-        boolean saoValidos = true;
-        
-        
-        
-        return saoValidos;
     }
     
     @FXML
@@ -246,22 +206,20 @@ public class FormularioConsultaController implements Initializable {
         
     }
     
-    private void inserirConsultaBD() {
-        Consulta c = new Consulta();     
-        c.setEstado((short) 0);
-        c.setPago((short) 0);
-        try {
-                Date data = java.sql.Date.valueOf(fieldData.getValue());
-                 c.setDatahora(data);
-        } catch (Exception e) {
-            System.out.println("fodeu");
-        }
-        c.setPaciente(paciente);
-        c.setTipoConsulta(boxTipoConsulta.getSelectionModel().getSelectedItem().getTipoConsulta());
-        c.setLocal(boxLocal.getSelectionModel().getSelectedItem().toString());
-        c.setDesctratamento(descricao.getText());
-        c.createT();
-        System.out.println("inseriu consulta na bd");
+    private void inserirConsultaBD() { 
+        boolean isNovaConsulta;
+        isNovaConsulta = consulta == null;
+        if (isNovaConsulta) consulta = new Consulta();
+        consulta.setEstado((short) 0);
+        consulta.setPago((short) 0);
+        Date data = Date.from(fieldData.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        consulta.setDatahora(data);
+        consulta.setPaciente(paciente);
+        consulta.setTipoConsulta(boxTipoConsulta.getSelectionModel().getSelectedItem().getTipoConsulta());
+        consulta.setLocal(boxLocal.getSelectionModel().getSelectedItem().toString());
+        consulta.setDesctratamento(descricao.getText());
+        if (isNovaConsulta) consulta.createT();
+        else consulta.updateT();
     }
     
     /*
@@ -283,7 +241,32 @@ public class FormularioConsultaController implements Initializable {
         @Override 
         public String toString() {
             return tipo.getNome();
-        }    
+        }   
+        
+        
+        @Override
+        public boolean equals(Object obj) {
+            if (obj == null) {
+                return false;
+            }
+            if (!Choice.class.isAssignableFrom(obj.getClass())) {
+                return false;
+            }
+            final Choice other = (Choice) obj;
+            if ((this.tipo == null) ? (other.tipo != null) : !this.tipo.equals(other.tipo)) {
+                return false;
+            }
+
+            return true;
+        }
+
+        @Override
+        public int hashCode() {
+            int hash = 7;
+            hash = 41 * hash + Objects.hashCode(this.tipo);
+            return hash;
+        }
+
     }
     
 }

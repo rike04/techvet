@@ -38,7 +38,7 @@ import model.Consulta;
 import model.Produto;
 import techvet.DocFXML;
 import techvet.GUIUtils;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * @author Henrique Faria e Sérgio Araújo
@@ -166,7 +166,7 @@ public class ProcessarConsultaController implements Initializable {
         Scene scene = new Scene(root);
         
         Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Stage stage = Util.preparaNovaJanela(owner);
+        Stage stage = Utils.preparaNovaJanela(owner);
         stage.setScene(scene);
         stage.showAndWait();
         return controller;
@@ -235,7 +235,7 @@ public class ProcessarConsultaController implements Initializable {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(DocFXML.FORMULARIORECEITA.getPath()));
         loader.setController(controller);
         Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Stage stage = Util.preparaNovaJanela(owner);
+        Stage stage = Utils.preparaNovaJanela(owner);
         try {
             Parent root = loader.load();
             Scene scene = new Scene(root);
@@ -258,7 +258,7 @@ public class ProcessarConsultaController implements Initializable {
     private void iniciarInternamento() {
         Initializable controller = new FormularioInternamentoController(content, consulta);
         try {
-            Util.mudaContentPara(DocFXML.FORMULARIOINTERNAMENTO, controller, content);
+            Utils.mudaContentPara(DocFXML.FORMULARIOINTERNAMENTO, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }

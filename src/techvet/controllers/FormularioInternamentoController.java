@@ -22,7 +22,7 @@ import javafx.scene.layout.Pane;
 import model.Consulta;
 import model.Internamento;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * @author Henrique Faria e Sergio Araujo
@@ -117,7 +117,7 @@ public class FormularioInternamentoController implements Initializable {
     
     private void mudarContent() throws IOException{
         ListaInternamentosController controller = new ListaInternamentosController(false);
-        Util.mudaContentPara(DocFXML.LISTAINTERNAMENTOS, controller, content);
+        Utils.mudaContentPara(DocFXML.LISTAINTERNAMENTOS, controller, content);
     }
 
     private void inserirInternamentoBD() {

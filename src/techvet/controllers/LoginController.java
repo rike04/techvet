@@ -13,7 +13,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
 import model.Utilizador;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * @author Henrique Faria e Sergio Araujo
@@ -52,7 +52,7 @@ public class LoginController implements Initializable {
     public void cliqueRegistar(ActionEvent event) {
         FormularioUtilizadorController controller = new FormularioUtilizadorController(null);
         try {
-            Util.mudaScenePara(DocFXML.FORMULARIOUTILIZADOR, controller, event);
+            Utils.mudaScenePara(DocFXML.FORMULARIOUTILIZADOR, controller, event);
         } catch (IOException e) {
         }
         
@@ -109,7 +109,7 @@ public class LoginController implements Initializable {
         if (palavraPasse.equals(utilizador.getPassword())) {
             try {
                 Initializable mainTemplate = new Template(utilizador);
-                Util.mudaScenePara(DocFXML.TEMPLATE, mainTemplate, event);
+                Utils.mudaScenePara(DocFXML.TEMPLATE, mainTemplate, event);
             } catch (IOException e) {
                 e.printStackTrace();
             } 

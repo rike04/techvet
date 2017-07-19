@@ -21,13 +21,13 @@ import javafx.stage.Stage;
 /**
  * @author Henrique Faria e Sérgio Araújo
  */
-public class Util {
+public class Utils {
     
-    private Util(){}
+    private Utils(){}
     
     public static void mudaScenePara(DocFXML doc, Initializable controller, Event event) throws IOException{
         Stage stage =(Stage) ((Node) event.getSource()).getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(Util.class.getResource(doc.getPath()));
+        FXMLLoader loader = new FXMLLoader(Utils.class.getResource(doc.getPath()));
         loader.setController(controller);
         Parent root =  loader.load();
         Scene scene = new Scene(root);
@@ -37,7 +37,7 @@ public class Util {
     }
     
     public static void mudaContentPara(DocFXML doc, Initializable controller, Pane content) throws IOException {
-        FXMLLoader loader = new FXMLLoader(Util.class.getResource(doc.getPath()));
+        FXMLLoader loader = new FXMLLoader(Utils.class.getResource(doc.getPath()));
         loader.setController(controller);
         content.getChildren().clear();
         content.getChildren().add(loader.load());

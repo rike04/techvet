@@ -30,7 +30,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Utilizador;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * @author Henrique Faria e Sergio Araujo
@@ -158,13 +158,13 @@ public class Template implements Initializable {
             case BOTOESPACIENTE: 
                     docContent = DocFXML.LISTAPACIENTES;
                     controllerSideBar = new BotoesPacienteController(getContent());
-                    controllerContent = new ListaPacientesController(false);
+                    controllerContent = new ListaPacientesController(false, content);
             break;
             
             case BOTOESCLIENTE: 
                     docContent = DocFXML.LISTACLIENTES;
                     controllerSideBar = new BotoesClienteController(getContent());
-                    controllerContent = new ListaClientesController(false);
+                    controllerContent = new ListaClientesController(false, getContent());
             break;
             
             case BOTOESADMINISTRADOR: 
@@ -196,8 +196,8 @@ public class Template implements Initializable {
         }
         
         try {
-            Util.mudaContentPara(docSideBar, controllerSideBar, getSideBar());
-            Util.mudaContentPara(docContent, controllerContent, getContent());
+            Utils.mudaContentPara(docSideBar, controllerSideBar, getSideBar());
+            Utils.mudaContentPara(docContent, controllerContent, getContent());
         } catch (IOException ex) {
             Logger.getLogger(Template.class.getName()).log(Level.SEVERE, null, ex);
         }

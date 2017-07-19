@@ -23,6 +23,7 @@
       <TableView fx:id="tabelaConsultas" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowSpan="2">
         <columns>
           <TableColumn fx:id="colData" prefWidth="75.0" text="Data" />
+            <TableColumn fx:id="colTipoConsulta" prefWidth="75.0" text="Tipo " />
           <TableColumn fx:id="colPaciente" prefWidth="75.0" text="Paciente" />
             <TableColumn fx:id="colCliente" prefWidth="75.0" text="Cliente" />
             <TableColumn fx:id="colLocal" prefWidth="75.0" text="Local" />

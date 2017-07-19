@@ -44,7 +44,7 @@
       </TextField>
       <Button mnemonicParsing="false" onAction="#cliqueConfirmar" text="Confirmar" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
       <Button mnemonicParsing="false" onAction="#cliqueCancelar" text="Cancelar" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-      <TextArea fx:id="fieldDesc" maxHeight="70.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER">
+      <TextArea fx:id="txtDesc" maxHeight="70.0" prefWidth="199.0" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets left="5.0" top="40.0" />
          </GridPane.margin>

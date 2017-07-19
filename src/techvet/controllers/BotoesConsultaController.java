@@ -12,7 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * @author rike4
@@ -38,7 +38,7 @@ public class BotoesConsultaController implements Initializable {
     public void cliqueListaConsultas(ActionEvent event) {
         Initializable controller = new ListaConsultasController(false, content);
         try {
-            Util.mudaContentPara(DocFXML.LISTACONSULTAS, controller, content);
+            Utils.mudaContentPara(DocFXML.LISTACONSULTAS, controller, content);
         } catch (IOException e) {
         }
     }
@@ -60,7 +60,7 @@ public class BotoesConsultaController implements Initializable {
     public void abre(ActionEvent event) {
        Initializable controller = new HorarioConsultasController();
         try {
-            Util.mudaContentPara(DocFXML.HORARIO, controller, content);
+            Utils.mudaContentPara(DocFXML.HORARIO, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,7 +70,7 @@ public class BotoesConsultaController implements Initializable {
     public void cliqueCriarTipoConsulta(ActionEvent event) {
         Initializable controller = new FormularioTipoConsultaController(content);
         try {
-            Util.mudaContentPara(DocFXML.FORMULARIOTIPOCONSULTA, controller, content);
+            Utils.mudaContentPara(DocFXML.FORMULARIOTIPOCONSULTA, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -12,7 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.Pane;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  *
@@ -38,7 +38,7 @@ public class BotoesInternamentoController implements Initializable{
     public void cliqueVerInternamentos(ActionEvent event) {
         Initializable controller = new ListaInternamentosController(false);
         try {
-            Util.mudaContentPara(DocFXML.LISTAINTERNAMENTOS, controller, content);
+            Utils.mudaContentPara(DocFXML.LISTAINTERNAMENTOS, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,7 +48,7 @@ public class BotoesInternamentoController implements Initializable{
     public void abreCriarInternamento(ActionEvent event) { 
 //        FormularioInternamentoController controller = new FormularioInternamentoController(content);
 //        try {
-//            Util.mudaContentPara(DocFXML.FORMULARIOINTERNAMENTO, controller, content);
+//            Utils.mudaContentPara(DocFXML.FORMULARIOINTERNAMENTO, controller, content);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }

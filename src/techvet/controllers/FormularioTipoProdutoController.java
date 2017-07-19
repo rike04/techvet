@@ -17,7 +17,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import model.TipoProduto;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * FXML Controller class
@@ -29,7 +29,7 @@ public class FormularioTipoProdutoController implements Initializable {
     @FXML 
     private TextField fieldNome;
     @FXML
-    private TextArea fieldDesc;
+    private TextArea txtDesc;
 
     private final Pane content;
     
@@ -37,10 +37,12 @@ public class FormularioTipoProdutoController implements Initializable {
         this.content = content;
     }
     
-
+    /**
+     * Initializes the controller class.
+     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        fieldNome.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoLimiteMax(40));
+        fieldNome.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoLimiteMax(40));
 //        fieldDesc.addEventFilter(KeyEvent.KEY_TYPED, Util.validacaoLimiteMax(200));
     }    
     
@@ -63,21 +65,22 @@ public class FormularioTipoProdutoController implements Initializable {
         if (fieldNome.getText().trim().isEmpty()) {
             saoValidos = false;
         }
-               
+        
+        
         return saoValidos;
     }
     
     private void insereTipoProdutoBD() {
         TipoProduto tipo = new TipoProduto();
         tipo.setNome(fieldNome.getText());
-        tipo.setDescricao(fieldDesc.getText());
+        tipo.setDescricao(txtDesc.getText());
         tipo.createT();
     }
     
     private void mudaContent() {
-        Initializable controller = new ListaArtigosController(false);
+        Initializable controller = new ListaArtigosController(false, content);
         try {
-            Util.mudaContentPara(DocFXML.LISTAARTIGOS, controller, content);
+            Utils.mudaContentPara(DocFXML.LISTAARTIGOS, controller, content);
         } catch (IOException e) {
         }
     }

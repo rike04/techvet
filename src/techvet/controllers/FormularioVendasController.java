@@ -30,7 +30,7 @@ import model.Consulta;
 import model.Paciente;
 import model.TipoConsulta;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
 /**
  * @author rike4
@@ -154,30 +154,8 @@ public class FormularioVendasController implements Initializable {
     @FXML
     private void cliqueProcurarPaciente(ActionEvent event) {
         ListaPacientesController controller;
-        try {
-            controller = abrirListaPacientes(event);
-        } catch (IOException ex) {
-            return ;
-        }
-        if (controller.foiSelecionadaOpcao()) {
-            paciente = controller.getPacienteSelecionado();
-            fieldNomePaciente.setText(paciente.getNome());
-        }
     }
     
-    private ListaPacientesController abrirListaPacientes(Event event) throws IOException {
-        ListaPacientesController controller = new ListaPacientesController(true);
-        FXMLLoader loader = new FXMLLoader(getClass().getResource(DocFXML.LISTAPACIENTES.getPath()));
-        loader.setController(controller);
-        Parent root = loader.load();
-        Scene scene = new Scene(root);
-        
-        Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Stage stage = Util.preparaNovaJanela(owner);
-        stage.setScene(scene);
-        stage.showAndWait();
-        return controller;
-    }
     
     @FXML
     private void cliqueProcurarCliente(ActionEvent event) {
@@ -202,7 +180,7 @@ public class FormularioVendasController implements Initializable {
         Scene scene = new Scene(root);
         
         Stage owner = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        Stage stage = Util.preparaNovaJanela(owner);
+        Stage stage = Utils.preparaNovaJanela(owner);
         stage.setScene(scene);
         stage.showAndWait();
         return controller;

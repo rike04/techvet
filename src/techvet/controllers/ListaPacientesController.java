@@ -1,10 +1,9 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * 
  */
 package techvet.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,9 +20,13 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import model.Cliente;
 import model.Paciente;
+import techvet.DocFXML;
 import techvet.GUIUtils;
+import techvet.Utils;
 
 /**
  * FXML Controller class
@@ -56,9 +59,27 @@ public class ListaPacientesController implements Initializable {
     private boolean foiConfirmado;
     private final boolean devolveEscolha; 
     
+    private Pane content;
+    
+    private Cliente cliente;
+    
     public ListaPacientesController(boolean devolveEscolha) {
         this.foiConfirmado = false;
         this.devolveEscolha = devolveEscolha;
+        this.content = null;
+    }
+    
+    public ListaPacientesController(boolean devolveEscolha, Pane content) {
+        this.foiConfirmado = false;
+        this.devolveEscolha = devolveEscolha;
+        this.content = content;
+    }
+    
+    public ListaPacientesController(boolean devolveEscolha, Cliente cliente) {
+        this.foiConfirmado = false;
+        this.devolveEscolha = devolveEscolha;
+        this.cliente = cliente;
+        this.content = null;
     }
     
     @Override
@@ -69,8 +90,23 @@ public class ListaPacientesController implements Initializable {
         botaoCancelar.setVisible(devolveEscolha);
         botaoCancelar.setDisable(!devolveEscolha);
         
-        tabelaPacientes.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tabelaPacientes.setPlaceholder(new Label("Não existem pacientes registados"));
+        
+        tabelaPacientes.setRowFactory( tv -> {
+            TableRow<Paciente> linha = new TableRow<>();
+            linha.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!linha.isEmpty()) && content != null) {
+                    Paciente p = linha.getItem();
+                    FormularioPacienteController controller = new FormularioPacienteController(content, p);
+                    try {
+                        Utils.mudaContentPara(DocFXML.FORMULARIOPACIENTE, controller, content);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+          return linha;
+        });
         
         colNome.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getNome()));
@@ -88,7 +124,6 @@ public class ListaPacientesController implements Initializable {
             SimpleStringProperty property = new SimpleStringProperty();
             Paciente p = (Paciente) dadosCell.getValue();
             if (p.getEstado() == 0) {
-                
                 property.set("Morto");
             } else {
                 property.set("Vivo");
@@ -124,11 +159,13 @@ public class ListaPacientesController implements Initializable {
     
     private List<Paciente> leListaPacientes() {
         List<Paciente> listaPacientes = new ArrayList<>();
-        try {
-            listaPacientes = Paciente.retrieveAll();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        if (cliente == null) {
+            try {
+                listaPacientes = Paciente.retrieveAll();
+            } catch (Exception e) {
+            }
+        } else listaPacientes = cliente.getListaPacientes();
+        
         return listaPacientes;
     }
     

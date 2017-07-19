@@ -44,21 +44,11 @@
             <Font name="System Bold" size="20.0" />
          </font>
       </Label>
-      <TextField fx:id="fieldNomePaciente" prefHeight="30.0" prefWidth="150.0" promptText="Nome do Paciente" GridPane.rowIndex="1" />
-      <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#cliqueProcurarPaciente" pickOnBounds="false" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
-         <graphic>
-            <ImageView fitHeight="34.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../resources/icon_pesquisa.png" />
-               </image>
-            </ImageView>
-         </graphic>
+      <TextField fx:id="fieldNomePaciente" prefHeight="30.0" prefWidth="150.0" promptText="Nome do Paciente" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.rowIndex="1" />
+      <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#cliqueProcurarPaciente" pickOnBounds="false" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;" GridPane.columnIndex="4" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <GridPane.margin>
             <Insets right="5.0" />
          </GridPane.margin>
-      </Button>
-      <TextField fx:id="fieldNomeCliente" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="150.0" promptText="Nome do Cliente" GridPane.columnIndex="5" GridPane.rowIndex="1" />
-      <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#cliqueProcurarCliente" pickOnBounds="false" style="-fx-background-color: transparent; -fx-border-color: transparent; -fx-text-fill: transparent;" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER">
          <graphic>
             <ImageView fitHeight="34.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -66,9 +56,6 @@
                </image>
             </ImageView>
          </graphic>
-         <GridPane.margin>
-            <Insets left="5.0" />
-         </GridPane.margin>
       </Button>
       <Label prefHeight="21.0" prefWidth="128.0" text="Tipo de Consulta:" GridPane.rowIndex="2">
          <GridPane.margin>

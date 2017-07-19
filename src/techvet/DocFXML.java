@@ -45,7 +45,9 @@ public enum DocFXML {
     LISTAVENDAS("/techvet/views/ListaVendas.fxml"),
     LISTAARTIGOS("/techvet/views/ListaArtigos.fxml"),
     
-    PROCESSARCONSULTA("/techvet/views/ProcessarConsulta.fxml");
+    PROCESSARCONSULTA("/techvet/views/ProcessarConsulta.fxml"),
+    EDITARPRODUTO("/techvet/views/EditarProduto.fxml");
+
     
     private final String caminhoParaDoc;
     

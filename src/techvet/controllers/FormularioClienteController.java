@@ -16,15 +16,16 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import model.Cliente;
 import techvet.DocFXML;
-import techvet.Util;
+import techvet.Utils;
 
-/*
- * @author rike4
+/**
+ * @author Henrique Faria e Sergio Araujo
  */
 public class FormularioClienteController implements Initializable {
     
@@ -40,6 +41,8 @@ public class FormularioClienteController implements Initializable {
     private TextField fieldTele;
     @FXML 
     private TextField fieldMail;
+    @FXML
+    private GridPane tabelaPacientes;
     
     private final Initializable controller;
     private final DocFXML doc;
@@ -47,10 +50,19 @@ public class FormularioClienteController implements Initializable {
     
     private final PseudoClass erro = PseudoClass.getPseudoClass("error");
     
+    private Cliente cliente;
+    
     public FormularioClienteController(Pane content) {
         this.controller = new ListaClientesController(false);
         this.doc = DocFXML.LISTACLIENTES;
         this.content = content;
+    }
+    
+    public FormularioClienteController(Pane content, Cliente cliente) {
+        this.controller = new ListaClientesController(false);
+        this.doc = DocFXML.LISTACLIENTES;
+        this.content = content;
+        this.cliente = cliente;
     }
     
     public FormularioClienteController(Initializable controller, DocFXML doc, Pane content) {
@@ -89,24 +101,46 @@ public class FormularioClienteController implements Initializable {
             }
         });
         
-        //Insere o caracter "-" na posição 5 da string do código postal e mantém-no lá
-        //Ver se da para alterar de modod a ficar como Event Filter 
         fieldCodigoPostal.lengthProperty().addListener((
                 ObservableValue<? extends Number> observable, Number oldValue, Number newValue) -> {
-            
             String stringCPostal = fieldCodigoPostal.getText();
-            
-            if (stringCPostal.length() >= 4 && !stringCPostal.contains("-")) {
-                stringCPostal = stringCPostal.substring(0, 4) + "-" 
-                        + stringCPostal.substring(4, stringCPostal.length());
-                fieldCodigoPostal.setText(stringCPostal);
-                
-            } else if (stringCPostal.indexOf("-") != 4) {
-                fieldCodigoPostal.setText(stringCPostal.replace("-", ""));
-            }
+            //Insere o caracter "-" na posição 5 da string do código postal e mantém-no lá
+            preparaCodigoPostal(stringCPostal);
         });    
-            
+        
+        if(cliente != null) {
+            montarTabelaPacientes();
+            preencheCampos();
+        }
     }    
+    
+    private void montarTabelaPacientes() {
+        Initializable controllerx = new ListaPacientesController(false, cliente);
+        try {
+            Utils.mudaContentPara(DocFXML.LISTAPACIENTES, controllerx, tabelaPacientes);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void preparaCodigoPostal(String stringCPostal) {
+        if (stringCPostal.length() >= 4 && !stringCPostal.contains("-")) {
+            stringCPostal = stringCPostal.substring(0, 4) + "-" 
+                        + stringCPostal.substring(4, stringCPostal.length());
+            fieldCodigoPostal.setText(stringCPostal);      
+        } else if (stringCPostal.indexOf("-") != 4) {
+                   fieldCodigoPostal.setText(stringCPostal.replace("-", ""));
+            }
+    }
+    
+    private void preencheCampos() {
+        fieldNomeCliente.setText(cliente.getNome());
+//        fieldCodigoPostal.setText(cliente.g);
+        fieldMorada.setText(cliente.getMorada());
+        fieldMail.setText(cliente.getEmail());
+        fieldTele.setText(cliente.getTelemovel());
+        fieldNIF.setText(cliente.getNif());
+    }
     
     @FXML
     public void cliqueConfirmar(ActionEvent event) {
@@ -119,13 +153,17 @@ public class FormularioClienteController implements Initializable {
     }
     
     private void inserirClienteBD() {
-        Cliente cli = new Cliente();
-        cli.setNome(fieldNomeCliente.getText());
-        cli.setEmail(fieldMail.getText());
-        cli.setMorada(fieldMorada.getText());
-        cli.setNif(fieldNIF.getText());
-        cli.setTelemovel(fieldTele.getText());
-        cli.createT();
+        boolean isNovoCliente = cliente == null;
+        if (isNovoCliente) cliente = new Cliente();
+        
+        cliente.setNome(fieldNomeCliente.getText());
+        cliente.setEmail(fieldMail.getText());
+        cliente.setMorada(fieldMorada.getText());
+        cliente.setNif(fieldNIF.getText());
+        cliente.setTelemovel(fieldTele.getText());
+        
+        if (isNovoCliente) cliente.createT();
+        else cliente.updateT();
     }
     
     private void resetErros() {
@@ -137,9 +175,9 @@ public class FormularioClienteController implements Initializable {
     }
     
     private void mudarContent() {
-        ListaClientesController c = new ListaClientesController(false);
+        ListaClientesController c = new ListaClientesController(false, content);
         try {
-            Util.mudaContentPara(doc, c, content);
+            Utils.mudaContentPara(doc, c, content);
         } catch (IOException e) {
             e.printStackTrace();
         }
