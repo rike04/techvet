@@ -82,9 +82,7 @@ public class ListaConsultasController implements Initializable {
             linha.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!linha.isEmpty())) {
                     Consulta c = linha.getItem();
-                    if (c.getEstado() == 0) {
-                        abrirProcessarConsulta(c);
-                    }
+                    abrirFormConsulta(c);
                 }
             });
           return linha;
@@ -124,17 +122,15 @@ public class ListaConsultasController implements Initializable {
         try {
             listaConsultas = Consulta.retrieveAll();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return listaConsultas;
     }
     
-    private void abrirProcessarConsulta(Consulta c) {
+    private void abrirFormConsulta(Consulta c) {
         FormularioConsultaController controller = new FormularioConsultaController(c, content);
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOCONSULTA, controller, content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     

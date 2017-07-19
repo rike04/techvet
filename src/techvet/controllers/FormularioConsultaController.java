@@ -29,6 +29,7 @@ import model.TipoConsulta;
 import bll.Util;
 import java.time.ZoneId;
 import java.util.Objects;
+import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 import techvet.DocFXML;
 import techvet.Utils;
@@ -51,6 +52,8 @@ public class FormularioConsultaController implements Initializable {
     private ChoiceBox boxLocal;
     @FXML
     private TextField localConsulta;
+    @FXML
+    private Button botaoPesquisar;
     
     private final Pane content;
     
@@ -120,14 +123,22 @@ public class FormularioConsultaController implements Initializable {
     }
     
     private void preencherCampos() {
+        boolean isEditavel = consulta.getEstado() == (short) 1;
         fieldNomePaciente.setText(consulta.getPaciente().getNome());
+        fieldNomePaciente.setDisable(isEditavel);
         fieldData.setValue(Util.dateToLocal(consulta.getDatahora()));
+        fieldData.setDisable(isEditavel);
         descricao.setText(consulta.getDesctratamento());
+        descricao.setDisable(isEditavel);
         if (!consulta.getLocal().equals(boxLocal.getSelectionModel().getSelectedItem())) {
             boxLocal.getSelectionModel().select(1);
+            boxLocal.setDisable(isEditavel);
             localConsulta.setText(consulta.getLocal());
+            localConsulta.setDisable(isEditavel);
         }
         boxTipoConsulta.getSelectionModel().select(new Choice(consulta.getTipoConsulta()));
+        boxTipoConsulta.setDisable(isEditavel);
+        botaoPesquisar.setDisable(isEditavel);
         atualizaPacienteBD(consulta.getPaciente().getNome());
     }
     
