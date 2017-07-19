@@ -47,7 +47,7 @@ public class BotoesAdministradorController implements Initializable {
     
     @FXML
     public void cliqueVerUtilizadores(ActionEvent event) {
-        Initializable controller = new ListaUtilizadoresController(false);
+        Initializable controller = new ListaUtilizadoresController(false, content);
         try {
             Utils.mudaContentPara(DocFXML.LISTAUTILIZADORES, controller, content);
         } catch (IOException e) {

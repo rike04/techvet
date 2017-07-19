@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="231.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="231.0" stylesheets="@SideBarTheme.css" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -18,7 +18,7 @@
    <children>
       <Button mnemonicParsing="false" onAction="#cliqueCriarArtigo" prefHeight="31.0" prefWidth="141.0" text="Novo produto" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
       <Button mnemonicParsing="false" onAction="#cliqueEditarProduto" text="Editar produto" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
-      <Button mnemonicParsing="false" onAction="#cliqueListaArtigos" text="Listagem de produtos" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-      <Button mnemonicParsing="false" onAction="#cliqueCriarTipoProduto" text="Criar tipo de produto" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#cliqueListaArtigos" text="Ver produtos" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+      <Button mnemonicParsing="false" onAction="#cliqueCriarTipoProduto" text="Tipos de Produto" GridPane.halignment="CENTER" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
    </children>
 </GridPane>

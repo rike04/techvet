@@ -49,9 +49,4 @@ public class BotoesVendaController implements Initializable {
         }
     }
     
-    @FXML
-    public void abre(ActionEvent event) {
-
-    }
-    
 }

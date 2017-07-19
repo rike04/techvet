@@ -4,6 +4,7 @@
 
 package techvet.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,10 +19,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Utilizador;
+import techvet.DocFXML;
 import techvet.GUIUtils;
+import techvet.Utils;
 
 /**
  * @author Henrique Faria e Sergio Araujo
@@ -45,9 +50,12 @@ public class ListaUtilizadoresController implements Initializable {
     private boolean foiConfirmado;
     private final boolean devolveEscolha;
     
-    public ListaUtilizadoresController (boolean devolveEscolha) { 
+    private Pane content;
+    
+    public ListaUtilizadoresController (boolean devolveEscolha, Pane content) { 
         this.foiConfirmado = false;
         this.devolveEscolha = devolveEscolha;
+        this.content = content;
     }
 
     @Override
@@ -58,9 +66,22 @@ public class ListaUtilizadoresController implements Initializable {
         botaoCancelar.setVisible(devolveEscolha);
         botaoCancelar.setDisable(!devolveEscolha);
         
-        tabelaUtilizadores.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tabelaUtilizadores.setPlaceholder(new Label("Não existem utilizadores registados"));
 
+        tabelaUtilizadores.setRowFactory( tv -> {
+            TableRow<Utilizador> linha = new TableRow<>();
+            linha.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!linha.isEmpty())) {
+                    Utilizador u = linha.getItem();
+                    Initializable controller = new FormularioUtilizadorController(content, u);
+                    try {
+                        Utils.mudaContentPara(DocFXML.FORMULARIOUTILIZADOR, controller, content);
+                    } catch (IOException e) {
+                    }
+                }
+            });
+          return linha;
+        });
         
         colUsername.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getUsername()));

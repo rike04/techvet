@@ -58,7 +58,7 @@ public class BotoesConsultaController implements Initializable {
     
     @FXML
     public void abre(ActionEvent event) {
-       Initializable controller = new HorarioConsultasController();
+       Initializable controller = new HorarioConsultasController(content);
         try {
             Utils.mudaContentPara(DocFXML.HORARIO, controller, content);
         } catch (IOException e) {

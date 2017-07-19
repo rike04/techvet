@@ -94,7 +94,6 @@ public class ListaArtigosController implements Initializable {
           return linha;
         });
         
-        
         colNome.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getNome()));
         colTipoProduto.setCellValueFactory(dadosCell -> 
@@ -109,7 +108,6 @@ public class ListaArtigosController implements Initializable {
                 new SimpleStringProperty(dadosCell.getValue().getDescricao()));
         colEditar.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty("Editar"));
-        
         
         tabela.setItems(FXCollections.observableList(leListaProdutos()));
         

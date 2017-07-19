@@ -5,7 +5,6 @@ package techvet.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Arrays;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,7 +20,7 @@ import techvet.DocFXML;
 import techvet.Utils;
 
 /**
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 public class FormularioUtilizadorController implements Initializable {
 
@@ -37,9 +36,15 @@ public class FormularioUtilizadorController implements Initializable {
     private ChoiceBox boxFuncao;
     
     private final Pane content;
+    private Utilizador utilizador;
     
     public FormularioUtilizadorController(Pane content) {
         this.content = content;
+    }
+    
+    public FormularioUtilizadorController(Pane content, Utilizador utilizador) {
+        this.content = content;
+        this.utilizador = utilizador;
     }
     
     public FormularioUtilizadorController() {
@@ -49,6 +54,8 @@ public class FormularioUtilizadorController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         popularChoiceBox();
+        
+        if (utilizador != null) preencherCampos(); 
     } 
     
     public String getNomeUtilizador() {
@@ -64,6 +71,14 @@ public class FormularioUtilizadorController implements Initializable {
         boxFuncao.getSelectionModel().select(0);
     }
     
+    private void preencherCampos() {
+        fieldNome.setText(utilizador.getNome());
+        fieldNomeUtilizador.setText(utilizador.getUsername());
+        fieldPasse.setText(utilizador.getPassword());
+        fieldPasseConfirmar.setText(utilizador.getPassword());
+        boxFuncao.getSelectionModel().select(utilizador.getFuncao());
+    }
+    
     @FXML
     public void cliqueConfirmar(ActionEvent event) {
         if (osDadosSaoValidos()) {
@@ -74,7 +89,7 @@ public class FormularioUtilizadorController implements Initializable {
     
     @FXML
     public void cliqueCancelar(ActionEvent event) {
-        ListaUtilizadoresController controller = new ListaUtilizadoresController(false);
+        ListaUtilizadoresController controller = new ListaUtilizadoresController(false, content);
         try {
             Utils.mudaContentPara(DocFXML.LISTAUTILIZADORES, controller, content);
         } catch (IOException e) {
@@ -105,18 +120,22 @@ public class FormularioUtilizadorController implements Initializable {
     }
     
     private void inserirUtilizadorBD() {
-        Utilizador user = new Utilizador();
-        user.setNome(fieldNome.getText());
-        user.setUsername(fieldNomeUtilizador.getText());
-        user.setPassword(fieldPasse.getCharacters().toString());
-        user.setFuncao(boxFuncao.getSelectionModel().getSelectedItem().toString());
-        user.createT();
+        boolean isNovoUtilizador = utilizador == null;
+        if (isNovoUtilizador) utilizador = new Utilizador();
+        
+        utilizador.setNome(fieldNome.getText());
+        utilizador.setUsername(fieldNomeUtilizador.getText());
+        utilizador.setPassword(fieldPasse.getCharacters().toString());
+        utilizador.setFuncao(boxFuncao.getSelectionModel().getSelectedItem().toString());
+        
+        if (isNovoUtilizador) utilizador.createT();
+        else utilizador.updateT();
     }
     
     private void mudarContent(){
-        Initializable controller = new ListaUtilizadoresController(false);
+        Initializable controller = new ListaUtilizadoresController(false, content);
         try {
-            Utils.mudaContentPara(DocFXML.LOGIN, controller, content);
+            Utils.mudaContentPara(DocFXML.LISTAUTILIZADORES, controller, content);
         } catch (IOException e) {
             e.printStackTrace();
         }
