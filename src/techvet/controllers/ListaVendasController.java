@@ -35,7 +35,7 @@ import techvet.Utils;
  */
 public class ListaVendasController implements Initializable{
     
-      @FXML
+    @FXML
     private TableView<Venda> tabelaVendas;
     @FXML
     private TableColumn<Venda, Integer> colCodigo;

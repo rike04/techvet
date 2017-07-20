@@ -31,7 +31,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.Consulta;
-import model.Paciente;
 import techvet.DocFXML;
 import techvet.GUIUtils;
 import techvet.Utils;
@@ -146,14 +145,14 @@ public class ListaConsultasController implements Initializable {
             }
             return new SimpleObjectProperty(circle);
         });
-        
+
         colEstado.setCellValueFactory(dadosCell -> {
             Consulta c = (Consulta) dadosCell.getValue();
             Circle circle = new Circle(5);
             if (c.getEstado() == 1) {
-                circle.setFill(Color.GREEN);
-            } else {
                 circle.setFill(Color.GRAY);
+            } else {
+                circle.setFill(Color.GREEN);
             }
             return new SimpleObjectProperty(circle);
         });
