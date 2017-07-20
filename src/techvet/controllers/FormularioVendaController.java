@@ -103,9 +103,7 @@ public class FormularioVendaController implements Initializable {
         colStock.setCellValueFactory(dadosCell -> 
                 new SimpleIntegerProperty(dadosCell.getValue().getProduto().getStock()).asObject());
         
-        //Desativa o botao de remover produtos caso nao esteja selecionada nenhuma linha
-        BooleanBinding desativaBotao = tabelaProdutos.getSelectionModel().selectedItemProperty().isNull();
-        botaoRemoveProd.disableProperty().bind(desativaBotao);
+
         
         //Permite editar a coluna de quantidade para inserir o valor pretendido
         colQuantidade.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -115,6 +113,11 @@ public class FormularioVendaController implements Initializable {
         });
         
         if (venda != null) preencheCampos();
+        else {
+            //Desativa o botao de remover produtos caso nao esteja selecionada nenhuma linha
+            BooleanBinding desativaBotao = tabelaProdutos.getSelectionModel().selectedItemProperty().isNull();
+            botaoRemoveProd.disableProperty().bind(desativaBotao);
+        }
         
         tabelaProdutos.setItems(listaLinhasArtigo);
         
@@ -168,7 +171,7 @@ public class FormularioVendaController implements Initializable {
     
     @FXML
     public void cliqueConfirmar(ActionEvent event) {
-        if (osCamposPreenchidos() && venda != null) {
+        if (osCamposPreenchidos() && venda == null) {
             inserirVendaBD();
         } 
         mudarContent();
@@ -279,30 +282,25 @@ public class FormularioVendaController implements Initializable {
         
         if (fieldNomeCliente.getText().trim().isEmpty()) {
             eValido = false;
-        }
-        
+        } 
         if (listaLinhasArtigo.size() > 0) {
             for(LinhaArtigo l: listaLinhasArtigo) {
                 if (l.getQuantidade() <= 0) {
                     eValido = false;
                 }
-            }
-            
+            }   
         } else {
             eValido = false;
-        }
-        
+        } 
         if (fieldTotal.getText().trim().isEmpty()) {
             eValido = false;
         }
-        
         return eValido;
     }
 
     private void inserirVendaBD() {
         boolean isNovaVenda = venda == null;
         if (isNovaVenda) venda = new Venda();
-        
         venda.setIdCliente(cliente);
         venda.setLinhaArtigoList(listaLinhasArtigo);
         listaLinhasArtigo.forEach((l) -> {
@@ -310,7 +308,6 @@ public class FormularioVendaController implements Initializable {
         });
         venda.setTotal(Double.valueOf(fieldTotal.getText()));
         venda.setData(Utils.toDate(fieldData.getValue()));
-        
         if (isNovaVenda) venda.createT();
         else venda.updateT();
     }

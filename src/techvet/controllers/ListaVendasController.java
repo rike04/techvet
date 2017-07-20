@@ -99,7 +99,7 @@ public class ListaVendasController implements Initializable{
         Initializable controller = new FormularioVendaController(content, v);
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOVENDA, controller, content);
-        } catch (Exception e) {
+        } catch (Exception e) { e.printStackTrace();
         }
     }
     
