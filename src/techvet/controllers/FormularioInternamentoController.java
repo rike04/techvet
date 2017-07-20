@@ -6,16 +6,15 @@ package techvet.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
-import java.time.Instant;
 import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -41,6 +40,8 @@ public class FormularioInternamentoController implements Initializable {
     private TextArea fieldObsv;
     @FXML
     private TextArea fieldGuia;
+    @FXML
+    private CheckBox boxSaida;
     
     private final Pane content;
     private final Consulta consulta;
@@ -51,13 +52,14 @@ public class FormularioInternamentoController implements Initializable {
     }
 
     @Override
-    public void initialize(URL url, ResourceBundle rb) {
+    public void initialize(URL url, ResourceBundle rb) { 
         if (consulta.getInternamento() != null) {
             preencherFields(consulta.getInternamento());
         } else {
                 preencherLabels();
         }
-        
+        BooleanBinding desativaBotao = boxSaida.selectedProperty().not();
+        fieldDataS.disableProperty().bind(desativaBotao);
     }    
     
     private void preencherLabels() {
@@ -68,15 +70,22 @@ public class FormularioInternamentoController implements Initializable {
     
     private void preencherFields(Internamento i) {
         fieldNomePaciente.setText(consulta.getPaciente().getNome());
-        
-        LocalDate lsE = Instant.ofEpochMilli(i.getDatae().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-        fieldDataE.setValue(lsE);
-        if (i.getDatas() != null) {
-            LocalDate ldS = Instant.ofEpochMilli(i.getDatas().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
-            fieldDataS.setValue(ldS);
-        }
         fieldObsv.setText(i.getObs());
         fieldGuia.setText(i.getGuiamed());
+        fieldDataE.setValue(Utils.toLocalDate(i.getDatae()));
+        if (i.getDatas() != null) {
+            desativarCampos();
+            fieldDataS.setValue(Utils.toLocalDate(i.getDatas()));
+        }
+    }
+    
+    private void desativarCampos() {
+        fieldNomePaciente.setDisable(true);
+        fieldObsv.setDisable(true);
+        fieldGuia.setDisable(true);
+        fieldDataE.setDisable(true);
+        fieldDataS.setDisable(true);
+        boxSaida.setDisable(true);
     }
        
     @FXML
@@ -121,13 +130,10 @@ public class FormularioInternamentoController implements Initializable {
         i.setIdConsulta(consulta);
         i.setIdPaciente(consulta.getPaciente());
         
-        Date dataE = Date.from(fieldDataE.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-        
-        i.setDatae(dataE);
+        i.setDatae(Utils.toDate(fieldDataE.getValue()));
 
         if (fieldDataS.getValue() != null) {
-            Date dataS = Date.from(fieldDataS.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-            i.setDatas(dataS);
+            i.setDatas(Utils.toDate(fieldDataS.getValue()));
         }
         
         i.setGuiamed(fieldGuia.getText());

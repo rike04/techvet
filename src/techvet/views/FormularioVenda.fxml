@@ -51,7 +51,7 @@
             <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#cliqueCancelar" prefHeight="31.0" prefWidth="123.0" text="Cancelar" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
             <ScrollPane fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="5" GridPane.vgrow="SOMETIMES">
                <content>
-                  <TableView fx:id="tabelaProdutos" editable="true" maxHeight="1.7976931348623157E308" prefHeight="384.0" prefWidth="523.0">
+                  <TableView fx:id="tabelaProdutos" editable="true" maxHeight="1.7976931348623157E308" prefHeight="384.0" prefWidth="528.0">
                     <columns>
                       <TableColumn fx:id="colNomeProduto" prefWidth="75.0" text="Nome" />
                       <TableColumn fx:id="colQuantidade" prefWidth="75.0" text="Quantidade" />

@@ -55,7 +55,7 @@ public class Template implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {    
-        mudarEcra(DocFXML.BOTOESCLIENTE); 
+        mudarEcra(DocFXML.BOTOESCONSULTA); 
         preencherLabels();
     }
     
@@ -144,9 +144,9 @@ public class Template implements Initializable {
         switch (docSideBar) {
             
             case BOTOESCONSULTA: 
-                    docContent = DocFXML.LISTACONSULTAS;
+                    docContent = DocFXML.HORARIO;
                     controllerSideBar = new BotoesConsultaController(getContent());
-                    controllerContent = new ListaConsultasController(false, content);
+                    controllerContent = new HorarioConsultasController(content);
             break;
             
             case BOTOESPACIENTE: 

@@ -60,7 +60,6 @@ public class ListaVendasController implements Initializable{
         botaoCancelar.setVisible(devolveEscolha);
         botaoCancelar.setDisable(!devolveEscolha);
         
-        tabelaVendas.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         tabelaVendas.setPlaceholder(new Label("Nao existem vendas registadas."));
         
         //Atribui o valor que cada coluna ira ter 
@@ -83,7 +82,6 @@ public class ListaVendasController implements Initializable{
         try {
             lista = Venda.retrieveAll();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return lista;
     }

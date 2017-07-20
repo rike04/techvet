@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -24,6 +25,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.Consulta;
 import techvet.DocFXML;
@@ -50,7 +53,7 @@ public class ListaConsultasController implements Initializable {
     @FXML
     private TableColumn<Consulta, Double> colValor;
     @FXML
-    private TableColumn<Consulta, String> colPago;
+    private TableColumn<Consulta, Circle> colPago;
     @FXML
     private Button botaoSelecionar;
     @FXML
@@ -102,14 +105,14 @@ public class ListaConsultasController implements Initializable {
         colValor.setCellValueFactory(dadosCell -> 
                 new SimpleDoubleProperty(dadosCell.getValue().getValor()).asObject());
         colPago.setCellValueFactory(dadosCell -> {
-            SimpleStringProperty string = new SimpleStringProperty();
             Consulta c = (Consulta) dadosCell.getValue();
+            Circle circle = new Circle(5);
             if (c.getPago() == 1) {
-                string.set("Pago");
+                circle.setFill(Color.GREEN);
             } else {
-                string.set("Por pagar");
+                circle.setFill(Color.RED);
             }
-            return string;
+            return new SimpleObjectProperty(circle);
         });
         
         tabelaConsultas.setItems(FXCollections.observableList(leListaConsultas()));

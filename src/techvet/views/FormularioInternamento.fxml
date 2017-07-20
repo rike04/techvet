@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
@@ -64,6 +65,7 @@
       <Label text="Observações:" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="TOP" />
       <DatePicker fx:id="fieldDataS" GridPane.columnIndex="5" GridPane.rowIndex="2" />
       <DatePicker fx:id="fieldDataE" GridPane.columnIndex="2" GridPane.rowIndex="2" />
+      <CheckBox fx:id="boxSaida" mnemonicParsing="false" text="Dar Saída" GridPane.columnIndex="5" GridPane.rowIndex="1" />
    </children>
    <opaqueInsets>
       <Insets />

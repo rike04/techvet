@@ -3,6 +3,7 @@ package techvet.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -53,21 +54,22 @@ public class ListaInternamentosController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         
         tabela.setPlaceholder(new Label("Não existem internamentos registados."));
-        
+        SimpleDateFormat sdfConsulta = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        SimpleDateFormat sdfNormal = new SimpleDateFormat("dd-MM-yyyy");
         colConsulta.setCellValueFactory(dadosCell -> 
-                new SimpleStringProperty(dadosCell.getValue().getIdConsulta().getDatahora().toString()));
+                new SimpleStringProperty(sdfConsulta.format(dadosCell.getValue().getIdConsulta().getDatahora())));
         colPaciente.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getIdPaciente().getNome()));
         colDataE.setCellValueFactory(dadosCell -> 
-                new SimpleStringProperty(dadosCell.getValue().getDatae().toString()));
+                new SimpleStringProperty(sdfNormal.format(dadosCell.getValue().getDatae())));
         colDataS.setCellValueFactory(dadosCell -> {
             SimpleStringProperty string = new SimpleStringProperty();       
             Internamento i = (Internamento) dadosCell.getValue();
-            if (i.getDatas() != null) {
-                string.set(i.getDatas().toString());
-            }
+            if (i.getDatas() != null) string.set(sdfNormal.format(i.getDatas()));
+            else string.set("Não definido");
             return string;
         });        
+        
         colGuia.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getGuiamed()));
         
@@ -100,7 +102,8 @@ public class ListaInternamentosController implements Initializable {
         Initializable controller = new FormularioInternamentoController(content, i.getIdConsulta());
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOINTERNAMENTO, controller, content);
-        } catch (IOException e) {}
+        } catch (IOException e) {e.printStackTrace();}
     }
+    
     
 }

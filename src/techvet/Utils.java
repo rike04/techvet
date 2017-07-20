@@ -5,6 +5,10 @@
 package techvet;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
@@ -88,5 +92,13 @@ public class Utils {
                 event.consume();
             }
         };
+    }
+    
+    public static Date toDate(LocalDate ld) {
+       return Date.from(ld.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+    }
+    
+    public static LocalDate toLocalDate(Date d) {
+        return Instant.ofEpochMilli(d.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }

@@ -6,6 +6,7 @@ package techvet.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -33,14 +34,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import model.ArtigoConsulta;
 import model.Cliente;
-import model.Consulta;
-import static model.Consulta_.paciente;
 import model.LinhaArtigo;
 import model.Produto;
-import static model.Produto_.descricao;
-import model.TipoConsulta;
 import model.Venda;
 import techvet.DocFXML;
 import techvet.GUIUtils;
@@ -71,12 +67,10 @@ public class FormularioVendaController implements Initializable {
     @FXML
     private Button botaoRemoveProd;
     
-    private Cliente cliente;
-    
+    private Cliente cliente; 
     private Venda venda;
     
     private final Pane content;
-    
     private final ObservableList<LinhaArtigo> listaLinhasArtigo;
     
     public FormularioVendaController(Pane content) {
@@ -93,6 +87,8 @@ public class FormularioVendaController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        LocalDate ld = LocalDate.now();
+        fieldData.setValue(ld);
         
         tabelaProdutos.setPlaceholder(new Label("Nao foram adicionados produtos."));
         
@@ -105,7 +101,7 @@ public class FormularioVendaController implements Initializable {
         colStock.setCellValueFactory(dadosCell -> 
                 new SimpleIntegerProperty(dadosCell.getValue().getProduto().getStock()).asObject());
         
-                //Desativa o botao de remover produtos caso nao esteja selecionada nenhuma linha
+        //Desativa o botao de remover produtos caso nao esteja selecionada nenhuma linha
         BooleanBinding desativaBotao = tabelaProdutos.getSelectionModel().selectedItemProperty().isNull();
         botaoRemoveProd.disableProperty().bind(desativaBotao);
         
@@ -113,11 +109,15 @@ public class FormularioVendaController implements Initializable {
         colQuantidade.setCellFactory(TextFieldTableCell.forTableColumn());
         colQuantidade.setOnEditCommit((CellEditEvent<LinhaArtigo, String> t) -> {
             atribuiQuantidadeAColuna(t);
+            atualizaTotal();
         });
         
-        if (venda != null) listaLinhasArtigo.setAll(venda.getLinhaArtigoList());
+        if (venda != null) preencheCampos();
+
         
         tabelaProdutos.setItems(listaLinhasArtigo);
+        
+        atualizaTotal();
         
         GUIUtils.autoFitTable(tabelaProdutos);
     }    
@@ -139,23 +139,41 @@ public class FormularioVendaController implements Initializable {
         t.getTableView().refresh();
     }
     
+    private void atualizaTotal() {
+        double total = 0;
+        for(LinhaArtigo la : listaLinhasArtigo) {
+            total += la.getQuantidade() * la.getValor();
+        }
+        fieldTotal.setText(String.valueOf(total));
+    }
+    
+    private void preencheCampos() {
+        fieldTotal.setText(String.valueOf(venda.getTotal()));
+        fieldNomeCliente.setText(venda.getIdCliente().getNome());
+        cliente = venda.getIdCliente();
+        listaLinhasArtigo.setAll(venda.getLinhaArtigoList());
+        fieldData.setValue(Utils.toLocalDate(venda.getData()));
+    }
+    
     @FXML
     public void cliqueConfirmar(ActionEvent event) {
         if (osCamposPreenchidos()) {
             inserirVendaBD();
-        } else {
-            
+            mudarContent();
+        } 
+    }
+    
+    private void mudarContent() {
+        Initializable controller = new ListaVendasController(false);
+        try {
+            Utils.mudaContentPara(DocFXML.LISTAVENDAS, controller, content);
+        } catch (IOException e) {
         }
     }
     
     @FXML
     public void cliqueCancelar(ActionEvent event) {
-        Initializable controller = new ListaVendasController(false);
-        try {
-            Utils.mudaContentPara(DocFXML.LISTAVENDAS, controller, content);
-        } catch (Exception e) {
-        }
-        
+        mudarContent();
     }
     
     @FXML
@@ -226,9 +244,10 @@ public class FormularioVendaController implements Initializable {
     
     private void adicionaProduto(Produto p) {
         if (verificaProdutoUnico(p)) {
-            LinhaArtigo ac = new LinhaArtigo();
-            ac.setProduto(p);
-            listaLinhasArtigo.add(ac);
+            LinhaArtigo la = new LinhaArtigo();
+            la.setProduto(p);
+            la.setValor(p.getPreco());
+            listaLinhasArtigo.add(la);
             tabelaProdutos.refresh();
         }
     }
@@ -237,6 +256,7 @@ public class FormularioVendaController implements Initializable {
     public void cliqueRemoveProd(ActionEvent event) {
         LinhaArtigo ac = tabelaProdutos.getSelectionModel().getSelectedItem();
         listaLinhasArtigo.remove(ac);
+        atualizaTotal();
         tabelaProdutos.refresh();
     }
     
@@ -252,25 +272,34 @@ public class FormularioVendaController implements Initializable {
         }
         
         if (listaLinhasArtigo.size() > 0) {
+            for(LinhaArtigo l: listaLinhasArtigo) {
+                if (l.getQuantidade() <= 0) {
+                    eValido = false;
+                }
+            }
             
         } else {
             eValido = false;
         }
         
+        if (fieldTotal.getText().trim().isEmpty()) {
+            eValido = false;
+        }
+        
         return eValido;
     }
-    
-    
+
     private void inserirVendaBD() {
-        
         boolean isNovaVenda = venda == null;
         if (isNovaVenda) venda = new Venda();
         
         venda.setIdCliente(cliente);
         venda.setLinhaArtigoList(listaLinhasArtigo);
+        listaLinhasArtigo.forEach((l) -> {
+            l.setIdVenda(venda);
+        });
         venda.setTotal(Double.valueOf(fieldTotal.getText()));
-        Date data = Date.from(fieldData.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-        venda.setData(data);
+        venda.setData(Utils.toDate(fieldData.getValue()));
         
         if (isNovaVenda) venda.createT();
         else venda.updateT();
