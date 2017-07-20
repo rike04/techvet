@@ -18,9 +18,11 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -29,6 +31,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
 import model.Consulta;
+import model.Paciente;
 import techvet.DocFXML;
 import techvet.GUIUtils;
 import techvet.Utils;
@@ -52,6 +55,8 @@ public class ListaConsultasController implements Initializable {
     private TableColumn<Consulta, String>  colLocal;
     @FXML
     private TableColumn<Consulta, Double> colValor;
+    @FXML
+    private TableColumn<Consulta, Circle> colEstado;
     @FXML
     private TableColumn<Consulta, Circle> colPago;
     @FXML
@@ -104,6 +109,33 @@ public class ListaConsultasController implements Initializable {
                 new SimpleStringProperty(dadosCell.getValue().getLocal()));        
         colValor.setCellValueFactory(dadosCell -> 
                 new SimpleDoubleProperty(dadosCell.getValue().getValor()).asObject());
+        
+        colPago.setCellFactory((TableColumn<Consulta, Circle> p) -> {
+           TableCell<Consulta, Circle> tc = new TableCell<Consulta, Circle>(){
+                @Override
+                public void updateItem(Circle item, boolean empty) {
+                    if (item != null){
+                        setGraphic(item);
+                    }
+                }
+            };
+            tc.setAlignment(Pos.CENTER);
+            return tc;
+        });
+        
+        colEstado.setCellFactory((TableColumn<Consulta, Circle> p) -> {
+           TableCell<Consulta, Circle> tc = new TableCell<Consulta, Circle>(){
+                @Override
+                public void updateItem(Circle item, boolean empty) {
+                    if (item != null){
+                        setGraphic(item);
+                    }
+                }
+            };
+            tc.setAlignment(Pos.CENTER);
+            return tc;
+        });
+        
         colPago.setCellValueFactory(dadosCell -> {
             Consulta c = (Consulta) dadosCell.getValue();
             Circle circle = new Circle(5);
@@ -111,6 +143,17 @@ public class ListaConsultasController implements Initializable {
                 circle.setFill(Color.GREEN);
             } else {
                 circle.setFill(Color.RED);
+            }
+            return new SimpleObjectProperty(circle);
+        });
+        
+        colEstado.setCellValueFactory(dadosCell -> {
+            Consulta c = (Consulta) dadosCell.getValue();
+            Circle circle = new Circle(5);
+            if (c.getEstado() == 1) {
+                circle.setFill(Color.GREEN);
+            } else {
+                circle.setFill(Color.GRAY);
             }
             return new SimpleObjectProperty(circle);
         });

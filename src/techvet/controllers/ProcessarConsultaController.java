@@ -1,6 +1,3 @@
-/*
- * 
- */
 
 package techvet.controllers;
 
@@ -143,7 +140,6 @@ public class ProcessarConsultaController implements Initializable {
         if (quantidade == 0) {
             return ;
         }
-            
         if(quantidade > 0 && quantidade < t.getRowValue().getIdProduto().getStock()) {
             t.getRowValue().setQuantidade(quantidade);
         }
@@ -262,7 +258,6 @@ public class ProcessarConsultaController implements Initializable {
             stage.setScene(scene);
             stage.showAndWait();
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -280,7 +275,6 @@ public class ProcessarConsultaController implements Initializable {
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOINTERNAMENTO, controller, content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }

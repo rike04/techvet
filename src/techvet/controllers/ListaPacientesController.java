@@ -104,7 +104,6 @@ public class ListaPacientesController implements Initializable {
                     try {
                         Utils.mudaContentPara(DocFXML.FORMULARIOPACIENTE, controller, content);
                     } catch (IOException e) {
-                        e.printStackTrace();
                     }
                 }
             });

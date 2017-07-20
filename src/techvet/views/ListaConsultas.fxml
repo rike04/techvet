@@ -28,6 +28,7 @@
             <TableColumn fx:id="colCliente" prefWidth="75.0" text="Cliente" />
             <TableColumn fx:id="colLocal" prefWidth="75.0" text="Local" />
             <TableColumn fx:id="colValor" prefWidth="75.0" text="Valor" />
+            <TableColumn fx:id="colEstado" prefWidth="75.0" text="Estado" />
             <TableColumn fx:id="colPago" prefWidth="75.0" text="Pago" />
         </columns>
          <columnResizePolicy>

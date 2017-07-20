@@ -74,9 +74,9 @@
       </TextField>
       <ChoiceBox fx:id="boxTipoConsulta" prefWidth="150.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
       <TextArea fx:id="descricao" prefHeight="82.0" prefWidth="600.0" promptText="Detalhes" GridPane.columnSpan="7" GridPane.rowIndex="4" />
-      <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#cliqueConfirmar" prefHeight="31.0" prefWidth="115.0" text="Confirmar" GridPane.columnIndex="2" GridPane.rowIndex="6" />
-      <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#cliqueCancelar" prefHeight="31.0" prefWidth="107.0" text="Cancelar" GridPane.columnIndex="4" GridPane.rowIndex="6" />
-      <Button mnemonicParsing="false" prefHeight="31.0" prefWidth="95.0" text="Fechar" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
+      <Button fx:id="botaoConfirmar" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#cliqueConfirmar" prefHeight="31.0" prefWidth="115.0" text="Confirmar" GridPane.columnIndex="2" GridPane.rowIndex="6" />
+      <Button fx:id="botaoCancelar" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#cliqueCancelar" prefHeight="31.0" prefWidth="107.0" text="Cancelar" GridPane.columnIndex="4" GridPane.rowIndex="6" />
+      <Button fx:id="botaoFechar" disable="true" mnemonicParsing="false" prefHeight="31.0" prefWidth="95.0" text="Fechar" visible="false" GridPane.columnIndex="6" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="6" GridPane.valignment="CENTER" />
       <DatePicker fx:id="fieldData" editable="false" promptText="Data" GridPane.columnIndex="4" GridPane.rowIndex="2" />
       <Label text="Nome do Paciente:" GridPane.rowIndex="1" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="7.0" GridPane.columnIndex="5" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">

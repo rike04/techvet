@@ -3,7 +3,9 @@
  */
 package techvet.controllers;
 
+import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -69,6 +71,8 @@ public class ListaVendasController implements Initializable{
         
         tabelaVendas.setPlaceholder(new Label("Nao existem vendas registadas."));
         
+
+        
         tabelaVendas.setRowFactory( tv -> {
             TableRow<Venda> linha = new TableRow<>();
             linha.setOnMouseClicked(event -> {
@@ -80,11 +84,12 @@ public class ListaVendasController implements Initializable{
           return linha;
         });
         
-        //Atribui o valor que cada coluna ira ter 
         colCodigo.setCellValueFactory(dadosCell -> 
                 new SimpleIntegerProperty(dadosCell.getValue().getId()).asObject());
+        
+        SimpleDateFormat sdfNormal = new SimpleDateFormat("dd-MM-yyyy");
         colData.setCellValueFactory(dadosCell ->
-                new SimpleStringProperty(dadosCell.getValue().getData().toString()));
+                new SimpleStringProperty(sdfNormal.format(dadosCell.getValue().getData())));
         colCliente.setCellValueFactory(dadosCell ->
                 new SimpleStringProperty(dadosCell.getValue().getIdCliente().getNome()));
         colTotal.setCellValueFactory(dadosCell ->
@@ -99,8 +104,7 @@ public class ListaVendasController implements Initializable{
         Initializable controller = new FormularioVendaController(content, v);
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOVENDA, controller, content);
-        } catch (Exception e) { e.printStackTrace();
-        }
+        } catch (IOException e) { }
     }
     
     private List<Venda> leListaVendas() {
