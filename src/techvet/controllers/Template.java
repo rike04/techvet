@@ -24,8 +24,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.Utilizador;
@@ -45,7 +45,7 @@ public class Template implements Initializable {
     @FXML 
     private Label labelNomeUtilizador;    
     @FXML
-    private StackPane content;
+    private AnchorPane content;
     @FXML 
     private VBox sideBar;
     

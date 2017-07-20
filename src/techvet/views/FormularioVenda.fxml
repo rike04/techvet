@@ -10,22 +10,24 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fitToHeight="true" fitToWidth="true" hbarPolicy="NEVER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
-   <content>
-      <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="889.0" prefWidth="917.0" style="-fx-background-color: white; -fx-border-color: black;">
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane alignment="CENTER" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="719.0" prefWidth="740.0" style="-fx-background-color: white; -fx-border-color: black;">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="141.0" prefWidth="150.0" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.0" minWidth="10.0" prefWidth="181.0" />
-            <ColumnConstraints hgrow="NEVER" maxWidth="254.0" minWidth="10.0" prefWidth="205.0" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="158.0" />
-            <ColumnConstraints hgrow="NEVER" maxWidth="275.0" minWidth="10.0" prefWidth="60.0" />
-            <ColumnConstraints hgrow="NEVER" maxWidth="292.0" minWidth="10.0" prefWidth="114.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="61.0" prefWidth="87.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.0" minWidth="10.0" prefWidth="211.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="254.0" minWidth="10.0" prefWidth="180.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="132.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="275.0" minWidth="10.0" prefWidth="47.0" />
+            <ColumnConstraints hgrow="NEVER" maxWidth="292.0" minWidth="10.0" prefWidth="65.0" />
         </columnConstraints>
         <rowConstraints>
           <RowConstraints maxHeight="142.0" minHeight="8.0" prefHeight="67.0" vgrow="SOMETIMES" />
@@ -95,7 +97,8 @@
             <Label text="Produtos da Venda:" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="4" GridPane.valignment="CENTER">
                <GridPane.margin>
                   <Insets top="5.0" />
-               </GridPane.margin></Label>
+               </GridPane.margin>
+            </Label>
             <Label fx:id="labelTipoConsulta" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
             <DatePicker fx:id="fieldData" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
             <TextField fx:id="fieldTotal" disable="true" editable="false" GridPane.columnIndex="3" GridPane.halignment="LEFT" GridPane.rowIndex="3" GridPane.valignment="CENTER" />
@@ -124,7 +127,7 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Button>
-            <Button fx:id="botaoFechar" mnemonicParsing="false" prefHeight="32.0" prefWidth="111.0" text="Fechar" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+            <Button fx:id="botaoFechar" disable="true" mnemonicParsing="false" prefHeight="32.0" prefWidth="111.0" text="Fechar" visible="false" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
          </children>
          <opaqueInsets>
             <Insets />
@@ -133,5 +136,5 @@
             <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
          </padding>
       </GridPane>
-   </content>
-</ScrollPane>
+   </children>
+</AnchorPane>

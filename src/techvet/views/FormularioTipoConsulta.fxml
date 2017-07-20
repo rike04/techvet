@@ -4,50 +4,56 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="743.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.111">
-  <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="389.0" minWidth="10.0" prefWidth="314.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="700.0" minWidth="10.0" prefWidth="200.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="700.0" minWidth="10.0" prefWidth="243.0" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints maxHeight="268.0" minHeight="0.0" prefHeight="121.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="305.0" minHeight="0.0" prefHeight="78.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="267.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="267.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
-  </rowConstraints>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label text="Nome:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
-      <Label text="Valor:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
-      <TextField fx:id="fieldNome" promptText="Nome" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <GridPane.margin>
-            <Insets left="5.0" />
-         </GridPane.margin>
-      </TextField>
-      <TextField fx:id="fieldValor" promptText="Valor" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <GridPane.margin>
-            <Insets left="5.0" />
-         </GridPane.margin>
-      </TextField>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
+      <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="302.0" prefWidth="705.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="389.0" minWidth="10.0" prefWidth="314.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="700.0" minWidth="10.0" prefWidth="200.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="700.0" minWidth="10.0" prefWidth="243.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="268.0" minHeight="0.0" prefHeight="121.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="305.0" minHeight="0.0" prefHeight="78.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="300.0" minHeight="10.0" prefHeight="77.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="267.0" minHeight="10.0" prefHeight="82.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="267.0" minHeight="10.0" prefHeight="81.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
+            <Label text="Nome:" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+            <Label text="Valor:" GridPane.halignment="RIGHT" GridPane.rowIndex="2" />
+            <TextField fx:id="fieldNome" promptText="Nome" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </TextField>
+            <TextField fx:id="fieldValor" promptText="Valor" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </TextField>
+            <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnSpan="2147483647" GridPane.rowIndex="4">
+               <children>
+                  <Region prefHeight="200.0" prefWidth="200.0" />
+                  <Button mnemonicParsing="false" onAction="#cliqueConfirmar" text="Confirmar" />
+                  <Region prefHeight="200.0" prefWidth="200.0" />
+                  <Button mnemonicParsing="false" onAction="#cliqueCancelar" text="Cancelar" />
+               </children>
+            </HBox>
             <Region prefHeight="200.0" prefWidth="200.0" />
-            <Button mnemonicParsing="false" onAction="#cliqueConfirmar" text="Confirmar" />
-            <Region prefHeight="200.0" prefWidth="200.0" />
-            <Button mnemonicParsing="false" onAction="#cliqueCancelar" text="Cancelar" />
+            <Label text="Novo Tipo de Consulta" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" />
          </children>
-      </HBox>
-      <Region prefHeight="200.0" prefWidth="200.0" />
-      <Label text="Novo Tipo de Consulta" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" />
+         <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+         </padding>
+      </GridPane>
    </children>
-   <padding>
-      <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
-   </padding>
-</GridPane>
+</AnchorPane>
