@@ -11,20 +11,26 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import model.Paciente;
 import model.Produto;
 import techvet.DocFXML;
 import techvet.GUIUtils;
@@ -49,6 +55,8 @@ public class ListaArtigosController implements Initializable {
     private TableColumn<Produto, Double> colPreco;
     @FXML
     private TableColumn<Produto, String> colDescricao;
+    @FXML
+    private TableColumn<Produto, Circle> colEstado;
 
     @FXML
     private Button botaoSelecionar;
@@ -90,6 +98,33 @@ public class ListaArtigosController implements Initializable {
                 }
             });
             return linha;
+        });
+        
+         colEstado.setCellFactory((TableColumn<Produto, Circle> p) -> {
+            TableCell<Produto, Circle> tc = new TableCell<Produto, Circle>(){
+                @Override
+                public void updateItem(Circle item, boolean empty) {
+                    if (item != null){
+                        setGraphic(item);
+                    }
+                }
+            };
+            tc.setAlignment(Pos.CENTER);
+            return tc;
+        });
+ 
+        colEstado.setCellValueFactory(dadosCell -> {
+            Circle circle = new Circle(5);
+            Produto p = (Produto) dadosCell.getValue();
+            if (p.getStock() == 0) {
+                circle.setFill(Color.RED);
+            } else if(p.getStock() - p.getStockmin() <= 5){
+                circle.setFill(Color.YELLOW);
+            } else {
+                circle.setFill(Color.GREEN);
+            }
+            SimpleObjectProperty<Circle> obj = new SimpleObjectProperty<>(circle);
+            return obj;
         });
         
         colNome.setCellValueFactory(dadosCell -> 

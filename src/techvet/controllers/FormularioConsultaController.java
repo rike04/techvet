@@ -26,7 +26,6 @@ import javafx.stage.Stage;
 import model.Consulta;
 import model.Paciente;
 import model.TipoConsulta;
-import bll.Util;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

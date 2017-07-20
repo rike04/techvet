@@ -27,7 +27,6 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import model.Cliente;
 import model.Paciente;
 import techvet.DocFXML;
@@ -151,15 +150,13 @@ public class ListaPacientesController implements Initializable {
         colCliente.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getIdCliente().getNome()));
         
-        //Muda a cor da linha para verde se o paciente estiver vivo e para vermleho se estiver morto
-        //ALTERAR: Ficar apenas a celula da coluna Estado verde ou vermelha 
         tabelaPacientes.setRowFactory((TableView<Paciente> param) -> {
             final TableRow<Paciente> row = new TableRow<Paciente>() {
                 @Override
                 protected void updateItem(Paciente item, boolean empty) {
                     super.updateItem(item, empty);
                     if (!empty) {
-                        if (item.getEstado() == (short) 0) setStyle("-fx-text-fill: #d3d3d3");
+                        if (item.getEstado() == (short) 0) setStyle("-fx-text-fill: red");
                     }
                 }
             };

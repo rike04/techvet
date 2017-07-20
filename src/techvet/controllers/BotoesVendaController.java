@@ -40,10 +40,11 @@ public class BotoesVendaController implements Initializable {
     
     @FXML
     public void cliqueCriarVenda(ActionEvent event) { 
-        Initializable controller = new FormularioVendasController();
+        Initializable controller = new FormularioVendaController(content);
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOVENDA, controller, content);
         } catch (IOException e) {
+            e.printStackTrace();
         }
     }
     
