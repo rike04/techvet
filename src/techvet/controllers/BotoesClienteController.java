@@ -22,9 +22,6 @@ public class BotoesClienteController implements Initializable {
         this.content = content;
     }
     
-    /**
-     * Initializes the controller class.
-     */
     @Override
     public void initialize(URL url, ResourceBundle rb) {
        

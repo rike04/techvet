@@ -27,6 +27,10 @@ import model.Consulta;
 import model.Paciente;
 import model.TipoConsulta;
 import bll.Util;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.ZoneId;
 import java.util.Objects;
 import javafx.scene.control.Button;
@@ -133,8 +137,18 @@ public class FormularioConsultaController implements Initializable {
         boolean isEditavel = consulta.getEstado() == (short) 1;
         fieldNomePaciente.setText(consulta.getPaciente().getNome());
         fieldNomePaciente.setDisable(isEditavel);
-        fieldData.setValue(Util.dateToLocal(consulta.getDatahora()));
+        
+        Instant i = Instant.ofEpochMilli(consulta.getDatahora().getTime());
+        LocalDateTime ldt = LocalDateTime.ofInstant(i, ZoneId.systemDefault());
+        
+        fieldHoras.setText(String.valueOf(ldt.getHour()));
+        fieldHoras.setDisable(isEditavel);
+        fieldMin.setText(String.valueOf(ldt.getMinute()));
+        fieldMin.setDisable(isEditavel);
+        
+        fieldData.setValue(ldt.toLocalDate());
         fieldData.setDisable(isEditavel);
+        
         descricao.setText(consulta.getDesctratamento());
         descricao.setDisable(isEditavel);
         if (!consulta.getLocal().equals(boxLocal.getSelectionModel().getSelectedItem())) {
@@ -143,6 +157,7 @@ public class FormularioConsultaController implements Initializable {
             localConsulta.setText(consulta.getLocal());
             localConsulta.setDisable(isEditavel);
         }
+        
         boxTipoConsulta.getSelectionModel().select(new Choice(consulta.getTipoConsulta()));
         boxTipoConsulta.setDisable(isEditavel);
         botaoPesquisar.setDisable(isEditavel);
@@ -223,6 +238,23 @@ public class FormularioConsultaController implements Initializable {
             eValido = false;
         }
         
+        int horas;
+        int mins;      
+        
+        try {
+            horas = Integer.parseInt(fieldHoras.getText());
+            mins = Integer.parseInt(fieldMin.getText());
+            
+            if (horas < 0 && horas >= 24) {
+                eValido = false;
+            }
+            
+            if (mins < 0 && mins > 59) {
+                eValido = false;
+            }
+        } catch (NumberFormatException e) {
+            eValido = false;
+        }
         atualizaPacienteBD(fieldNomePaciente.getText());
         
         return eValido;
@@ -232,16 +264,31 @@ public class FormularioConsultaController implements Initializable {
         boolean isNovaConsulta;
         isNovaConsulta = consulta == null;
         if (isNovaConsulta) consulta = new Consulta();
+        
         consulta.setEstado((short) 0);
         consulta.setPago((short) 0);
-        Date data = Date.from(fieldData.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
-        consulta.setDatahora(data);
+        consulta.setDatahora(prepararData());
         consulta.setPaciente(paciente);
         consulta.setTipoConsulta(boxTipoConsulta.getSelectionModel().getSelectedItem().getTipoConsulta());
         consulta.setLocal(boxLocal.getSelectionModel().getSelectedItem().toString());
         consulta.setDesctratamento(descricao.getText());
+        
         if (isNovaConsulta) consulta.createT();
         else consulta.updateT();
+    }
+    
+    private Date prepararData() {       
+        int horas = Integer.parseInt(fieldHoras.getText());
+        int mins = Integer.parseInt(fieldMin.getText());
+        
+        LocalTime time = LocalTime.of(horas, mins);
+        LocalDate date = fieldData.getValue();
+        
+        LocalDateTime ldt = LocalDateTime.of(date, time);
+        Instant i = ldt.atZone(ZoneId.systemDefault()).toInstant();
+        Date data = Date.from(i);
+        
+        return data;
     }
     
     private class Choice {

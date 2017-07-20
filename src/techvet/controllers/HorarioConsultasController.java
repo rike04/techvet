@@ -6,7 +6,9 @@ package techvet.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
@@ -61,7 +63,8 @@ public class HorarioConsultasController implements Initializable {
         
         fieldData.valueProperty().addListener((ov, valorAntigo, novoValor) -> {
             if(novoValor != null) {
-               listaHorario.setItems(preparaSortedList(novoValor));
+               Date data = Date.from(novoValor.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+               listaHorario.setItems(preparaSortedList(data));
                listaHorario.refresh();
             }
         });
@@ -73,16 +76,14 @@ public class HorarioConsultasController implements Initializable {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd");
         LocalDate localDate = LocalDate.now();
         fieldData.setValue(localDate);
-        
-//        consultaObservableList.setAll(fetchConsultasPorDia(localDate));
     }
     
-    private List<Consulta> fetchConsultasPorDia(LocalDate data) {
+    private List<Consulta> fetchConsultasPorDia(Date data) {
        List<Consulta> listaConsultas = Consulta.readByData(data);
        return listaConsultas;
     }
     
-    private SortedList<Consulta> preparaSortedList (LocalDate data) {
+    private SortedList<Consulta> preparaSortedList (Date data) {
         ObservableList<Consulta> listaConsulta = 
                 FXCollections.observableList(fetchConsultasPorDia(data));
         FilteredList<Consulta> listaFiltrada =

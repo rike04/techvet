@@ -21,9 +21,9 @@
       <ColumnConstraints hgrow="SOMETIMES" maxWidth="197.0" minWidth="141.0" prefWidth="150.0" />
       <ColumnConstraints hgrow="NEVER" maxWidth="177.0" minWidth="0.0" prefWidth="47.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.0" minWidth="10.0" prefWidth="91.0" />
-      <ColumnConstraints hgrow="NEVER" maxWidth="249.0" minWidth="10.0" prefWidth="96.0" />
-      <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="162.0" />
-      <ColumnConstraints hgrow="ALWAYS" maxWidth="220.0" minWidth="10.0" prefWidth="65.0" />
+      <ColumnConstraints hgrow="NEVER" maxWidth="249.0" minWidth="10.0" prefWidth="82.0" />
+      <ColumnConstraints hgrow="SOMETIMES" maxWidth="279.0" minWidth="10.0" prefWidth="153.0" />
+      <ColumnConstraints hgrow="ALWAYS" maxWidth="220.0" minWidth="10.0" prefWidth="74.0" />
       <ColumnConstraints hgrow="ALWAYS" maxWidth="220.0" minWidth="10.0" prefWidth="70.0" />
       <ColumnConstraints hgrow="NEVER" maxWidth="171.0" minWidth="10.0" prefWidth="50.0" />
   </columnConstraints>
@@ -87,13 +87,13 @@
             <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
          </padding>
       </HBox>
-      <DatePicker fx:id="fieldData" promptText="Data" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+      <DatePicker fx:id="fieldData" editable="false" promptText="Data" GridPane.columnIndex="4" GridPane.rowIndex="2" />
       <Label text="Nome do Paciente:" GridPane.rowIndex="1" />
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="7.0" GridPane.columnIndex="5" GridPane.columnSpan="2147483647" GridPane.rowIndex="2">
          <children>
-            <TextField fx:id="fieldHoras" prefHeight="31.0" prefWidth="30.0" />
+            <TextField fx:id="fieldHoras" prefHeight="31.0" prefWidth="39.0" />
             <Label text="Horas" />
-            <TextField fx:id="fieldMin" prefHeight="31.0" prefWidth="32.0" />
+            <TextField fx:id="fieldMin" prefHeight="31.0" prefWidth="39.0" />
             <Label text="Min." />
          </children>
       </HBox>

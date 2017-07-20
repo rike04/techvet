@@ -7,7 +7,6 @@ import javafx.css.PseudoClass;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
@@ -28,8 +27,6 @@ public class LoginController implements Initializable {
     private Label labelErroPasse;
     @FXML 
     private Label labelErroNome;
-    @FXML 
-    private Button botaoInitSessao;
     
     //Mensagens de erro para os campos de textos do formulário
     private final String erroFieldUtilizadorVazio = "O nome de utilizador deve ter entre 3 a 9 caracteres.";
@@ -39,7 +36,7 @@ public class LoginController implements Initializable {
     private final PseudoClass errorClass = PseudoClass.getPseudoClass("error");
     
     @FXML
-    private void click(ActionEvent event) {
+    private void cliqueIniciarSessao(ActionEvent event) {
         resetErros();
         if(isCamposValidos()) {
             String nomeUtilizador = fieldNomeUtilizador.getText();
@@ -48,22 +45,22 @@ public class LoginController implements Initializable {
         } 
     }
     
-    @FXML
-    public void cliqueRegistar(ActionEvent event) {
-        FormularioUtilizadorController controller = new FormularioUtilizadorController(null);
-        try {
-            Utils.mudaScenePara(DocFXML.FORMULARIOUTILIZADOR, controller, event);
-        } catch (IOException e) {
-        }
-        
-    }
-    
     private void resetErros() {
         // Reset das mensagens de erro 
         labelErroNome.setVisible(false);
         labelErroPasse.setVisible(false);
         fieldNomeUtilizador.pseudoClassStateChanged(errorClass, false);
         fieldPalavraPasse.pseudoClassStateChanged(errorClass, false);
+    }
+    
+    @FXML
+    public void cliqueRegistar(ActionEvent event) {
+        FormularioUtilizadorController controller = new FormularioUtilizadorController();
+        try {
+            Utils.mudaScenePara(DocFXML.FORMULARIOUTILIZADOR, controller, event);
+        } catch (IOException e) {
+        }
+        
     }
     
     @Override

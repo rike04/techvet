@@ -1,6 +1,4 @@
-/*
- * 
- */
+
 package techvet.controllers;
 
 import java.io.IOException;
@@ -25,9 +23,7 @@ public class BotoesConsultaController implements Initializable {
         this.content = content;
     }
 
-    /**
-     * Initializes the controller class.
-     */
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         
@@ -51,7 +47,6 @@ public class BotoesConsultaController implements Initializable {
         try {
             content.getChildren().add(loader.load());
         } catch (IOException e) {
-            e.printStackTrace();
         }        
     }
     
@@ -61,7 +56,6 @@ public class BotoesConsultaController implements Initializable {
         try {
             Utils.mudaContentPara(DocFXML.HORARIO, controller, content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     
@@ -71,7 +65,6 @@ public class BotoesConsultaController implements Initializable {
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOTIPOCONSULTA, controller, content);
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
     

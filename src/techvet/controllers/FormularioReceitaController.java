@@ -58,12 +58,7 @@ public class FormularioReceitaController implements Initializable {
         fieldMedicamentos.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoLimiteMax(100));
         fieldTratamentos.addEventFilter(KeyEvent.KEY_TYPED, Utils.validacaoLimiteMax(200));
     }    
-    
-    @FXML
-    public void cliqueVerPerfil(ActionEvent event) {
-        
-    }
-    
+
     @FXML
     public void cliqueConfirmar(ActionEvent event) {
         if (osDadosSaoValidos()) {

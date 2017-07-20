@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -21,6 +24,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Utilizador;
@@ -46,11 +50,13 @@ public class ListaUtilizadoresController implements Initializable {
     private Button botaoSelecionar;
     @FXML
     private Button botaoCancelar;
+    @FXML
+    private TextField fieldFiltroProcura;
     
     private boolean foiConfirmado;
     private final boolean devolveEscolha;
     
-    private Pane content;
+    private final Pane content;
     
     public ListaUtilizadoresController (boolean devolveEscolha, Pane content) { 
         this.foiConfirmado = false;
@@ -73,11 +79,7 @@ public class ListaUtilizadoresController implements Initializable {
             linha.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!linha.isEmpty())) {
                     Utilizador u = linha.getItem();
-                    Initializable controller = new FormularioUtilizadorController(content, u);
-                    try {
-                        Utils.mudaContentPara(DocFXML.FORMULARIOUTILIZADOR, controller, content);
-                    } catch (IOException e) {
-                    }
+                    abreFormUtilizador(u);
                 }
             });
           return linha;
@@ -90,9 +92,38 @@ public class ListaUtilizadoresController implements Initializable {
         colFuncao.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getFuncao()));
         
-        tabelaUtilizadores.setItems(FXCollections.observableList(leListaUtilizadores()));
+        ObservableList<Utilizador> listaUtilizadores = FXCollections.observableList(leListaUtilizadores());
+        FilteredList<Utilizador> listaFiltrada = new FilteredList<>(listaUtilizadores, p -> true);
+        fieldFiltroProcura.textProperty().addListener((observable, oldValue, newValue) -> {
+            listaFiltrada.setPredicate(utilizador -> {
+                if (newValue == null || newValue.isEmpty()) {
+                    return true;
+                }         
+                String filtro = newValue.toLowerCase();
+                if (utilizador.getNome().toLowerCase().contains(filtro)) {
+                    return true;
+                }
+                
+                if (utilizador.getUsername().toLowerCase().contains(filtro)) {
+                    return true;
+                }
+                
+                return false;
+            });
+        });
+        SortedList<Utilizador> sortedList = new SortedList<>(listaFiltrada);
+        sortedList.comparatorProperty().bind(tabelaUtilizadores.comparatorProperty());
+        
+        tabelaUtilizadores.setItems(sortedList);
         
         GUIUtils.autoFitTable(tabelaUtilizadores);
+    }
+    
+    private void abreFormUtilizador(Utilizador u) {
+        Initializable controller = new FormularioUtilizadorController(content, u);
+        try {
+            Utils.mudaContentPara(DocFXML.FORMULARIOUTILIZADOR, controller, content);
+        } catch (IOException e) {}
     }
 
     private List<Utilizador> leListaUtilizadores() {
@@ -100,7 +131,6 @@ public class ListaUtilizadoresController implements Initializable {
         try {
             listaUtilizadores = Utilizador.retrieveAll();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return listaUtilizadores;
     }
