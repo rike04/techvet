@@ -128,7 +128,7 @@ public class ProcessarConsultaController implements Initializable {
         labelTipoConsulta.setText(consulta.getTipoConsulta().getNome());
         fieldNomePaciente.setText(consulta.getPaciente().getNome());
         
-        if (!consulta.getDesctratamento().trim().isEmpty()) {
+        if (consulta.getDesctratamento() != null && !consulta.getDesctratamento().trim().isEmpty()) {
             fieldDescricao.setText(consulta.getDesctratamento());
         }
     }

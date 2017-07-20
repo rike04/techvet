@@ -47,8 +47,8 @@
                </font>
             </Label>
             <TextField fx:id="fieldNomeCliente" editable="false" prefHeight="30.0" prefWidth="150.0" promptText="Nome do Cliente" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#cliqueConfirmar" prefHeight="31.0" prefWidth="129.0" text="Confirmar" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
-            <Button maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#cliqueCancelar" prefHeight="31.0" prefWidth="123.0" text="Cancelar" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+            <Button fx:id="botaoConfirmar" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#cliqueConfirmar" prefHeight="31.0" prefWidth="129.0" text="Confirmar" GridPane.columnIndex="1" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
+            <Button fx:id="botaoCancelar" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#cliqueCancelar" prefHeight="31.0" prefWidth="123.0" text="Cancelar" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
             <ScrollPane fitToWidth="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="5" GridPane.vgrow="SOMETIMES">
                <content>
                   <TableView fx:id="tabelaProdutos" editable="true" maxHeight="1.7976931348623157E308" prefHeight="384.0" prefWidth="528.0">
@@ -124,6 +124,7 @@
                   <Insets left="5.0" />
                </GridPane.margin>
             </Button>
+            <Button fx:id="botaoFechar" mnemonicParsing="false" prefHeight="32.0" prefWidth="111.0" text="Fechar" GridPane.columnIndex="5" GridPane.halignment="LEFT" GridPane.rowIndex="7" GridPane.valignment="CENTER" />
          </children>
          <opaqueInsets>
             <Insets />

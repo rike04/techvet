@@ -68,6 +68,12 @@ public class FormularioVendaController implements Initializable {
     private Button botaoAdicionar;
     @FXML
     private Button botaoProcurar;
+    @FXML
+    private Button botaoCancelar;
+    @FXML
+    private Button botaoFechar;
+    @FXML
+    private Button botaoConfirmar;
     
     private Cliente cliente; 
     private Venda venda;
@@ -103,7 +109,10 @@ public class FormularioVendaController implements Initializable {
         colStock.setCellValueFactory(dadosCell -> 
                 new SimpleIntegerProperty(dadosCell.getValue().getProduto().getStock()).asObject());
         
-
+        botaoFechar.setOnAction( v -> {
+            mudarContent();
+        });
+        
         
         //Permite editar a coluna de quantidade para inserir o valor pretendido
         colQuantidade.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -167,6 +176,12 @@ public class FormularioVendaController implements Initializable {
         botaoProcurar.setDisable(true);
         botaoRemoveProd.setDisable(true);
         botaoAdicionar.setDisable(true);
+        botaoConfirmar.setDisable(true);
+        botaoConfirmar.setVisible(false);
+        botaoCancelar.setDisable(true);
+        botaoCancelar.setVisible(false);
+        botaoFechar.setVisible(true);
+        botaoFechar.setDisable(false);
     }
     
     @FXML

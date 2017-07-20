@@ -56,7 +56,7 @@ public class HorarioConsultasController implements Initializable {
                     Initializable controller = new ProcessarConsultaController(newValue, content);
                     try {
                         Utils.mudaContentPara(DocFXML.PROCESSARCONSULTA, controller, content);
-                    } catch (IOException e) {}
+                    } catch (IOException e) {e.printStackTrace();}
                 }
             }
         });
