@@ -33,7 +33,7 @@
       <RowConstraints maxHeight="307.0" minHeight="10.0" prefHeight="57.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="754.0" text="Novo Produto" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="TOP">
+      <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="754.0" text="Produto" textAlignment="CENTER" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="TOP">
          <GridPane.margin>
             <Insets top="20.0" />
          </GridPane.margin>

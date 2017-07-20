@@ -86,18 +86,12 @@ public class ListaClientesController implements Initializable {
             linha.setOnMouseClicked(event -> {
                 if (event.getClickCount() == 2 && (!linha.isEmpty()) && content != null) {
                     Cliente c = linha.getItem();
-                    Initializable controller = new FormularioClienteController(content, c); 
-                    try {
-                        Utils.mudaContentPara(DocFXML.FORMULARIOCLIENTE, controller, content);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    abreFormCliente(c);
                 }
             });
           return linha;
         });
         
-        //Atribui o valor que cada coluna ira ter 
         colNome.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getNome()));
         colMorada.setCellValueFactory(dadosCell ->
@@ -125,8 +119,7 @@ public class ListaClientesController implements Initializable {
                 }
                 return false;
             });
-        });
-        
+        }); 
         SortedList<Cliente> sortedList = new SortedList<>(listaFiltrada);
         sortedList.comparatorProperty().bind(tabelaClientes.comparatorProperty());
         
@@ -134,6 +127,13 @@ public class ListaClientesController implements Initializable {
         
         GUIUtils.autoFitTable(tabelaClientes);
     }  
+    
+    private void abreFormCliente(Cliente c) {
+        Initializable controller = new FormularioClienteController(content, c); 
+        try {
+            Utils.mudaContentPara(DocFXML.FORMULARIOCLIENTE, controller, content);
+        } catch (IOException e) {}
+    }
     
     private List<Cliente> leListaClientes() {
         List<Cliente> listaClientes = new ArrayList<>();

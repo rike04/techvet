@@ -6,16 +6,17 @@ package techvet.controllers;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.time.ZoneId;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -33,9 +34,9 @@ public class FormularioInternamentoController implements Initializable {
     @FXML 
     private TextField fieldNomePaciente;
     @FXML
-    private TextField fieldDataE;
+    private DatePicker fieldDataE;
     @FXML
-    private TextField fieldDataS;
+    private DatePicker fieldDataS;
     @FXML 
     private TextArea fieldObsv;
     @FXML
@@ -62,15 +63,17 @@ public class FormularioInternamentoController implements Initializable {
     private void preencherLabels() {
         fieldNomePaciente.setText(consulta.getPaciente().getNome());
         LocalDate dataLocal = LocalDate.now();
-        fieldDataE.setText(DateTimeFormatter.ofPattern("yyyy/MM/dd").format(dataLocal));
+        fieldDataE.setValue(dataLocal);
     }
     
     private void preencherFields(Internamento i) {
         fieldNomePaciente.setText(consulta.getPaciente().getNome());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        fieldDataE.setText(sdf.format(i.getDatae()));
+        
+        LocalDate lsE = Instant.ofEpochMilli(i.getDatae().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+        fieldDataE.setValue(lsE);
         if (i.getDatas() != null) {
-            fieldDataS.setText(sdf.format(i.getDatas()));
+            LocalDate ldS = Instant.ofEpochMilli(i.getDatas().getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+            fieldDataS.setValue(ldS);
         }
         fieldObsv.setText(i.getObs());
         fieldGuia.setText(i.getGuiamed());
@@ -90,19 +93,11 @@ public class FormularioInternamentoController implements Initializable {
     
     private Boolean osDadosSaoValidos() {
         boolean saoValidos = true;     
-        try {
-            Date.valueOf(fieldDataE.getText());
-        } catch (Exception e) {
-            saoValidos = false;
+        
+        if (fieldDataE.getValue() == null) {
+            saoValidos =true;
         }
         
-        if (!fieldDataS.getText().trim().isEmpty()) {
-            try {
-                Date.valueOf(fieldDataS.getText());
-            } catch (Exception e) {
-                saoValidos = false;
-            }
-        }
         return saoValidos;
     }
     
@@ -116,22 +111,25 @@ public class FormularioInternamentoController implements Initializable {
     }
     
     private void mudarContent() throws IOException{
-        ListaInternamentosController controller = new ListaInternamentosController(false);
+        ListaInternamentosController controller = new ListaInternamentosController(content);
         Utils.mudaContentPara(DocFXML.LISTAINTERNAMENTOS, controller, content);
     }
 
     private void inserirInternamentoBD() {
-        Internamento i = new Internamento();
+        Internamento i = consulta.getInternamento();
+        if (i == null) i = new Internamento(); 
         i.setIdConsulta(consulta);
         i.setIdPaciente(consulta.getPaciente());
-        try {
-            i.setDatae(Date.valueOf(fieldDataE.getText()));
-            if (!fieldDataS.getText().isEmpty()) {
-                i.setDatas(Date.valueOf(fieldDataS.getText()));
-            }
-        } catch (IllegalArgumentException e) {
-            return ;
+        
+        Date dataE = Date.from(fieldDataE.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        
+        i.setDatae(dataE);
+
+        if (fieldDataS.getValue() != null) {
+            Date dataS = Date.from(fieldDataS.getValue().atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+            i.setDatas(dataS);
         }
+        
         i.setGuiamed(fieldGuia.getText());
         i.setObs(fieldObsv.getText());
         consulta.setInternamento(i);

@@ -97,12 +97,11 @@ public class Template implements Initializable {
         Optional<ButtonType> result = alerta.showAndWait();
         if(result.get() == botaoConfirmar) {
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/techvet/views/Login.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource(DocFXML.LOGIN.getPath()));
                 Scene scene = new Scene(root);
                 stage.setScene(scene);
                 stage.show();      
             } catch (IOException e) {
-                 e.printStackTrace();
             }
         } 
     }
@@ -126,11 +125,6 @@ public class Template implements Initializable {
     public void cliqueInventario(ActionEvent event) {
         mudarEcra(DocFXML.BOTOESINVENTARIO);
     }
-    
-    @FXML
-    public void cliqueInternamentos(ActionEvent event) {
-        mudarEcra(DocFXML.BOTOESINTERNAMENTOS);
-    } 
     
     @FXML
     public void cliqueVendas(ActionEvent event) {
@@ -171,12 +165,6 @@ public class Template implements Initializable {
                     docContent = DocFXML.LISTAUTILIZADORES;
                     controllerSideBar = new BotoesAdministradorController(getContent());
                     controllerContent = new ListaUtilizadoresController(false, content);
-            break;
-            
-            case BOTOESINTERNAMENTOS: 
-                    docContent = DocFXML.LISTAINTERNAMENTOS;
-                    controllerSideBar = new BotoesInternamentoController(getContent());
-                    controllerContent = new ListaInternamentosController(false);
             break;
             
             case BOTOESVENDA: 

@@ -34,8 +34,7 @@ public class BotoesConsultaController implements Initializable {
         Initializable controller = new ListaConsultasController(false, content);
         try {
             Utils.mudaContentPara(DocFXML.LISTACONSULTAS, controller, content);
-        } catch (IOException e) {
-        }
+        } catch (IOException e) {}
     }
     
     @FXML
@@ -46,8 +45,7 @@ public class BotoesConsultaController implements Initializable {
         content.getChildren().clear();
         try {
             content.getChildren().add(loader.load());
-        } catch (IOException e) {
-        }        
+        } catch (IOException e) {}        
     }
     
     @FXML
@@ -55,8 +53,7 @@ public class BotoesConsultaController implements Initializable {
        Initializable controller = new HorarioConsultasController(content);
         try {
             Utils.mudaContentPara(DocFXML.HORARIO, controller, content);
-        } catch (IOException e) {
-        }
+        } catch (IOException e) {}
     }
     
     @FXML
@@ -64,8 +61,15 @@ public class BotoesConsultaController implements Initializable {
         Initializable controller = new FormularioTipoConsultaController(content);
         try {
             Utils.mudaContentPara(DocFXML.FORMULARIOTIPOCONSULTA, controller, content);
-        } catch (IOException e) {
-        }
+        } catch (IOException e) {}
+    }
+    
+    @FXML
+    public void cliqueVerInternamentos(ActionEvent event) {
+        Initializable controller = new ListaInternamentosController(content);
+        try {
+            Utils.mudaContentPara(DocFXML.LISTAINTERNAMENTOS, controller, content);
+        } catch (IOException e) {}
     }
     
 }

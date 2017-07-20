@@ -230,7 +230,7 @@ public class ProcessarConsultaController implements Initializable {
     
     @FXML
     public void cliqueCancelar(ActionEvent event) {
-
+        mudarContent();
     }
     
     private void mudarContent() {

@@ -1,27 +1,25 @@
-/*
- *
- */
 
 package techvet.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.stage.Stage;
+import javafx.scene.layout.Pane;
 import model.Internamento;
+import techvet.DocFXML;
 import techvet.GUIUtils;
+import techvet.Utils;
 
 /**
  * @author Henrique Faria e Sergio Araujo
@@ -45,24 +43,16 @@ public class ListaInternamentosController implements Initializable {
     @FXML
     private Button botaoCancelar;
     
-    private boolean foiConfirmado;
-    private final boolean devolveEscolha;
+    private final Pane content;
     
-    public ListaInternamentosController (boolean devolveEscolha) { 
-        this.foiConfirmado = false;
-        this.devolveEscolha = devolveEscolha;
+    public ListaInternamentosController (Pane content) { 
+        this.content = content;
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        botaoSelecionar.setVisible(devolveEscolha);
-        botaoSelecionar.setDisable(!devolveEscolha);
         
-        botaoCancelar.setVisible(devolveEscolha);
-        botaoCancelar.setDisable(!devolveEscolha);
-        
-        tabela.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        tabela.setPlaceholder(new Label("Não existem internamentos registados"));
+        tabela.setPlaceholder(new Label("Não existem internamentos registados."));
         
         colConsulta.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getIdConsulta().getDatahora().toString()));
@@ -81,6 +71,17 @@ public class ListaInternamentosController implements Initializable {
         colGuia.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getGuiamed()));
         
+        tabela.setRowFactory( tv -> {
+            TableRow<Internamento> linha = new TableRow<>();
+            linha.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!linha.isEmpty()) && content != null) {
+                    Internamento i = linha.getItem();
+                    abreFormInternamento(i);
+                }
+            });
+          return linha;
+        });
+
         tabela.setItems(FXCollections.observableList(leListaInternamentos()));
         
         GUIUtils.autoFitTable(tabela);
@@ -91,34 +92,15 @@ public class ListaInternamentosController implements Initializable {
         try {
             lista = Internamento.retrieveAll();
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return lista;
     }
     
-    public boolean foiSelecionadaOpcao() {
-        return foiConfirmado;
+    private void abreFormInternamento(Internamento i) {
+        Initializable controller = new FormularioInternamentoController(content, i.getIdConsulta());
+        try {
+            Utils.mudaContentPara(DocFXML.FORMULARIOINTERNAMENTO, controller, content);
+        } catch (IOException e) {}
     }
     
-    public Internamento getConsultaSelecionada() {
-        return tabela.getSelectionModel().getSelectedItem();
-    }
-    
-    @FXML 
-    public void cliqueSelecionar(ActionEvent event) {
-        foiConfirmado = true;
-        fechaJanela(event);
-    }
-    
-    @FXML 
-    public void cliqueCancelar(ActionEvent event) {
-        foiConfirmado = false;
-        fechaJanela(event);
-    }
-
-    private void fechaJanela(Event event) {
-        Stage stage = (Stage) ((Node)event.getSource()).getScene().getWindow();
-        stage.close();
-    }
-   
 }

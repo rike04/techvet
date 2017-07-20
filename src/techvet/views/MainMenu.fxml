@@ -88,7 +88,6 @@
                   <Button mnemonicParsing="false" onAction="#cliqueAdministrador" text="Administrador" />
                 <Button mnemonicParsing="false" onAction="#cliqueVendas" text="Vendas" />
                   <Button mnemonicParsing="false" onAction="#cliqueInventario" text="Inventario" />
-                  <Button mnemonicParsing="false" onAction="#cliqueInternamentos" text="Internamentos" />
                   <Button mnemonicParsing="false" onAction="#cliqueClientes" prefHeight="33.0" text="Clientes" />
                   <Button mnemonicParsing="false" onAction="#cliquePacientes" stylesheets="@MainMenuTheme.css" text="Pacientes" />
                   <Button mnemonicParsing="false" onAction="#cliqueConsultas" text="Consultas" />

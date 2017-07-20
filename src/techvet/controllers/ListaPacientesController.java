@@ -8,20 +8,26 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import model.Cliente;
 import model.Paciente;
 import techvet.DocFXML;
@@ -46,7 +52,7 @@ public class ListaPacientesController implements Initializable {
     @FXML
     private TableColumn<Paciente, String> colCor;
     @FXML
-    private TableColumn<Paciente, String> colEstado;
+    private TableColumn<Paciente, Circle> colEstado;
     @FXML
     private TableColumn<Paciente, String> colCliente;
     @FXML
@@ -57,7 +63,7 @@ public class ListaPacientesController implements Initializable {
     private boolean foiConfirmado;
     private final boolean devolveEscolha; 
     
-    private Pane content;
+    private final Pane content;
     
     private Cliente cliente;
     
@@ -116,17 +122,31 @@ public class ListaPacientesController implements Initializable {
                 new SimpleStringProperty(dadosCell.getValue().getSexo()));
         colCor.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getCor()));
+        
+        colEstado.setCellFactory((TableColumn<Paciente, Circle> p) -> {
+            TableCell<Paciente, Circle> tc = new TableCell<Paciente, Circle>(){
+                @Override
+                public void updateItem(Circle item, boolean empty) {
+                    if (item != null){
+                        setGraphic(item);
+                    }
+                }
+            };
+            tc.setAlignment(Pos.CENTER);
+            return tc;
+        });
        
-        //Esta a atribuir vivo ou morto porque o tipo de variavel SHORT nao existe em JAVAFX
+ 
         colEstado.setCellValueFactory(dadosCell -> {
-            SimpleStringProperty property = new SimpleStringProperty();
+            Circle circle = new Circle(5);
             Paciente p = (Paciente) dadosCell.getValue();
             if (p.getEstado() == 0) {
-                property.set("Morto");
+                circle.setFill(Color.RED);
             } else {
-                property.set("Vivo");
+                circle.setFill(Color.GREEN);
             }
-            return property;
+            SimpleObjectProperty<Circle> obj = new SimpleObjectProperty<>(circle);
+            return obj;
         });
         colCliente.setCellValueFactory(dadosCell -> 
                 new SimpleStringProperty(dadosCell.getValue().getIdCliente().getNome()));
@@ -139,11 +159,7 @@ public class ListaPacientesController implements Initializable {
                 protected void updateItem(Paciente item, boolean empty) {
                     super.updateItem(item, empty);
                     if (!empty) {
-                        if (item.getEstado() == 0) {
-                            setStyle("-fx-background: red");
-                        } else if (item.getEstado() == 1) {
-                            setStyle("-fx-background: green");                        
-                        }
+                        if (item.getEstado() == (short) 0) setStyle("-fx-text-fill: #d3d3d3");
                     }
                 }
             };

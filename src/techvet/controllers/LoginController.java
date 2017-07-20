@@ -46,7 +46,6 @@ public class LoginController implements Initializable {
     }
     
     private void resetErros() {
-        // Reset das mensagens de erro 
         labelErroNome.setVisible(false);
         labelErroPasse.setVisible(false);
         fieldNomeUtilizador.pseudoClassStateChanged(errorClass, false);
@@ -115,30 +114,6 @@ public class LoginController implements Initializable {
             labelErroPasse.setVisible(true);
             fieldPalavraPasse.requestFocus();
         }
-    }
-    
-    //NÃO USADA. Função para gerir e mostrar os erros. Pode vir a ser usada caso seja necessário
-    private void handlerErros(TipoErro tipo, String mensagem) {
-        Label mensagemErro = null;
-        
-        switch (tipo) {
-            case NomeUtilizador: mensagemErro = labelErroNome;
-            break;
-            
-            case Passe: mensagemErro = labelErroPasse;
-            break;
-        }
-        
-        if(mensagemErro != null) {
-            mensagemErro.setText(mensagem);
-            mensagemErro.setVisible(true);
-            mensagemErro.setStyle("-fx-border-color: red;");
-        }
-    }
-    
-    private enum TipoErro {
-        NomeUtilizador,
-        Passe
     }
     
 }

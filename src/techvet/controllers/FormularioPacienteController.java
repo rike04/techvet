@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
@@ -44,6 +45,8 @@ public class FormularioPacienteController implements Initializable {
     private TextField fieldCliente;
     @FXML
     private TextField fieldPeso;
+    @FXML
+    private CheckBox boxVivo;
     
     private final Pane content;
     private Cliente cliente;
@@ -64,6 +67,8 @@ public class FormularioPacienteController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         popularChoiceBox();
        
+        boxVivo.setSelected(true);
+        
         if(paciente != null) preencheCampos();
     }    
     
@@ -74,6 +79,8 @@ public class FormularioPacienteController implements Initializable {
         fieldCliente.setText(paciente.getIdCliente().getNome());
         fieldEspecie.setText(paciente.getEspecie());
         boxSexo.getSelectionModel().select(paciente.getSexo());
+        
+        boxVivo.setSelected( paciente.getEstado() == (short) 1 );  
     }
     
     @FXML
@@ -155,8 +162,9 @@ public class FormularioPacienteController implements Initializable {
         paciente.setIdCliente(c);
         paciente.setRaca("Raca");
         paciente.setCor("Cor");
-        paciente.setSexo(boxSexo.getSelectionModel().getSelectedItem().toString());
-        paciente.setEstado((short) 1);
+        paciente.setSexo(boxSexo.getSelectionModel().getSelectedItem().toString());     
+        if (boxVivo.isSelected()) paciente.setEstado((short) 1);
+        else paciente.setEstado((short) 0);
         
         if (isNovoPaciente) paciente.createT();
         else paciente.updateT();

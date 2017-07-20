@@ -35,7 +35,6 @@ import techvet.Utils;
 /**
  * @author Henrique Faria e Sergio Araujo
  */
-
 public class ListaUtilizadoresController implements Initializable {
     
     @FXML
@@ -72,7 +71,7 @@ public class ListaUtilizadoresController implements Initializable {
         botaoCancelar.setVisible(devolveEscolha);
         botaoCancelar.setDisable(!devolveEscolha);
         
-        tabelaUtilizadores.setPlaceholder(new Label("Não existem utilizadores registados"));
+        tabelaUtilizadores.setPlaceholder(new Label("Não existem utilizadores registados."));
 
         tabelaUtilizadores.setRowFactory( tv -> {
             TableRow<Utilizador> linha = new TableRow<>();
