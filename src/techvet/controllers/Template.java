@@ -170,7 +170,7 @@ public class Template implements Initializable {
             case BOTOESVENDA: 
                     docContent = DocFXML.LISTAVENDAS;
                     controllerSideBar = new BotoesVendaController(getContent());
-                    controllerContent = new ListaVendasController(false);
+                    controllerContent = new ListaVendasController(false, content);
             break;
             
             case BOTOESINVENTARIO: 

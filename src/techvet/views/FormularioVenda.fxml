@@ -66,7 +66,7 @@
             </ScrollPane>
             <VBox GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="5" GridPane.valignment="TOP">
                <children>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#cliqueAdicionarProduto" pickOnBounds="false" prefHeight="31.0" prefWidth="40.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
+                  <Button fx:id="botaoAdicionar" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#cliqueAdicionarProduto" pickOnBounds="false" prefHeight="31.0" prefWidth="40.0" style="-fx-background-color: transparent; -fx-border-color: transparent;">
                      <graphic>
                         <ImageView fitHeight="31.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -119,7 +119,7 @@
                   <Insets right="5.0" />
                </GridPane.margin>
             </Label>
-            <Button mnemonicParsing="false" onAction="#cliqueProcurarCliente" text="Procurar" GridPane.columnIndex="3" GridPane.rowIndex="2">
+            <Button fx:id="botaoProcurar" mnemonicParsing="false" onAction="#cliqueProcurarCliente" text="Procurar" GridPane.columnIndex="3" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin>

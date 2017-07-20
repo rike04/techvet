@@ -19,10 +19,14 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import model.Venda;
+import techvet.DocFXML;
 import techvet.GUIUtils;
+import techvet.Utils;
 
 /**
  * @author Henrique Faria e Sergio Araujo
@@ -44,12 +48,15 @@ public class ListaVendasController implements Initializable{
     @FXML
     private Button botaoCancelar;
 
+    private final Pane content;
+    
     private final boolean devolveEscolha;
     private boolean foiConfirmado;
     
-    public ListaVendasController(boolean devolveEscolha) {
+    public ListaVendasController(boolean devolveEscolha,Pane content) {
         this.devolveEscolha = devolveEscolha;
         this.foiConfirmado = false;
+        this.content = content;
     }
     
     @Override
@@ -61,6 +68,17 @@ public class ListaVendasController implements Initializable{
         botaoCancelar.setDisable(!devolveEscolha);
         
         tabelaVendas.setPlaceholder(new Label("Nao existem vendas registadas."));
+        
+        tabelaVendas.setRowFactory( tv -> {
+            TableRow<Venda> linha = new TableRow<>();
+            linha.setOnMouseClicked(event -> {
+                if (event.getClickCount() == 2 && (!linha.isEmpty())) {
+                    Venda v = linha.getItem();
+                    abrirFormConsulta(v);
+                }
+            });
+          return linha;
+        });
         
         //Atribui o valor que cada coluna ira ter 
         colCodigo.setCellValueFactory(dadosCell -> 
@@ -75,6 +93,14 @@ public class ListaVendasController implements Initializable{
         tabelaVendas.setItems(FXCollections.observableList(leListaVendas()));
         
         GUIUtils.autoFitTable(tabelaVendas);
+    }
+    
+    private void abrirFormConsulta(Venda v) {
+        Initializable controller = new FormularioVendaController(content, v);
+        try {
+            Utils.mudaContentPara(DocFXML.FORMULARIOVENDA, controller, content);
+        } catch (Exception e) {
+        }
     }
     
     private List<Venda> leListaVendas() {

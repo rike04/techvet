@@ -31,7 +31,7 @@ public class BotoesVendaController implements Initializable {
     
     @FXML 
     public void cliqueListaVendas(ActionEvent event) {
-        Initializable controller = new ListaVendasController(false);
+        Initializable controller = new ListaVendasController(false, content);
         try {
             Utils.mudaContentPara(DocFXML.LISTAVENDAS, controller, content);
         } catch (IOException e) {

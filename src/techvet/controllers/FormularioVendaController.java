@@ -7,8 +7,6 @@ package techvet.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import java.util.ResourceBundle;
 import javafx.beans.binding.BooleanBinding;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -43,7 +41,7 @@ import techvet.GUIUtils;
 import techvet.Utils;
 
 /**
- * @author rike4
+ * @author Henrique Faria e Sergio Araujo
  */
 
 public class FormularioVendaController implements Initializable {
@@ -66,6 +64,10 @@ public class FormularioVendaController implements Initializable {
     private DatePicker fieldData;
     @FXML
     private Button botaoRemoveProd;
+    @FXML
+    private Button botaoAdicionar;
+    @FXML
+    private Button botaoProcurar;
     
     private Cliente cliente; 
     private Venda venda;
@@ -113,7 +115,6 @@ public class FormularioVendaController implements Initializable {
         });
         
         if (venda != null) preencheCampos();
-
         
         tabelaProdutos.setItems(listaLinhasArtigo);
         
@@ -132,8 +133,7 @@ public class FormularioVendaController implements Initializable {
         if (quantidade == 0) {
             return ;
         }
-            
-        if(quantidade > 0 && quantidade < t.getRowValue().getProduto().getStock()) {
+        if(quantidade > 0 && quantidade <= t.getRowValue().getProduto().getStock()) {
             t.getRowValue().setQuantidade(quantidade);
         }
         t.getTableView().refresh();
@@ -153,18 +153,29 @@ public class FormularioVendaController implements Initializable {
         cliente = venda.getIdCliente();
         listaLinhasArtigo.setAll(venda.getLinhaArtigoList());
         fieldData.setValue(Utils.toLocalDate(venda.getData()));
+        desativaCampos();
+    }
+    
+    private void desativaCampos() {
+        fieldTotal.setDisable(true);
+        fieldNomeCliente.setDisable(true);
+        fieldData.setDisable(true);
+        tabelaProdutos.setEditable(false);
+        botaoProcurar.setDisable(true);
+        botaoRemoveProd.setDisable(true);
+        botaoAdicionar.setDisable(true);
     }
     
     @FXML
     public void cliqueConfirmar(ActionEvent event) {
-        if (osCamposPreenchidos()) {
+        if (osCamposPreenchidos() && venda != null) {
             inserirVendaBD();
-            mudarContent();
         } 
+        mudarContent();
     }
     
     private void mudarContent() {
-        Initializable controller = new ListaVendasController(false);
+        Initializable controller = new ListaVendasController(false, content);
         try {
             Utils.mudaContentPara(DocFXML.LISTAVENDAS, controller, content);
         } catch (IOException e) {
@@ -187,7 +198,6 @@ public class FormularioVendaController implements Initializable {
         if (controller.foiSelecionadaOpcao()) {
             cliente = controller.getClienteSelecionado();
             fieldNomeCliente.setText(cliente.getNome());
-            
         }
     }
     
